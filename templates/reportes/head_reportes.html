@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+{% load static from staticfiles %}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ titulo }}</title>
+<link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+<link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+<style>
+.negrita {
+		font-weight: bold;
+}
+.container {
+		margin-left: 200%;
+		margin-right: 200%;
+		text-align: justify;
+		font-size: 14px;
+		margin-top: 40px;
+		margin-bottom: 500px
+}
+@page {
+		size: a4 portrait;
+		@frame header_frame {
+				-pdf-frame-content: header_content;
+				left: 1cm;
+				right: 1cm;
+				width: 19cm;
+				top: 1.3cm;
+				bottom: 1cm;
+				height: 40pt;
+		}
+		@frame content_frame {
+				left: 1.6cm;
+				right: 1.6cm;
+				top: 40pt;
+				bottom: 4cm;
+		}
+		@frame footer_frame {
+				-pdf-frame-content: footer_content;
+				/*-pdf-frame-border: 1;*/
+
+				right: 1.6cm;
+				width: 512pt;
+				bottom: 1.1cm;
+				height: 0.6cm;
+		}
+		@frame footer_frame {
+				-pdf-frame-content: razon_social;
+				left: 1.6cm;
+				right: 1.6cm;
+				bottom: 1.1cm;
+				width: 10cm;
+				height: 0.6cm;
+		}
+		@frame footer_frame {
+				-pdf-frame-content: footer_sucursal;
+				left: 2cm;
+				right: 2cm;
+				bottom: 1cm;
+				width: 20cm;
+				height: 0.6cm;
+		}
+}
+.reporte {
+		border-collapse: collapse;
+		border: 1px solid black;
+		width: 100%;
+}
+.td_reporte {
+		text-align: center;
+		font-size: 12px;
+		padding: 1px;
+		padding-top: 6px;
+}
+.tr_primera {
+		background-color: #f2f2f2;
+}
+.borde {
+		border: 1px solid red;
+}
+.titulo {
+		font-family: arial, sans-serif;
+		font-size: 17px;
+		color: #333;
+}
+.td_ben {
+		font-family: arial, sans-serif;
+		font-size: 14px;
+		color: #333;
+}
+.sin_datos {
+		padding: 40px;
+		text-align: center;
+}
+.fuera_rango {
+		background-color: rgb(251, 233, 231);
+		background: rgb(251, 233, 231);
+}
+.table-header {
+		background-color: rgb(88, 175, 36);
+		background: rgb(88, 175, 36);
+		border: 1px solid #ddd;
+		padding-top: 7px;
+		padding-bottom: 3px;
+		color: white;
+		font-size: 14px
+}
+.table-content {
+		border: 1px solid #ddd;
+}
+</style>
+</head>
+<body>
+	<div id="footer_content" align="right">Pagina <pdf:pagenumber> de <pdf:pagecount> </div>
+	<div style="color: #333; font-size: 12px" id="razon_social"><span>Control y Desarrollo App | https://controlydesarrollo.herokuapp.com</span></div>
+  <table style="width:100%">
+    <tr>
+      <th style="width:10%"><img src="{{ url }}{{ logo }}" style="height: 80px; width: 70px;" alt="" /></th>
+      <th style="width:90%">
+        <span class="titulo">
+          <strong>REPORTE DE {{ titulo }}</strong><br><br>
+          <strong>{{ beneficiario.primer_nombre }} {{ beneficiario.segundo_nombre }} {{ beneficiario.primer_apellido }} {{ beneficiario.segundo_apellido }}</strong>
+        </span>
+      </th>
+    </tr>
+  </table><br><br>
+  <table style="width:100%;">
+    <tr>
+      <th style="width:70%"></th>
+      <th style="width:30%"></th>
+    </tr>
+    <tr>
+      <td>
+        <div class="td_ben"><strong>Unidad de Servicio :</strong><span> {{ beneficiario.uds }}</span></div>
+        <div class="td_ben"><strong>Fecha de Afiliación :</strong><span> {{ beneficiario.fecha }}</span></div>
+        <div class="td_ben"><strong>Tipo de Beneficiario :</strong><span> {{ tipo }}</span></div>
+        <div class="td_ben"><strong>Tipo de Documento :</strong><span> {{ beneficiario.tipo_documento }}</span></div>
+        <div class="td_ben"><strong>Numero de Documento :</strong><span> {{ beneficiario.numero_documento }}</span></div>
+        <div class="td_ben"><strong>Fecha de Nacimiento :</strong><span> {{ beneficiario.fecha_nacimiento }}</span></div>
+        <div class="td_ben"><strong>Edad :</strong><span> {{ beneficiario.edad_anios }} {{ beneficiario.edad_anios_detalle }} {{ beneficiario.edad_meses }} {{ beneficiario.edad_meses_detalle }}</span></div>
+      </td>
+      <td align="right"><img src="{{ url }}{{ beneficiario.foto }}" width="150" height="150" alt="" style="display: block;"/></td>
+    </tr>
+  </table><br><br>

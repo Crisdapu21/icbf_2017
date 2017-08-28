@@ -1,0 +1,38 @@
+{% include 'reportes/head_reportes.html' %}
+  <table style="width:100%;">
+    <tbody>
+      <div style="overflow-x:auto;">
+        <table style="width:100%">
+          <tr class="table">
+            <th class="table-header"><strong>GRUPO ETNICO EN EL QUE SE IDENTIFICA EL BENEFICIARIO</th>
+          </tr>
+          <tr>
+            <th></th>
+          </tr>
+        </table>
+      </div>
+    </tbody>
+  </table>
+  <table style="width:100%;">
+    <tbody>
+      <div style="overflow-x:auto;">
+        <table style="width:100%">
+          <tr class="table">
+            <th style="width:60%"></th>
+            <th style="width:40%"></th>
+          </tr>
+          <tr class="table-content">
+            <td style="padding-left: 10px">
+              <div class="td_ben"><strong>Grupo Perteneciente :</strong><span> {{ grupoN }}</span></div>
+              <div class="td_ben"><strong>Nombre del Grupo o Comunidad :</strong><span> {{ beneficiario.grupo_perteneciente }}</span></div>
+              <div class="td_ben"><strong>En la Familia se habla la lengua Nativa :</strong><span> {{ a15 }}</span></div>
+              <div class="td_ben"><strong>El Beneficiario habla la lengua Nativa :</strong><span> {{ a16 }}</span></div>
+            </td>
+            <td style="padding: 10px"><img src="{{ url }}{{ grupoI }}" style="height: 200px; width: 300px;" /></td>
+          </tr>
+        </table>
+      </div>
+    </tbody>
+  </table>
+</body>
+</html>

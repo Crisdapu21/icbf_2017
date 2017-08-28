@@ -1,0 +1,24 @@
+{% extends 'menu.html' %} {% block content %}{% load static from staticfiles %}
+<div class="page-header">
+	<div class="page-header-content">
+			<div class="page-title">
+					<ul class="breadcrumb">
+							<li>
+									<h4><a href="javascript:history.back(1)" id="volver_atras" class="icon-arrow-left52 position-left"></a><span class="no-margin text-bold">PANEL ADMINISTRATIVO</span></h4>
+							</li>
+					</ul>
+			</div>
+	</div>
+	<div class="breadcrumb-line">
+			<ul class="breadcrumb">
+					<li><i class="icon-meter-fast position-left"></i>Panel Administrativo</a></li>
+			</ul>
+	</div>
+</div>
+<div class="content">
+</div>
+{% endblock %}{% block javascript %}
+<script type="text/javascript" src="{% static 'assets/js/pages/form_validation.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/tags/tokenfield.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/form_tags_input.js' %}"></script>
+{% endblock %}

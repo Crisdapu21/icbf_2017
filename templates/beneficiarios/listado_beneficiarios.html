@@ -1,0 +1,130 @@
+{% extends 'menu.html' %}{% block content %}{% load static from staticfiles %}{% if messages %}{% for message in messages %}
+<script>
+$( document ).ready(function() {
+	if ("{{ message }}" == "Creado"){
+			mensagesSuccess("EXITO AL GUARDAR","Beneficiario","Creado Exitosamente.");
+	}
+	if ("{{ message }}" == "Actualizado"){
+			mensagesSuccess("EXITO AL EDITAR","Información del Beneficiario","Actualizada Exitosamente.");
+	}
+	if ("{{ message }}" == "Borrado"){
+			mensagesSuccess("EXITO AL BORRAR","Beneficiario","Borrado Exitosamente.");
+	}
+	if ("{{ message }}" == "Caracteristicas"){
+			mensagesSuccess("EXITO AL GUARDAR","Catacteristicas de Vivienda","Actualizadas Exitosamente.");
+	}
+	if ("{{ message }}" == "Cabeza"){
+			mensagesSuccess("EXITO AL GUARDAR","Cabeza de Nucleo","Actualizada Exitosamente.");
+	}
+	if ("{{ message }}" == "Relaciones"){
+			mensagesSuccess("EXITO AL GUARDAR","Relaciones Comunitarias","Actualizadas Exitosamente.");
+	}
+  if ("{{ message }}" == "Nutricion"){
+			mensagesSuccess("EXITO AL GUARDAR","Nutrición","Actualizada Exitosamente.");
+	}
+  if ("{{ message }}" == "Salud"){
+			mensagesSuccess("EXITO AL GUARDAR","Salud","Actualizada Exitosamente.");
+	}
+});
+</script>
+{% endfor %}{% endif %}
+<div class="page-header ">
+    <div class="page-header-content">
+      <div class="page-title">
+        <div class="row">
+         <div class="col-xs-12 col-sm-12 col-md-1"></div>
+         <div class="col-xs-12 col-sm-12 col-md-10">
+           <div class="breadcrumb container">
+              <ul id="breadcrumb">
+                <li><h4 style="margin-top: 5px;"><span id="titulo_breadcrumb" class="no-margin text-bold">LISTADO DE BENEFICIARIOS</span></h4></li>
+                <li>&nbsp;&nbsp;</li>
+                <li>   <a href="{% url 'beneficiarios:crearBeneficiario' %}"><button class="btn btn bg-warning-800 btn-labeled heading-btn" type="button"><b><i class=" icon-user-plus"></i></b>&nbsp;&nbsp;CREAR BENEFICIARIO&nbsp;&nbsp;</button></a></li>
+              </ul>
+           </div>
+         </div>
+         <div class="col-xs-12 col-sm-12 col-md-1"></div>
+       </div>
+      </div>
+    </div>
+    <div class="breadcrumb-line">
+      <ul class="breadcrumb">
+          <li><a href="{% url 'login:panel' %}"><i class="icon-meter-fast position-left"></i>Panel Administrativo</a></li>
+          <li class="active">Beneficiarios</a></li>
+      </ul>
+    </div>
+</div>
+<div class="content">
+	<div class="panel panel-flat">
+		<table class="table datatable-responsive">
+			<thead>
+				<tr>
+        	<th class="text-center">UDS</th>
+          <th class="text-center">TIPO</th>
+          <th class="text-center">BENEFICIARIO</th>
+          <th class="text-center">TIPO DOCUMENTO</th>
+					<th class="text-center">NUMERO</th>
+          <th class="text-center">EDAD</th>
+          <th class="text-center">GENERO</th>
+          <th class="text-center">REPORTES</th>
+					<th class="text-center">ACCIONES</th>
+				</tr>
+			</thead>
+			<tbody>
+      {% if beneficiarios.count >= 1  %}
+        <script>
+          var listBH = [];
+          var listBM = [];
+          var listM = [];
+          var listF = [];
+					var listA = [];
+					var listM = [];
+        </script>
+        {% for beneficiario in beneficiarios %}
+        <tr>
+          <td class="text-center">{{ beneficiario.uds }}</td>
+          <td class="text-center"><span id="t{{ beneficiario.id }}">{{ beneficiario.tipo_beneficiario }}</span></td>
+          <td class="text-center">{{ beneficiario.primer_nombre }} {{ beneficiario.segundo_nombre }}<br>{{ beneficiario.primer_apellido }} {{ beneficiario.segundo_apellido }}</td>
+          <td class="text-center">{{ beneficiario.tipo_documento }}</td>
+          <td class="text-center">{{ beneficiario.numero_documento }}</td>
+          <td class="text-center">{{ beneficiario.edad_anios }} {{ beneficiario.edad_anios_detalle }} {{ beneficiario.edad_meses }} {{ beneficiario.edad_meses_detalle }}</td>
+          <td class="text-center"><span id="g{{ beneficiario.id }}"></span></td>
+          <td style="text-align: center;">
+            <ul class="icons-list">
+              <li class="text-bg-grey-600"><a href="{{ servidor }}/beneficiarios/medidas_antropometricas/{{ beneficiario.id }}/reporte" target="_blank" data-popup="tooltip" title="MEDIDAS ANTROPOMETRICAS" data-placement="top" data-original-title="MEDIDAS ANTROPOMETRICAS"><i class="icon-file-pdf"></i>&nbsp;&nbsp;&nbsp;</a></li>
+              <li class="text-bg-grey-600"><a href="{{ servidor }}/beneficiarios/datos_etnicos/{{ beneficiario.id }}/reporte" target="_blank" data-popup="tooltip" title="DATOS ETNICOS" data-placement="top" data-original-title="DATOS ETNICOS"><i class="icon-file-pdf"></i>&nbsp;&nbsp;&nbsp;</a></li>
+							<li class="text-bg-grey-600"><a href="{{ servidor }}/beneficiarios/hechos_victimizantes/{{ beneficiario.id }}/reporte" target="_blank" data-popup="tooltip" title="HECHOS VICTIMIZANTES" data-placement="top" data-original-title="HECHOS VICTIMIZANTES"><i class="icon-file-pdf"></i>&nbsp;&nbsp;&nbsp;</a></li>
+							<li class="text-bg-grey-600"><a href="{{ servidor }}/beneficiarios/enfermedades/{{ beneficiario.id }}/reporte" target="_blank" data-popup="tooltip" title="ENFERMEDADES" data-placement="top" data-original-title="ENFERMEDADES"><i class="icon-file-pdf"></i>&nbsp;&nbsp;&nbsp;</a></li>
+            </ul>
+          </td>
+          <td style="text-align: center;">
+            <ul class="icons-list">
+              <li class="text-danger-600"><a onclick='eliminar("beneficiario/eliminar/","{{ beneficiario.id }}","Eliminando Beneficiario por favor espere ....")' title="ELIMINAR" data-popup="tooltip" title=""data-placement="top" data-original-title="ELIMINAR"><i class="icon-bin"></i>&nbsp;&nbsp;&nbsp;</a></li>
+              <li class="text-violet-800"><a href="{% url 'beneficiarios:editarBeneficiario' beneficiario.id %}" data-popup="tooltip" title="EDITAR" data-placement="top" data-original-title="EDITAR" /><i class="icon-pencil7"></i>&nbsp;&nbsp;&nbsp;</a>
+            </ul>
+          </td>
+					<script>
+					setTipoBeneficiario('{{ beneficiario.id }}','{{ beneficiario.tipo_beneficiario }}');
+					setGeneroBeneficiario('{{ beneficiario.id }}','{{ beneficiario.genero }}');
+					</script>
+				</tr>
+        {% endfor %}
+			</tbody>
+		</table>
+    {% endif %}
+    <script>
+      RemplazarTexto(listBH,"Niño");
+      RemplazarTexto(listBM,"Niña");
+      RemplazarTexto(listM,"Masculino");
+      RemplazarTexto(listF,"Femenino");
+    </script>
+	</div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/extensions/responsive.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/datatables_responsive.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/ui/prism.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/extension_blockui.js' %}"></script>
+{% endblock %}

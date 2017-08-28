@@ -1,0 +1,178 @@
+{% extends 'menu.html' %}{% block content %}{% load static from staticfiles %}{% if messages %}{% for message in messages %}
+<script>
+$(document).ready(function() {
+  if ("{{ message }}" == "Creado") {
+      mensagesSuccess("EXITO AL GUARDAR","Evento","Creado Exitosamente.");
+  }
+  if ("{{ message }}" == "Borrado") {
+      mensagesSuccess("EXITO AL BORRAR","Evento","Borrado Exitosamente.");
+  }
+});
+</script>
+{% endfor %}{% endif %}
+<link href="{% static 'assets/css/minified/calendario.css' %}" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.0/fullcalendar.min.js"></script>
+<div class="content">
+    <div class="row botones">
+        <div class="col-xs-5 col-sm-5 col-md-5"></div>
+        <div class="col-xs-1 col-sm-1 col-md-1">
+          <button class="btnEventos btnTareas" title="TAREAS" data-toggle="modal" data-target="#modal_tareas">
+              <span><i class="icon-notebook"></i></span>
+          </button>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1">
+          <button class="btnEventos btnPendientes" title="PENDIENTES" data-toggle="modal" data-target="#modal_pendientes">
+              <span><i class="icon-file-check2"></i></span>
+          </button>
+        </div>
+        <div class="col-xs-5 col-sm-5 col-md-5"></div>
+    </div>
+</div>
+<div class="content">
+    <div class="panel panel-flat">
+        <div class="panel-body">
+            <div id="calendario" class="fullcalendar-agenda"></div>
+        </div>
+    </div>
+</div>
+<div id="modal_tareas" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-brown">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h6 id="title_tareas" class="modal-title"><span><i class="icon-notebook"></i></span>&nbsp;&nbsp;TAREAS</h6>
+            </div>
+            <form class="form-horizontal" id="form_tareas" action="{% url 'calendario:guardarTareas' %}" method="POST"> {% csrf_token %}
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-lg-3">Detalle :<span class="text-danger">*</span></label>
+                        <div class="col-lg-9">
+                            <textarea id="tareas_detalle" name="tareas_detalle" style="resize: vertical; max-height: 100px;" rows="5" cols="5" class="form-control" onkeypress="validarCampos('tareas','detalle')"></textarea>
+                            <label id="tareas_detalle_success" style="display: none" class="validation-error-label validation-valid-label">Success.</label>
+                            <label id="tareas_detalle_error" style="display: none" class="validation-error-label">This field is required.</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-3">Inicia:<span class="text-danger">*</span></label>
+                        <div class="col-lg-9">
+                            <input type="date" id="tareas_inicia" name="tareas_inicia" class="form-control" value="{{ request.session.fecha }}" onblur="validarCampos('tareas','inicia')">
+                            <label id="tareas_inicia_success" style="display: none" class="validation-error-label validation-valid-label">Success.</label>
+                            <label id="tareas_inicia_error" style="display: none" class="validation-error-label">This field is required.</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                          <a type="button" id="f_tareas" onclick="ValidarFormulario(['inicia','detalle'],'tareas','form_tareas')" class="btn bg-brown btn-labeled btn-xlg"><b><i class="icon-floppy-disk"></i></b>GUARDAR</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="modal_pendientes" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-orange-800">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h6 id="title_pendientes" class="modal-title"><span><i class="icon-file-check2"></i></span>&nbsp;&nbsp;PENDIENTES</h6>
+            </div>
+            <form class="form-horizontal" id="form_pendientes" action="{% url 'calendario:guardarPendientes' %}" method="POST">{% csrf_token %}
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-lg-3">Beneficiario :<span class="text-danger">*</span></label>
+                        <div class="col-lg-9">
+                            <select name="pendientes_beneficiario" id="pendientes_beneficiario" onchange="validarCampos('pendientes','beneficiario')" class="select-search">
+                                <option value="">-- Selecciona un Beneficiario --</option>
+                                {% for beneficiario in beneficiarios %}
+                                <option value="{{ beneficiario.id }}">{{ beneficiario.primer_nombre }} {{ beneficiario.segundo_nombre }} {{ beneficiario.primer_apellido }} {{ beneficiario.segundo_apellido }}</option>
+                                {% endfor %}
+                            </select>
+                            <label id="pendientes_beneficiario_success" style="display: none" class="validation-error-label validation-valid-label">Success.</label>
+                            <label id="pendientes_beneficiario_error" style="display: none" class="validation-error-label">This field is required.</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-3">Detalle :<span class="text-danger">*</span></label>
+                        <div class="col-lg-9">
+                            <textarea id="pendientes_detalle" name="pendientes_detalle" style="resize: vertical; max-height: 100px;" rows="5" cols="5" class="form-control" onkeypress="validarCampos('pendientes','detalle')"></textarea>
+                            <label id="pendientes_detalle_success" style="display: none" class="validation-error-label validation-valid-label">Success.</label>
+                            <label id="pendientes_detalle_error" style="display: none" class="validation-error-label">This field is required.</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-3">Inicia :<span class="text-danger">*</span></label>
+                        <div class="col-lg-9">
+                            <input type="date" id="pendientes_inicia" name="pendientes_inicia" class="form-control" value="{{ request.session.fecha }}" onblur="validarCampos('pendientes','inicia')">
+                            <label id="pendientes_inicia_success" style="display: none" class="validation-error-label validation-valid-label">Success.</label>
+                            <label id="pendientes_inicia_error" style="display: none" class="validation-error-label">This field is required.</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-3">Finaliza :<span class="text-danger">*</span></label>
+                        <div class="col-lg-9">
+                            <input type="date" id="pendientes_finaliza" name="pendientes_finaliza" class="form-control" value="{{ request.session.fecha }}" onblur="validarCampos('pendientes','finaliza')">
+                            <label id="pendientes_finaliza_success" style="display: none" class="validation-error-label validation-valid-label">Success.</label>
+                            <label id="pendientes_finaliza_error" style="display: none" class="validation-error-label">This field is required.</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <a type="button" id="f_pendientes" onclick="ValidarFormulario(['finaliza','inicia','detalle','beneficiario'],'pendientes','form_pendientes')" class="btn bg-orange-800 btn-labeled btn-xlg"><b><i class="icon-floppy-disk"></i></b>GUARDAR</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>var eventos = [];</script>
+{% for evento in eventos %}
+<script>AddEventos('{{ evento.id }}','{{ evento.estado }}','{{ evento.tipo }}','{{ evento.beneficiario }}','{{ evento.allday }}','{{ evento.detalle }}','{{ evento.f_inicio }}','{{ evento.f_fin }}')</script>
+{% endfor %}
+<script>
+$(function() {
+    $('.fullcalendar-agenda').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'agendaDay,agendaWeek,month'
+        },
+        defaultView: 'agendaDay',
+        editable: false,
+        events: eventos,
+        minTime: "00:00:00",
+        defaultView: 'agendaDay',
+        editable: false,
+        events: eventos,
+        monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+        monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+        dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+        dayNamesShort: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
+        eventMouseover: function(calEvent, jsEvent) {
+            var tooltip = '<div class="tooltipevent" style="width: auto; height: auto; background:#263238; color: white; position: absolute; z-index:10001; padding: 15px">' + calEvent.title + '</div>';
+            $("body").append(tooltip);
+            $(this).mouseover(function(e) {
+                $(this).css('z-index', 10000);
+                $('.tooltipevent').fadeIn('500');
+                $('.tooltipevent').fadeTo('10', 1.9);
+            }).mousemove(function(e) {
+                $('.tooltipevent').css('top', e.pageY + 10);
+                $('.tooltipevent').css('left', e.pageX + 20);
+            });
+         },
+         eventMouseout: function(calEvent, jsEvent) {
+               $(this).css('z-index', 8);
+               $('.tooltipevent').remove();
+         },
+    });
+});
+</script>
+<script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery_ui/datepicker.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/form_validation.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery_ui/interactions.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/form_select2.js' %}"></script>
+{% endblock %}

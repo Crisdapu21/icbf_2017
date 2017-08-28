@@ -1,0 +1,87 @@
+{% include "head.html" %}{% include "header.html" %}{% load static from staticfiles %}
+<style>
+  h4.ui-pnotify-title{
+    font-weight: 500;
+  }
+  .notificacion_pendientes{
+    background-color: #f5f5f5;
+    border-color: #ef6c00;
+    color: #263238;
+  }
+  .notificacion_tareas{
+    background-color: #f5f5f5;
+    border-color: #9c4e0d;
+    color: #263238;
+  }
+</style>
+<div class="page-container">
+  <div class="page-content">
+    <div class="sidebar sidebar-main sidebar-fixed">
+      <div class="sidebar-content">
+        <div class="sidebar-user">
+        <div class="category-content">
+          <div class="media">
+            <a href="/perfil"><img src="{{ request.session.foto }}" class="img-circle img-sm" alt=""></a>
+            <div class="media-body">
+              <span class="media-heading text-semibold">{{ user.first_name }} {{ user.last_name }}</span>
+              <div class="text-size-mini text-muted">{{ request.session.nombregrupo }}</div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="sidebar-category sidebar-category-visible">
+          <div class="category-content no-padding">
+            <ul class="navigation navigation-main navigation-accordion">
+              <li id="menu_parametrizacion">
+                <a href="/admin">
+                 <i class="icon-gear"></i><span>Parametrización</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'operarios:perfil' %}">
+                  <i class="icon-user"></i> <span>Mi Perfil</span>
+                </a>
+              </li>
+              <li id="menu_operarios">
+                <a href="{% url 'operarios:operarios' %}">
+                  <i class="icon-user-tie"></i><span>Operarios</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'beneficiarios:beneficiarios' %}">
+                  <i class="icon-users4"></i><span>Beneficiarios</span>
+                </a>
+              </li>
+              <li id="menu_calendario">
+                <a href="{% url 'calendario:calendario' %}">
+                  <i class="icon-calendar2"></i><span>Calendario</span>
+                </a>
+              </li>
+              <li id="menu_logs">
+                <a href="{% url 'parametrizacion:listadoLogs' %}">
+                  <i class="icon-watch2"></i><span>Registro de Logs</span>
+                </a>
+              </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="content-wrapper">
+      {%  block content %}
+      {% endblock %}
+    </div>
+    <script>
+        if ("{{ request.session.grupo }}" == "1") {
+            $("#menu_calendario").remove()
+        }
+        if ("{{ request.session.grupo }}" == "2") {
+            $("#menu_parametrizacion").remove()
+            $("#menu_operarios").remove()
+            $("#menu_logs").remove()
+            Notificaciones()
+        }
+    </script>
+  </div>
+</div>
+{% block javascript %}{% endblock %}{% include "footer.html" %}

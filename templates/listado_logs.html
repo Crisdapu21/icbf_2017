@@ -1,0 +1,58 @@
+{% extends 'menu.html' %}{% block content %}{% load static from staticfiles %}
+<div class="page-header ">
+    <div class="page-header-content">
+      <div class="page-title">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-2"></div>
+          <div class="col-xs-12 col-sm-12 col-md-8">
+              <h4><span id="titulo_breadcrumb" class="no-margin text-bold">LISTADO DE MOVIMIENTOS EN EL SISTEMA</span></h4>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-2"></div>
+        </div>
+      </div>
+    </div>
+    <div class="breadcrumb-line">
+      <ul class="breadcrumb">
+          <li><a href="{% url 'login:panel' %}"><i class="icon-meter-fast position-left"></i>Panel Administrativo</a></li>
+          <li class="active">Logs</a></li>
+      </ul>
+    </div>
+</div>
+<div class="content">
+	<div class="panel panel-flat">
+		<table class="table datatable-responsive">
+			<thead>
+				<tr>
+          <th class="text-center" style="width: 180px; max-width: 180px; min-width: 180px">OPERARIO</th>
+          <th class="text-center" style="width: 140px; max-width: 140px; min-width: 140px">ACCIÓN</th>
+          <th class="text-center" style="width: 180px; max-width: 180px; min-width: 180px">TABLA</th>
+          <th class="text-center" style="width: 180px; max-width: 180px; min-width: 180px">DETALLE</th>
+          <th class="text-center" style="width: 180px; max-width: 180px; min-width: 180px">REFERENCIA</th>
+          <th class="text-center" style="width: 180px; max-width: 180px; min-width: 180px">FECHA</th>
+				</tr>
+			</thead>
+			<tbody>
+      {% if logs.count >= 1  %}
+        {% for log in logs %}
+        <tr>
+          <td class="text-center">{{ log.usuario }}</td>
+          <td class="text-center">{{ log.accion }}</td>
+          <td class="text-center">{{ log.modelo }}</td>
+          <td class="text-center">{{ log.detalle }}</td>
+          <td class="text-center">{{ log.referencia }}</td>
+          <td class="text-center">{{ log.fecha }}<br>{{ log.hora }}</td>
+				</tr>
+        {% endfor %}
+			</tbody>
+		</table>
+    {% endif %}
+	</div>
+</div>
+{% endblock %}{% block javascript %}
+<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/extensions/responsive.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/datatables_responsive.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/ui/prism.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/extension_blockui.js' %}"></script>
+{% endblock %}

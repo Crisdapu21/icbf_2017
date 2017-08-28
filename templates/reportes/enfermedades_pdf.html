@@ -1,0 +1,42 @@
+{% include 'reportes/head_reportes.html' %}
+  <!--{% if controles.count <= 0  %}
+    <table style="width:100%;">
+      <tbody>
+        <div style="overflow-x:auto;">
+          <table style="width:100%" class="reporte">
+            <tr>
+              <th></th>
+            </tr>
+            <tr>
+              <div class="sin_datos">
+                <h1>NO EXISTEN REGISTROS DE ESTE BENEFICIARIO</h1>
+              </div>
+            </tr>
+          </table>
+        </div>
+      </tbody>
+    </table>
+  {% endif %}-->
+  <!--{% if controles.count >= 1  %}-->
+
+    <table style="width:100%;">
+      <tbody>
+        <div style="overflow-x:auto;">
+          <table style="width:100%">
+            <tr class="table">
+              <th class="table-header"><strong>TOMA</strong></th>
+              <th class="table-header"><strong>DIAGNOSTICO</strong></th>
+              <th class="table-header"><strong>EXAMENES</strong></th>
+              <th class="table-header"><strong>ATENDIDO POR</strong></th>
+            </tr>
+            <tr>
+              <td class="td_reporte table-content">TOMA 1</td>
+              <td class="td_reporte table-content">{{ beneficiario.t1_d8 }}</td>
+            </tr>
+          </table>
+        </div>
+      </tbody>
+    </table>
+  <!--{% endif %}-->
+</body>
+</html>

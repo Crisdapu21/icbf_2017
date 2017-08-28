@@ -1,0 +1,342 @@
+{% extends 'menu.html' %}{% block content %}{% load static from staticfiles %}{% if messages %}{% for message in messages %}
+<script>
+$(document).ready(function() {
+  if ("{{ message }}" == "Composicion") {
+    mensagesSuccess("EXITO AL GUARDAR", "Familiar Agregado", "Exitosamente.");
+  }
+});
+</script>
+{% endfor %}{% endif %}
+<style>
+    .list-group-item {
+        padding: 10px 20px;
+        border: 0;
+        margin-bottom: 20px;
+    }
+
+    .modal-footer {
+        padding-top: 20px;
+        padding: 11px;
+    }
+</style>
+<div class="page-header">
+    <div class="page-header-content">
+        <div class="page-title">
+            <ul class="breadcrumb">
+                <li>
+                    <h4><a href="javascript:history.back(1)" id="volver_atras" class="icon-arrow-left52 position-left"></a><span class="no-margin text-bold">CREAR BENEFICIARIO</span></h4>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="{% url 'login:panel' %}"><i class="icon-meter-fast position-left"></i>Panel Administrativo</a></li>
+            <li>
+                <a href="{% url 'beneficiarios:beneficiarios' %}"></i>Beneficiarios</a>
+            </li>
+            <li class="active">Nuevo</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="content">
+    <div class="panel panel-flat">
+        <div class="panel-heading">
+            <h5 class="panel-title"></h5>
+            <div class="panel-body">
+                <form class="form-horizontal form-validate-jquery" id="formularioA" enctype="multipart/form-data" action="{% url 'beneficiarios:guardarBeneficiario' %}" method="POST"> {% csrf_token %}
+                    <span class="list-group-item list-group-item-success">INFORMACIÓN DE LA UNIDAD DE SERVICIO</span>
+                    <fieldset class="content-group">
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">Nombre de la UDS: <span class="text-danger">*</span></label>
+                            <div class="col-lg-10">
+                                <select name="uds" id="uds" class="select-search" required="required">
+                                    <option value="">-- Selecciona una UDS --</option>
+                                    {% for uds in unidades_servicio %}
+                                    <option value="{{ uds.id }}">{{ uds.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">Tipo de Beneficiario: <span class="text-danger">*</span></label>
+                            <div class="col-lg-10">
+                                <select name="tip_ben" id="tip_ben" class="form-control" required="required">
+                                    <option value="1">Niño</option>
+                                    <option value="2">Niña</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="content-group">
+                        <span class="list-group-item list-group-item-success">DATOS BÁSICOS</span>
+                        <div class="col-md-10 col-lg-8">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Primer Nombre : <span class="text-danger">*</span></label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="1nombre" name="1nombre" maxlength="30" class="form-control" required="required" placeholder="Primer Nombre" required="required">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Segundo Nombre :</label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="2nombre" name="2nombre" maxlength="30" class="form-control" placeholder="Segundo Nombre">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Primer Apellido :<span class="text-danger">*</span></label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="1apellido" name="1apellido" maxlength="30" class="form-control" required="required" placeholder="Primer Apellido" required="required">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Segundo Apellido :</label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="2apellido" name="2apellido" maxlength="30" class="form-control" placeholder="Segundo Apellido">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-lg-4">
+                            <div class="form-group">
+                                <img id="imgSalida" style="height: 220px; width: 200px; display: block; margin-left: auto; margin-right: auto;" name="foto" />
+                                <input style="display: none" id="archivo" name="archivo" type="file">
+                                <input id="bandera_foto" name="bandera_foto" type="hidden">
+                                <button type="button" id="archivo2" name="archivo2" onclick="subirImagen()" class="btn bg-warning-800 btn-labeled"><b><i class="icon-cloud-upload2"></i></b>Subir Foto</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="content-group">
+                        <span class="list-group-item list-group-item-success">DATOS DE IDENTIFICACIÓN</span>
+                        <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Tipo de Documento : <span class="text-danger">*</span></label>
+                                <div class="col-lg-8">
+                                    <select name="tip_doc" id="tip_doc" class="select-search" required="required">
+                                        <option value="">-- Selecciona un Tipo de Documento --</option>
+                                        {% for tipdoc in tipos_documentos %}
+                                        <option value="{{ tipdoc.id }}">{{ tipdoc.tipo }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Numero Documento :<span class="text-danger">*</span></label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="numdoc" name="numdoc" maxlength="15" class="form-control" placeholder="Numero del Documento" onKeyPress="return soloNumeros(event,'beneficiario','numdoc','NO')" required="required">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Fecha Expedicion :<span class="text-danger">*</span></label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" id="fec_exp" name="fec_exp" type="date" min="{{ request.session.fecha_min }}" max="{{ request.session.fecha }}" required="required">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Lugar Expedición :<span class="text-danger">*</span></label>
+                                <div class="col-lg-8">
+                                    <select name="lug_exp" id="lug_exp" class="select-search" required="required">
+                                        <option value="">-- Selecciona una Ciudad o Municipio --</option>
+                                        {% for lug_exp in lugares_expedicion %}
+                                        <option value="{{ lug_exp.id }}">{{ lug_exp.ciudad }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="content-group">
+                      <div class="row">
+                        <span class="list-group-item list-group-item-success">DATOS DE NACIMIENTO</span>
+                        <div class="col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Nacimiento :<span class="text-danger">*</span></label>
+                                <div class="col-lg-8">
+                                  <input class="form-control" id="fec_nac" name="fec_nac" type="date" min="{{ request.session.fecha_min }}" max="{{ request.session.fecha }}" required="required">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Genero :<span class="text-danger">*</span></label>
+                                <div class="col-lg-8">
+                                  <select name="genero" id="genero" class="form-control" required="required">
+                                      <option value="M">Masculino</option>
+                                      <option value="F">Femenino</option>
+                                  </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Pais :<span class="text-danger">*</span></label>
+                                <div class="col-lg-8">
+                                  <select name="pais_nac" id="pais_nac" class="select-search" required="required" onchange="paises('pais_nac','departamento_nac','ciudad_nac')">
+                                      <option value="">-- Selecciona un Pais --</option>
+                                      {% for pais in paises %}
+                                      <option value="{{ pais.id }}">{{ pais.pais }}</option>
+                                      {% endfor %}
+                                  </select>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Departamento :<span class="text-danger">*</span></label>
+                                <div class="col-lg-8">
+                                  <select name="departamento_nac" id="departamento_nac" required="required" onchange="departamentos('departamento_nac','ciudad_nac')" class="select-search">
+                                      <option value="">-- Selecciona un Departamento --</option>
+                                  </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Ciudad :<span class="text-danger">*</span></label>
+                                <div class="col-lg-8">
+                                  <select name="ciudad_nac" id="ciudad_nac" required="required" class="select-search">
+                                      <option value="">-- Selecciona una Ciudad o Municipio --</option>
+                                  </select>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                    <fieldset class="content-group">
+                        <span class="list-group-item list-group-item-success">DATOS ÉTNICOS</span>
+                        <div class="col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="control-label col-lg-12"> <strong>A13.</strong> Grupo étnico en el que se identifica el beneficiario.</label>
+                                <div class="col-lg-12">
+                                    <select name="grupo_etnico" id="grupo_etnico" class="form-control">
+                                        <option value="">-- Selecciona un Grupo Étnico --</option>
+                                        <option value="1">Afrocolombiano</option>
+                                        <option value="2">Indígena</option>
+                                        <option value="3">Rrom/Gitano</option>
+                                        <option value="4">Raizal del Archipiélago de San Andrés</option>
+                                        <option value="5">Palenquero</option>
+                                        <option value="6">No se Autoreconze</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-12"> <strong>A14.</strong> Si el núcleo familiar del beneficiario se reconoce como Afrocolombiano o Indígena indique a qué comunidad, resguardo o territorio colectivo pertenece.</label>
+                                <div class="col-lg-12">
+                                    <input type="text" id="a14" name="a14" maxlength="30" class="form-control" placeholder="Nombre del grupo Étnico al que pertenece">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-10"><strong>A15.</strong> ¿En la familia se habla la lengua nativa del grupo étnico al que pertenece?</label>
+                                <div class="col-lg-2">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="check_a15" id="check_a15" onchange="obtenerRespuesta('check_a15','a15')" class="styled" value="SI">SI
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="check_a15" id="check_a15" onchange="obtenerRespuesta('check_a15','a15')" class="styled" value="NO">NO
+                                    </label>
+                                    <input type="hidden" id="a15" name="a15"></input>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-10"><strong>A16.</strong> ¿El beneficiario habla la lengua nativa del grupo étnico al que pertenece?</label>
+                                <div class="col-lg-2">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="check_a16" id="check_a16" onchange="obtenerRespuesta('check_a16','a16')" class="styled" value="SI">SI
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="check_a16" id="check_a16" onchange="obtenerRespuesta('check_a16','a16')" class="styled" value="NO">NO
+                                    </label>
+                                    <input type="hidden" id="a16" name="a16"></input>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="content-group">
+                        <span class="list-group-item list-group-item-success"> DATOS DE CONTACTO DEL ADULTO RESPONSABLE</span>
+                        <div class="col-md-8 col-lg-8">
+                            <div class="form-group">
+                                <label class="control-label col-lg-2">Dirección :</label>
+                                <div class="col-lg-10">
+                                    <input type="text" id="direccion_acu" name="direccion_acu" maxlength="50" class="form-control" placeholder="Dirección del Acudiente">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Teléfono :</label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="tel_acu" name="tel_acu" onKeyPress="return soloNumeros(event,'beneficiario','tel_acu','NO')" maxlength="15" class="form-control" placeholder="Teléfono del Acudiente">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="content-group">
+                        <span class="list-group-item list-group-item-success">DATOS DE HECHOS VICTIMIZANTES</span>
+                        <div class="col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="control-label col-lg-10"><strong>A18.</strong> ¿Ha sido víctima del desplazamiento forzado u otro hecho victimizante?</label>
+                                <div class="col-lg-2">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="check_a18" id="check_a18" onchange="obtenerRespuesta('check_a18','a18')" class="styled" value="SI">SI
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="check_a18" id="check_a18" onchange="obtenerRespuesta('check_a18','a18')" class="styled" value="NO">NO
+                                    </label>
+                                    <input type="hidden" id="a18" name="a18"></input>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-10"><strong>A19.</strong> ¿Algún miembro del grupo familiar con el que convive el beneficiario ha sido víctima del Desplazamiento forzado u otro hecho victimizante?</label>
+                                <div class="col-lg-2">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="check_a19" id="check_a19" onchange="obtenerRespuesta('check_a19','a19')" class="styled" value="SI">SI
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="check_a19" id="check_a19" onchange="obtenerRespuesta('check_a19','a19')" class="styled" value="NO">NO
+                                    </label>
+                                    <input type="hidden" id="a19" name="a19"></input>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-12"> <strong>A20.</strong> Señale el tipo de relación del miembro del grupo familiar con el que convive, que ha sido víctima del Desplazamiento u otro hecho victimizante.</label>
+                                <div class="col-lg-12">
+                                    <select name="a20" id="a20" class="select-search">
+                                        <option value="">-- Selecciona un Miembro --</option>
+                                        {% for miembro in miembros %}
+                                        <option value="{{ miembro.id }}">{{ miembro.parentezco }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <button id="guardarA" type="submit" class="btn bg-primary-800 btn-labeled btn-xlg pull-right"><b><i>A</i></b>GUARDAR INFORMACIÓN DEL BENEFICIARIO</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}{% block javascript %}
+<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/extensions/responsive.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/datatables_responsive.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/form_validation.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery_ui/interactions.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/form_select2.js' %}"></script>
+{% endblock %}

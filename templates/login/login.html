@@ -1,0 +1,83 @@
+{% include "head.html" %}{% if messages %}{% for message in messages %}
+<script>
+	if ("{{ message }}" == "Actualizado"){
+		$( document ).ready(function() {
+			mensagesSuccess("EXITO AL ACTUALIZAR","Contraseña","Actualizada.");
+		});
+	}
+</script>
+{% endfor %}{% endif %}
+<body background="{{ url }}childrens.png">
+    <div class="centrado-porcentual">
+        <div class="page-content">
+            <div class="content-wrapper">
+                <div class="content">
+                    <style>
+                      body {
+                          background-position: center center;
+                          background-repeat: no-repeat;
+                          background-attachment: fixed;
+                          -webkit-background-size: cover;
+                          -moz-background-size: cover;
+                          -o-background-size: cover;
+                          background-size: cover;
+                          color: #fff;
+                          background-color: #000000;
+                          font-family: 'Open Sans', sans-serif
+                      }
+                      .centrado-porcentual {
+                          position: absolute;
+                          left: 50%;
+                          top: 50%;
+                          transform: translate(-50%, -50%);
+                          -webkit-transform: translate(-50%, -50%);
+                      }
+                      .panel {
+                          margin-bottom: 20px;
+                          border-color: #ddd;
+                          color: #333;
+                          width: 320px;
+                      }
+                      .panel-body {
+                          padding: 40px;
+                      }
+                      .has-feedback-left .form-control {
+                          margin-bottom: 20px;
+                      }
+                    </style>
+                    <form action="{% url 'login:login' %}" method="post">{% csrf_token %}
+                        <div class="panel panel-body login-form">
+                            <div class="text-center">
+                                <img id="foto_usuario" style="width: 120px; height: 120px" src="{{ url }}icbf-logo.svg" alt=""/>
+                                <h5 class="content-group">Acceso a tu cuenta <small class="display-block">Introduzca sus credenciales de abajo</small></h5>
+                            </div>
+                            {% if error %}
+                            <div class="alert alert-danger alert-bordered">
+  										            <button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button>
+						                      <span class="text-semibold">{{ error }}</span>
+        								    </div>
+                            {% endif %}
+                            <div class="form-group has-feedback has-feedback-left">
+                                <input type="email" name="txtEmail" class="form-control" placeholder="Correo">
+                                <div class="form-control-feedback">
+                                    <i class="icon-user text-muted"></i>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback has-feedback-left">
+                                <input type="password" name="txtPassword" class="form-control" placeholder="Contraseña" required="required">
+                                <div class="form-control-feedback">
+                                    <i class="icon-lock2 text-muted"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn bg-success-700 btn-block">Ingresar <i class="icon-circle-right2 position-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+{% include "footer.html" %}

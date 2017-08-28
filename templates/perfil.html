@@ -1,0 +1,147 @@
+{% extends 'menu.html' %}
+{% block content %}
+{% load static from staticfiles %}
+{% if messages %}
+    {% for message in messages %}
+				<script>
+					if ("{{ message }}" == "PerfilActualizado"){
+						$( document ).ready(function() {
+							mensagesSuccess("EXITO AL EDITAR","Perfil","Actualizado Exitosamente.");
+						});
+					}
+				</script>
+    {% endfor %}
+{% endif %}
+<div class="page-header">
+	<div class="page-header-content">
+			<div class="page-title">
+					<ul class="breadcrumb">
+							<li>
+                <h4><a href="javascript:history.back(1)" id="volver_atras" class="icon-arrow-left52 position-left"></a><span id="titulo_breadcrumb" class="no-margin text-bold">{{ user.first_name }} {{ user.last_name }}</span>&nbsp;&nbsp;
+                  <span id="categoria_agente" class="label bg-primary-800">{{ request.session.nombregrupo }}</span>
+                </h4>
+							</li>
+					</ul>
+			</div>
+	</div>
+	<div class="breadcrumb-line">
+			<ul class="breadcrumb">
+					<li><i class="icon-meter-fast position-left"></i>Panel Administrativo</a></li>
+					<li class="active">Mi Perfil</a></li>
+			</ul>
+	</div>
+</div>
+<div class="content">
+<div class="panel panel-flat">
+		<div class="panel-heading">
+				<h5 class="panel-title"></h5>
+					<div class="panel-body">
+            <form class="form-horizontal form-validate-jquery" id="formAgregar" enctype="multipart/form-data" action="{% url 'operarios:actualizarOperario' %}" method="POST"> {% csrf_token %}
+              <fieldset class="content-group">
+                  <legend class="text-bold">Datos Basicos</legend>
+                  <input type="hidden" id="operario_id" name="operario_id" value="{{ operario.id_id }}" />
+                  <div class="col-md-10 col-lg-8">
+                      <div class="form-group">
+                          <label class="control-label col-lg-2">Nombres :<span class="text-danger">*</span></label>
+                          <div class="col-lg-10">
+                              <input type="text" id="nombres" name="nombres" maxlength="30" class="form-control" required="required" placeholder="Nombres del Operario" value="{{ operario.first_name }}">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label class="control-label col-lg-2">Apellidos :<span class="text-danger">*</span></label>
+                          <div class="col-lg-10">
+                              <input type="text" id="apellidos" name="apellidos" maxlength="30" class="form-control" required="required" placeholder="Apellidos del Operario" value="{{ operario.last_name }}">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label class="control-label col-lg-2">Genero :</label>
+                          <div class="col-lg-10">
+                              <label class="radio-inline">
+                                  <input type="radio" name="bedStatus" id="masculino" class="styled" value="masculino">Masculino
+                              </label>
+                              <label class="radio-inline">
+                                  <input type="radio" name="bedStatus" id="femenino" class="styled" value="femenino">Femenino
+                              </label>
+                                  <input type="hidden" id="genero" name="genero" value="{{ operario.genero }}"></input>
+                            </div>
+                      </div>
+                  </div>
+                  <div class="col-md-2 col-lg-4">
+                      <div class="form-group">
+                          <img id="imgSalida" style="height: 220px; width: 200px; display: block; margin-left: auto; margin-right: auto;" name="foto" src="{{ url }}{{ operario.foto }}"/>
+                          <input style="display: none"  id="archivo" name="archivo" type="file">
+                          <input id="bandera_foto" name="bandera_foto" type="hidden">
+                          <button type="button" id="archivo2" name="archivo2" onclick="subirImagen()" class="btn bg-warning-800 btn-labeled"><b><i class="icon-cloud-upload2"></i></b>Subir Foto</button>
+                      </div>
+                  </div>
+              </fieldset>
+              <fieldset class="content-group">
+                  <legend class="text-bold">Datos de contacto</legend>
+                  <div class="form-group">
+                      <label class="control-label col-lg-2">Dirección :</label>
+                      <div class="col-lg-10">
+                          <input type="text" id="direccion" name="direccion" maxlength="40"  class="form-control" placeholder="Dirección del Operario" value="{{ operario.direccion }}">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="control-label col-lg-2">Teléfono :</label>
+                      <div class="col-lg-10">
+                        <input type="text" name="telefono"  id="telefono" maxlength="15" class="form-control" onKeyPress="return soloNumeros(event,'agente','telefono','SI')" placeholder="Teléfono del Operario" value="{{ operario.telefono }}">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="control-label col-lg-2">Celular :</label>
+                      <div class="col-lg-10">
+                        <input type="text" id="celular" name="celular" maxlength="15" class="form-control"  onKeyPress="return soloNumeros(event,'agente','celular','SI')"  maxlenght="15" placeholder="Celular del Operario" value="{{ operario.celular }}">
+                      </div>
+                  </div>
+              </fieldset>
+              <fieldset class="content-group">
+                <legend class="text-bold">Datos del Sistema</legend>
+                <div class="form-group">
+                    <label class="control-label col-lg-2">E-mail :<span class="text-danger">*</span></label>
+                    <div class="col-lg-10">
+                        <input type="email" id="email" name="email" maxlength="30" required="required" class="form-control" placeholder="E-mail del Operario" value="{{ operario.email }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Contraseña :</label>
+                    <div class="col-lg-10">
+                        <a type="button" style="width: 100%" href="{%  url 'operarios:cambiar_pass' %}" class="btn bg-indigo-800 btn-xlg"><i class="icon-safe position-left"></i>Cambiar Contraseña</a>
+                    </div>
+                </div>
+              </fieldset>
+              <div class="form-group text-right">
+                  <label class="control-label col-lg-2">
+                  </label>
+                  <div class="col-lg-10">
+                    <button type="reset" class="btn bg-warning-800 btn-labeled btn-xlg" id="reset"><b><i class="icon-undo position-right"></i></b>&nbsp;&nbsp;&nbsp;RESET &nbsp;&nbsp;</button>
+                    <button type="submit" class="btn bg-primary-800 btn-labeled btn-xlg"><b><i class="icon-floppy-disk"></i></b>GUARDAR</button>
+                  </div>
+              </div>
+            </form>
+					</div>
+			</div>
+	</div>
+</div>
+{% endblock %}
+{% block javascript %}>
+<script type="text/javascript" src="{% static 'assets/js/pages/form_validation.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/tags/tokenfield.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/form_tags_input.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/uploaders/fileinput.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery_ui/interactions.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/form_select2.js' %}"></script>
+<script>
+obtenerGenero();
+fijarGenero();
+
+//VERIFICAR QUE EL CORREO NO EXISTA
+$('#email').on('input', function() {
+	$('#email').val().trim()
+	verificarEmail();
+});
+
+</script>
+{% endblock %}

@@ -1,0 +1,208 @@
+{% extends 'menu.html' %}{% block content %}{% load static from staticfiles %}{% if messages %}{% for message in messages %}
+<script>
+$( document ).ready(function() {
+	if ("{{ message }}" == "Actualizado"){
+			mensagesSuccess("EXITO AL EDITAR","Evento","Actualizado Exitosamente.");
+	}
+	if ("{{ message }}" == "Creada"){
+			mensagesSuccess("EXITO AL GUARDAR","Nota","Creada Exitosamente.");
+	}
+});
+</script>
+{% endfor %}{% endif %}
+<link href="{% static 'assets/css/minified/calendario.css' %}" rel="stylesheet" type="text/css">
+<div class="page-header">
+	<div class="page-header-content">
+			<div class="page-title">
+					<ul class="breadcrumb">
+							<li>
+									<h4><a href="javascript:history.back(1)" id="volver_atras" class="icon-arrow-left52 position-left"></a><span class="no-margin text-bold">EDITAR EVENTOS</span></h4>
+							</li>
+					</ul>
+			</div>
+	</div>
+	<div class="breadcrumb-line">
+			<ul class="breadcrumb">
+					<li><a href="{% url 'login:panel' %}"><i class="icon-meter-fast position-left"></i>Panel Administrativo</a></li>
+					<li><a href="{% url 'calendario:calendario' %}"></i>Calendario</a></li>
+					<li></i>Editar</a></li>
+					<li class="active">{{ evento.id }}</a></li>
+			</ul>
+	</div>
+</div>
+<div class="content">
+  <div class="modal-content" id="modal_tareas" style="display: none">
+	  	<div id="header_tareas" class="modal-header bg-brown">
+	    <div class="row">
+	      <div class="col-xs-10 col-sm-10 col-md-10"><h6  class="modal-title"><span><i class="icon-notebook"></i></span>&nbsp;&nbsp;TAREA&nbsp;&nbsp;{{ evento.estado }}</h6></div>
+	      <div class="col-xs-2 col-sm-2 col-md-2">
+	        <div class="row">
+	          <div class="col-xs-4 col-sm-4 col-md-4"></div>
+	          <div class="col-xs-4 col-sm-4 col-md-4" style="margin-top: 5px;">
+	            <div class="checkbox checkbox-switchery switchery-sm">
+	                <label><input type="checkbox" onclick="changeEstado('tareas_estado','tareas_Estado');" id="tareas_Estado" name="tareas_Estado" class="switchery switchery-default"></label>
+	            </div>
+	          </div>
+	          <div class="col-xs-4 col-sm-4 col-md-4"></div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	  	<form class="form-horizontal" id="form_tareas" action="{% url 'calendario:actualizarTareas' %}" method="POST">{% csrf_token %}
+			<input class="hidden" id="tareas_id" name="tareas_id" value="{{ evento.id }}"></input>
+	    <input class="hidden" id="tareas_estado" name="tareas_estado" value="{{ evento.estado }}"></input>
+	    <div class="modal-body">
+	        <div class="form-group">
+	            <label class="control-label col-lg-2">Detalle :<span class="text-danger">*</span></label>
+	            <div class="col-lg-10">
+	                <textarea id="tareas_detalle" name="tareas_detalle" style="resize: vertical; max-height: 100px;" rows="5" cols="5" class="form-control" onkeypress="validarCampos('tareas','detalle')">{{ evento.detalle }}</textarea>
+	                <label id="tareas_detalle_success" style="display: none" class="validation-error-label validation-valid-label">Success.</label>
+	                <label id="tareas_detalle_error" style="display: none" class="validation-error-label">This field is required.</label>
+	            </div>
+	        </div>
+	        <div class="form-group">
+	            <label class="control-label col-lg-2">Inicia:<span class="text-danger">*</span></label>
+	            <div class="col-lg-10">
+	                <input type="date" id="tareas_inicia" name="tareas_inicia" class="form-control" value="{{ evento.f_inicio }}" onblur="validarCampos('tareas','inicia')">
+	                <label id="tareas_inicia_success" style="display: none" class="validation-error-label validation-valid-label">Success.</label>
+	                <label id="tareas_inicia_error" style="display: none" class="validation-error-label">This field is required.</label>
+	            </div>
+	        </div>
+	        <div class="form-group">
+	            <div class="col-lg-12">
+	              <a type="button" name="f_tareas" id="f_tareas" onclick="ValidarFormulario(['inicia','detalle'],'tareas','form_tareas')" class="btn bg-brown btn-labeled btn-xlg"><b><i class="icon-floppy-disk"></i></b>ACTUALIZAR</a>
+	              <a href="/eliminarEvento/{{ evento.id }}" id="b_tareas" class="btn bg-danger btn-labeled btn-xlg"><b><i class="icon-bin"></i></b>ELIMINAR</a>
+	            </div>
+	        </div>
+	    </div>
+	  </form>
+  </div>
+	 <div class="modal-content" id="modal_pendientes" style="display: none">
+	  	<div id="header_pendientes" class="modal-header bg-orange">
+	    <div class="row">
+	      <div class="col-xs-10 col-sm-10 col-md-10">
+	        <h6  class="modal-title"><span><i class="icon-file-check2"></i></span>&nbsp;&nbsp;PENDIENTE&nbsp;&nbsp;{{ evento.estado }}</h6>
+	      </div>
+	      <div class="col-xs-2 col-sm-2 col-md-2">
+	        <div class="row">
+	          <div class="col-xs-4 col-sm-4 col-md-4"></div>
+	          <div class="col-xs-4 col-sm-4 col-md-4" style="margin-top: 5px;">
+	            <div class="checkbox checkbox-switchery switchery-sm">
+									<label><input type="checkbox" onclick="changeEstado('pendientes_estado','pendientes_Estado');" id="pendientes_Estado" name="pendientes_Estado" class="switchery"></label>
+							</div>
+	          </div>
+	          <div class="col-xs-4 col-sm-4 col-md-4"></div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	  	<form class="form-horizontal" id="form_pendientes" action="{% url 'calendario:actualizarPendientes' %}" method="POST">{% csrf_token %}
+				<input class="hidden" id="pendientes_id" name="pendientes_id" value="{{ evento.id }}"></input>
+			  <input class="hidden" id="pendientes_estado" name="pendientes_estado" value="{{ evento.estado }}"></input>
+	      <div class="modal-body">
+	          <div class="form-group">
+	              <label class="control-label col-lg-2">Beneficiario :<span class="text-danger">*</span></label>
+	              <div class="col-lg-10">
+	                  <select name="pendientes_beneficiario" id="pendientes_beneficiario" onchange="validarCampos('pendientes','beneficiario')" class="select-search" disabled="disabled">
+	                      <option value="">-- Selecciona un Beneficiario --</option>
+	                      {% for beneficiario in beneficiarios %}
+	                      <option value="{{ beneficiario.id }}">{{ beneficiario.primer_nombre }} {{ beneficiario.segundo_nombre }} {{ beneficiario.primer_apellido }} {{ beneficiario.segundo_apellido }}</option>
+	                      {% endfor %}
+	                  </select>
+	                  <label id="pendientes_beneficiario_success" style="display: none" class="validation-error-label validation-valid-label">Success.</label>
+	                  <label id="pendientes_beneficiario_error" style="display: none" class="validation-error-label">This field is required.</label>
+	                  <script>$("#pendientes_beneficiario> option[value=" + '{{ evento.beneficiario_id }}' + "]").attr("selected", "selected");</script>
+	              </div>
+	          </div>
+	          <div class="form-group">
+	              <label class="control-label col-lg-2">Detalle :<span class="text-danger">*</span></label>
+	              <div class="col-lg-10">
+	                  <textarea id="pendientes_detalle" name="pendientes_detalle" style="resize: vertical; max-height: 100px;" rows="5" cols="5" class="form-control" onkeypress="validarCampos('pendientes','detalle')">{{ evento.detalle }}</textarea>
+	                  <label id="pendientes_detalle_success" style="display: none" class="validation-error-label validation-valid-label">Success.</label>
+	                  <label id="pendientes_detalle_error" style="display: none" class="validation-error-label">This field is required.</label>
+	              </div>
+	          </div>
+	          <div class="form-group">
+	              <label class="control-label col-lg-2">Inicia :<span class="text-danger">*</span></label>
+	              <div class="col-lg-10">
+	                  <input type="date" id="pendientes_inicia" name="pendientes_inicia" class="form-control" value="{{ evento.f_inicio }}" onblur="validarCampos('pendientes','inicia')">
+	                  <label id="pendientes_inicia_success" style="display: none" class="validation-error-label validation-valid-label">Success.</label>
+	                  <label id="pendientes_inicia_error" style="display: none" class="validation-error-label">This field is required.</label>
+	              </div>
+	          </div>
+	          <div class="form-group">
+	              <label class="control-label col-lg-2">Finaliza :<span class="text-danger">*</span></label>
+	              <div class="col-lg-10">
+	                  <input type="date" id="pendientes_finaliza" name="pendientes_finaliza" class="form-control" value="{{ evento.f_fin }}" onblur="validarCampos('pendientes','finaliza')">
+	                  <label id="pendientes_finaliza_success" style="display: none" class="validation-error-label validation-valid-label">Success.</label>
+	                  <label id="pendientes_finaliza_error" style="display: none" class="validation-error-label">This field is required.</label>
+	              </div>
+	          </div>
+	          <div class="form-group">
+	              <div class="col-lg-12">
+	                <a type="button" name="f_pendientes" id="f_pendientes" onclick="ValidarFormulario(['finaliza','inicia','detalle','beneficiario'],'pendientes','form_pendientes')" class="btn bg-orange btn-labeled btn-xlg"><b><i class="icon-floppy-disk"></i></b>ACTUALIZAR</a>
+	                <a href="/eliminarEvento/{{ evento.id }}" id="b_pendientes" class="btn bg-danger btn-labeled btn-xlg"><b><i class="icon-bin"></i></b>ELIMINAR</a>
+	              </div>
+	          </div>
+	      </div>
+	    </form>
+	 </div>
+	 <div style="margin-top: 20px">
+		 <form style="display: none" class="form-horizontal form-validate-jquery" id="form_notas" action="{% url 'beneficiarios:guardarNota' %}" method="POST">{% csrf_token %}
+			<fieldset class="content-group">
+				<div class="timeline-row">
+	        <div class="panel panel-flat timeline-content">
+	            <div class="panel-body" style="padding: 40px;">
+								<div class="content">
+									<ul class="media-list chat-list content-group">
+										<input type="hidden" id="pendientes_id" name="pendientes_id" value="{{ evento.id }}"></input>
+										<input type="hidden" id="beneficiario_id" name="beneficiario_id" value="{{ evento.beneficiario.id }}"></input>
+										{% for nota in notas %}
+											<li class="media">
+												<div class="media-left">
+													<img src="{{ url }}{{ operario.foto }}" class="img-circle" alt="">
+												</div>
+												<div class="media-body">
+													<div class="media-content">
+														{{ nota.nota }}
+													</div>
+													<span class="media-annotation display-block mt-10">{{ nota.fecha }} {{ nota.hora }}</span>
+												</div>
+											</li>
+										{% endfor %}
+									</ul>
+	                <textarea id="notas_detalle" name="notas_detalle" style="height: 100px; resize: none" required="required" rows="5" cols="5" maxlength="300" class="form-control" placeholder="Seguimiento del Beneficiario"></textarea>
+	                <div class="text-right" style="margin-top: 30px">
+	                  <a type="button" class="btn bg-primary-800 btn-labeled btn-xlg" onclick="ValidarFormulario(['detalle'],'notas','form_notas')"><b><i class="icon-envelop5"></i></b>ENVIAR</a>
+	                  <a href="{% url 'calendario:calendario' %}" class="btn bg-warning-800 btn-labeled btn-xlg"><b><i class="icon-undo position-right"></i></b>VOLVER</a>
+	                </div>
+	              </div>
+	            </div>
+						</div>
+					</div>
+			</fieldset>
+		 </form>
+	 </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script>
+$( document ).ready(function() {
+	if ("{{ evento.tipo }}" == "TAREAS"){
+   	$("#modal_tareas").show();
+    setEstado("tareas_estado","tareas_Estado","header_tareas","bg-brown","bg-grey-400","f_tareas","b_tareas");
+ 	}
+ 	if ("{{ evento.tipo }}" == "PENDIENTES"){
+	 	$("#modal_pendientes").show();
+		$("#form_notas").show();
+    setEstado("pendientes_estado","pendientes_Estado","header_pendientes","bg-orange","bg-grey-400","f_pendientes","b_pendientes");
+ 	}
+});
+</script>
+<script type="text/javascript" src="{% static 'assets/js/pages/form_validation.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/tags/tokenfield.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/form_tags_input.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery_ui/interactions.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/form_select2.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% include 'reportes/head_reportes.html' %}
+  {% if controles.count <= 0  %}
+    <table style="width:100%;">
+      <tbody>
+        <div style="overflow-x:auto;">
+          <table style="width:100%" class="reporte">
+            <tr>
+              <th></th>
+            </tr>
+            <tr>
+              <div class="sin_datos">
+                <h1>NO EXISTEN REGISTROS DE ESTE BENEFICIARIO</h1>
+              </div>
+            </tr>
+          </table>
+        </div>
+      </tbody>
+    </table>
+  {% endif %}
+  {% if controles.count >= 1  %}
+    <table style="width:100%;">
+      <tbody>
+        <div style="overflow-x:auto;">
+          <table style="width:100%">
+            <tr class="table">
+              <th class="table-header"><strong>Nº ORDEN</strong></th>
+              <th class="table-header"><strong>FECHA</strong></th>
+              <th class="table-header"><strong>EDAD</strong></th>
+              <th class="table-header"><strong>PESO</strong></th>
+              <th class="table-header"><strong>TALLA</strong></th>
+            </tr>
+            {% for control in controles %}
+              <tr>
+                <td class="td_reporte table-content">{{ control.numero_orden }}</td>
+                <td class="td_reporte table-content">{{ control.fecha_control }}</td>
+                <td class="td_reporte table-content">{{ control.edad_anios }} Años {{ control.edad_meses }} Meses </td>
+                <td class="td_reporte table-content {{ control.clase_peso }}">{{ control.peso_kilos }},{{ control.peso_gramos }}</td>
+                <td class="td_reporte table-content {{ control.clase_talla }}">{{ control.talla }} CMS</td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </tbody>
+    </table>
+  {% endif %}
+</body>
+</html>
