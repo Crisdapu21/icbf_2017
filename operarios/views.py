@@ -228,8 +228,14 @@ def eliminarOperario(request, id=None):
       if User.objects.filter(pk=request.user.id, groups__name=GRUPO1).exists():
            usu = User.objects.get(id=id)
            operario = Operario.objects.get(id = id)
-           conn = tinys3.Connection(AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,tls=True)
-           conn.delete(str(operario.foto),AWS_STORAGE_BUCKET_NAME)
+           try:
+             conn = tinys3.Connection(AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_STORAGE_BUCKET_NAME,tls=True)
+             lista = conn.list('media/operarios/'+str(id), AWS_STORAGE_BUCKET_NAME)
+             for fichero in lista:
+               conn.delete(fichero['key'])
+             conn.delete('media/operarios/'+str(id))
+           except OSError as e:
+             print(e)
            operario.delete()
            registrarLogs(request.user.first_name+" "+request.user.last_name,'ELIMINAR','Operarios','Eliminar Operario',usu.first_name + " " + usu.last_name)
            usu.delete()
