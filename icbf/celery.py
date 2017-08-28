@@ -5,15 +5,11 @@ from __future__ import absolute_import, unicode_literals
 from celery import shared_task,Celery,group
 from celery.task import periodic_task
 from celery.schedules import crontab
-from django.contrib.auth.models import User, Group
-from django.template.loader import render_to_string
-from django.db.models import Q
 from calendario.models import Eventos, Notificaciones
 from beneficiarios.models import Notas
 from calendario.views import guardarNotificacion
 from dateutil.relativedelta import relativedelta
-import django.conf as conf
-import os,time,math,smtplib
+import os,time
 import datetime
 from datetime import datetime, timedelta
 
