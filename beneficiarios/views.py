@@ -29,8 +29,8 @@ from calendario.models import Eventos
 from parametrizacion.views import registrarLogs
 from django.db.models import Q
 from dateutil.relativedelta import relativedelta
-from icbf.celery import VacunasTask
 from datetime import datetime, timedelta
+from calendario.tasks import VacunasTask
 import json, os, boto3, tinys3, time, math
 
 ################## LISTADO BENEFICIARIOS ######################
