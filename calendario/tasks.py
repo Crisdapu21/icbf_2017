@@ -10,6 +10,7 @@ from calendario.models import Eventos, Notificaciones
 from beneficiarios.models import Notas
 from calendario.views import guardarNotificacion
 from dateutil.relativedelta import relativedelta
+from django.db.models import Q
 import os,time
 import datetime
 from datetime import datetime, timedelta
