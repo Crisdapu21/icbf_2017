@@ -45,8 +45,17 @@
       margin-left: 25px;
       padding-bottom: 15px;
     }
-
+    canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
 </style>
+{% load static from staticfiles %}
+<script type="text/javascript" src="http://www.chartjs.org/dist/2.6.0/Chart.bundle.js"></script>
+<script type="text/javascript" src="http://www.chartjs.org/samples/latest/utils.js"></script>
+
+
 <div class="content">
   <div class="panel panel-flat">
     <div class="panel-heading">
@@ -183,6 +192,80 @@
                 </tr>
                 </tbody>
               </table>
+							<!--
+							<div class="panel panel-flat">
+								<div class="panel-heading">
+
+									<body>
+										<div>
+												<canvas id="canvas"></canvas>
+										</div>
+										<script>
+										var lineChartData = {
+												labels: ["January", "February", "March", "April", "May", "June", "July"],
+												datasets: [{
+														label: "Promedio",
+														borderColor: window.chartColors.red,
+														backgroundColor: window.chartColors.red,
+														fill: false,
+														data: [0, 10, 5, 2, 20, 30, 45],
+														yAxisID: "y-axis-1",
+												}, {
+														label: "Beneficiario",
+														borderColor: window.chartColors.green,
+														backgroundColor: window.chartColors.green,
+														fill: false,
+														data: [
+																randomScalingFactor(),
+																randomScalingFactor(),
+																randomScalingFactor(),
+																randomScalingFactor(),
+																randomScalingFactor(),
+																randomScalingFactor(),
+																randomScalingFactor()
+														],
+														yAxisID: "y-axis-2"
+												}]
+										};
+
+										window.onload = function() {
+												var ctx = document.getElementById("canvas").getContext("2d");
+												window.myLine = Chart.Line(ctx, {
+														data: lineChartData,
+														options: {
+																responsive: true,
+																hoverMode: 'index',
+																stacked: false,
+																title:{
+																		display: true,
+																		text:'VARIACIÓN DEL PESO'
+																},
+																scales: {
+																		yAxes: [{
+																				type: "linear", // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+																				display: true,
+																				position: "left",
+																				id: "y-axis-1",
+																		}, {
+																				type: "linear", // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+																				display: true,
+																				position: "right",
+																				id: "y-axis-2",
+
+																				// grid line settings
+																				gridLines: {
+																						drawOnChartArea: false, // only want the grid lines for one axis to show up
+																				},
+																		}],
+																}
+														}
+												});
+										};
+
+										</script>
+									</body>-->
+								</div>
+							</div>
             </div>
           </fieldset>
         </form>

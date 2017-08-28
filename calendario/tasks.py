@@ -144,8 +144,7 @@ def alertaVacuna(beneficiario,uds,detalle,inicia,finaliza):
     e.allday = "True"
     e.save()
     n = Notas()
-    nota = "Añadir Evento "+detalle+" a Calendario."
-    n.nota = nota.encode('ascii', 'ignore')
+    n.nota = "Añadir Evento "+detalle+" a Calendario."
     n.uds = uds
     n.beneficiario_id = beneficiario
     n.save()

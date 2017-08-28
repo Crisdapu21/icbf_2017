@@ -175,7 +175,7 @@ def guardarMedidasAntropometricas(request):
 
         e = Beneficiario.objects.get(id=request.POST['e_ben'])
         registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Nutrición','Guardar Medidas Antropometricas',e.primer_nombre+" "+e.segundo_nombre+" "+e.primer_apellido+" "+e.segundo_apellido)
-        peso_talla_Ideal(c.id,e.genero,e.edad, c.peso_kilos, c.peso_gramos, c.talla)
+        peso_talla_Ideal(c.id,e.genero,e.edad_anios,c.peso_kilos,c.peso_gramos,c.talla)
         messages.success(request, 'Guardado')
         return HttpResponseRedirect('/beneficiarios/medidas_antropometricas/'+request.POST['e_ben'])
     else:
@@ -242,13 +242,17 @@ def asignarClase(id,pesoK,p_IdealK,pesoG,p_IdealG,talla,t_Ideal,clase):
     c_talla = ""
     c_peso = ""
 
-    if pesoK <= p_IdealK:
-        if pesoG < p_IdealG:
-            c_peso = clase
+    if pesoK < p_IdealK:
+        c_peso = clase
 
-    if pesoK >= p_IdealK:
-        if pesoG > p_IdealG:
-            c_peso = clase
+    if pesoG < p_IdealG:
+        c_peso = clase
+
+    if pesoK > p_IdealK:
+        c_peso = clase
+
+    if pesoG > p_IdealG:
+        c_peso = clase
 
     if talla < t_Ideal:
         c_talla = clase
