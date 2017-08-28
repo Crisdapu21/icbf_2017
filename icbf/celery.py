@@ -16,11 +16,11 @@ app.conf.update(
     CELERYBEAT_SCHEDULE={
         'alertarFechaEventos': {
             'task': 'alertarFecha',
-            'schedule': timedelta(seconds=25),
+            'schedule': timedelta(seconds=20),
         },
         'actualizarFechaEventos': {
             'task': 'actualizarFecha',
-            'schedule': timedelta(minutes=1, seconds = 15),
+            'schedule': timedelta(minutes=1, seconds = 30),
         },
     },
 )

@@ -69,8 +69,7 @@ function mensagesInfo(titulo,campo,texto,clase){
 
 
 function Notificaciones(){
-  setInterval(Notificaciones, 10000);
-  //setInterval(Notificaciones, 30000);
+  setInterval(Notificaciones, 30000);
   function Notificaciones(){
     $.ajax({
        type:'GET',
