@@ -11,7 +11,6 @@ from django.db.models import Q
 from calendario.models import Eventos, Notificaciones
 from beneficiarios.models import Notas
 from calendario.views import guardarNotificacion
-from django.conf import settings
 from dateutil.relativedelta import relativedelta
 import django.conf as conf
 import os,time,math,smtplib
@@ -19,7 +18,7 @@ import datetime
 from datetime import datetime, timedelta
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'remax.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'icbf.settings')
 CELERY_ACCEPT_CONTENT = ['json']
 app = Celery('CeleryApp')
 app.conf.update(
