@@ -19,7 +19,7 @@ from parametrizacion.views import registrarLogs
 from parametrizacion.models import  Paises,Departamentos,Ciudades
 from nutricion.models import *
 from beneficiarios.models import Beneficiario
-import json, os
+import json,os,math
 
 ################## FUNCION GUARDAR O ACTUALIZAR NUTRICION ######################
 
@@ -151,8 +151,52 @@ def guardarNutricion(request):
 @login_required(login_url="login:login")
 def medidasAntropometricas(request, id=None):
     beneficiario = Beneficiario.objects.get(id = id)
-    controles = Controles.objects.filter(beneficiario=id).order_by("fecha_control")[::-1]
-    return render(request,'nutricion/agregar_medidas.html',{'controles': controles, 'beneficiario': beneficiario })
+    controles = Controles.objects.filter(beneficiario=id).order_by("edad_anios").order_by("edad_meses")
+    cantidad = Controles.objects.filter(beneficiario=id).count()
+    edades = []
+    pesos = []
+    labels = []
+    for e in controles:
+        edad = e.edad_anios+"."+e.edad_meses
+        peso = e.peso_kilos+"."+e.peso_gramos
+        edades.append(edad)
+        pesos.append(float(peso))
+    if len(pesos)>0:
+        peso = int(math.ceil(max(pesos)))
+    else:
+        peso = 0
+    if len(edades)>0:
+        edad = max(edades)
+    else:
+        edad = 0
+
+    if edad == '0.0':
+        labels = ['Recien Nacido']
+    if edad == '0.1':
+        labels = ['Recien Nacido','1 Mes']
+    if edad == '0.2':
+        labels = ['Recien Nacido','1 Mes','2 Meses']
+    if edad == '0.3':
+        labels = ['Recien Nacido','1 Mes','2 Meses','3 Meses']
+    if edad == '0.4':
+        labels = ['Recien Nacido','1 Mes','2 Meses','3 Meses','4 Meses']
+    if edad == '0.5':
+        labels = ['Recien Nacido','1 Mes','2 Meses','3 Meses','4 Meses','5 Meses']
+    if edad == '0.6':
+        labels = ['Recien Nacido','1 Mes','2 Meses','3 Meses','4 Meses','5 Meses','6 Meses']
+    if edad == '0.7':
+        labels = ['Recien Nacido','1 Mes','2 Meses','3 Meses','4 Meses','5 Meses','6 Meses','7 Meses']
+    if edad == '0.8':
+        labels = ['Recien Nacido','1 Mes','2 Meses','3 Meses','4 Meses','5 Meses','6 Meses','7 Meses','8 Meses']
+    if edad == '0.9':
+        labels = ['Recien Nacido','1 Mes','2 Meses','3 Meses','4 Meses','5 Meses','6 Meses','7 Meses','8 Meses','9 Meses']
+    if edad == '0.10':
+        labels = ['Recien Nacido','1 Mes','2 Meses','3 Meses','4 Meses','5 Meses','6 Meses','7 Meses','8 Meses','9 Meses','10 Meses']
+    if edad == '0.11':
+        labels = ['Recien Nacido','1 Mes','2 Meses','3 Meses','4 Meses','5 Meses','6 Meses','7 Meses','8 Meses','9 Meses','10 Meses','11 Meses']
+
+    label = ','.join(labels)
+    return render(request,'nutricion/agregar_medidas.html',{'controles':controles,'beneficiario':beneficiario,'label':label,'peso':peso, 'cantidad': cantidad })
 
 ################## FUNCION GUARDAR MEDIDAS ANTROPOMETRICAS ######################
 
@@ -175,19 +219,994 @@ def guardarMedidasAntropometricas(request):
 
         e = Beneficiario.objects.get(id=request.POST['e_ben'])
         registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Nutrición','Guardar Medidas Antropometricas',e.primer_nombre+" "+e.segundo_nombre+" "+e.primer_apellido+" "+e.segundo_apellido)
-        peso_talla_Ideal(c.id,e.genero,e.edad_anios,c.peso_kilos,c.peso_gramos,c.talla)
+        peso_talla_Ideal(c.id,e.genero,c.edad_anios,c.edad_meses,c.peso_kilos,c.peso_gramos,c.talla)
         messages.success(request, 'Guardado')
         return HttpResponseRedirect('/beneficiarios/medidas_antropometricas/'+request.POST['e_ben'])
     else:
         return HttpResponseRedirect("/")
 
-def peso_talla_Ideal(id,genero,edad,pesoK,pesoG,talla):
-    edad = int(edad)
+def peso_talla_Ideal(id,genero,edad_anios,edad_meses,pesoK,pesoG,talla):
+    edad_anios = int(edad_anios)
+    edad_meses = int(edad_meses)
     if genero == "M":
-        if edad <= 1:
-            p_IdealK = "10"
-            p_IdealG = "2"
-            t_Ideal = "76"
+        if edad_anios <= 1:
+            if edad_meses == 0:
+                p_SobrepesoK = ""
+                p_SobrepesoG = ""
+                p_ObesoK = ""
+                p_ObesoG = ""
+                p_IdealK = ""
+                p_IdealG = ""
+                p_BajoPesoK = ""
+                p_BajoPesoG = ""
+                p_BajoPesoSeveroK = ""
+                p_BajoPesoSeveroG = ""
+            if edad_meses == 1:
+                p_SobrepesoK = ""
+                p_SobrepesoG = ""
+                p_ObesoK = ""
+                p_ObesoG = ""
+                p_IdealK = ""
+                p_IdealG = ""
+                p_BajoPesoK = ""
+                p_BajoPesoG = ""
+                p_BajoPesoSeveroK = ""
+                p_BajoPesoSeveroG = ""
+            if edad_meses == 2:
+                p_SobrepesoK = ""
+                p_SobrepesoG = ""
+                p_ObesoK = ""
+                p_ObesoG = ""
+                p_IdealK = ""
+                p_IdealG = ""
+                p_BajoPesoK = ""
+                p_BajoPesoG = ""
+                p_BajoPesoSeveroK = ""
+                p_BajoPesoSeveroG = ""
+            if edad_meses == 3:
+                p_SobrepesoK = ""
+                p_SobrepesoG = ""
+                p_ObesoK = ""
+                p_ObesoG = ""
+                p_IdealK = ""
+                p_IdealG = ""
+                p_BajoPesoK = ""
+                p_BajoPesoG = ""
+                p_BajoPesoSeveroK = ""
+                p_BajoPesoSeveroG = ""
+            if edad_meses == 4:
+                p_SobrepesoK = ""
+                p_SobrepesoG = ""
+                p_ObesoK = ""
+                p_ObesoG = ""
+                p_IdealK = ""
+                p_IdealG = ""
+                p_BajoPesoK = ""
+                p_BajoPesoG = ""
+                p_BajoPesoSeveroK = ""
+                p_BajoPesoSeveroG = ""
+            if edad_meses == 5:
+                p_SobrepesoK = ""
+                p_SobrepesoG = ""
+                p_ObesoK = ""
+                p_ObesoG = ""
+                p_IdealK = ""
+                p_IdealG = ""
+                p_BajoPesoK = ""
+                p_BajoPesoG = ""
+                p_BajoPesoSeveroK = ""
+                p_BajoPesoSeveroG = ""
+            if edad_meses == 6:
+                p_SobrepesoK = ""
+                p_SobrepesoG = ""
+                p_ObesoK = ""
+                p_ObesoG = ""
+                p_IdealK = ""
+                p_IdealG = ""
+                p_BajoPesoK = ""
+                p_BajoPesoG = ""
+                p_BajoPesoSeveroK = ""
+                p_BajoPesoSeveroG = ""
+            if edad_meses == 7:
+                p_SobrepesoK = ""
+                p_SobrepesoG = ""
+                p_ObesoK = ""
+                p_ObesoG = ""
+                p_IdealK = ""
+                p_IdealG = ""
+                p_BajoPesoK = ""
+                p_BajoPesoG = ""
+                p_BajoPesoSeveroK = ""
+                p_BajoPesoSeveroG = ""
+            if edad_meses == 8:
+                p_SobrepesoK = ""
+                p_SobrepesoG = ""
+                p_ObesoK = ""
+                p_ObesoG = ""
+                p_IdealK = ""
+                p_IdealG = ""
+                p_BajoPesoK = ""
+                p_BajoPesoG = ""
+                p_BajoPesoSeveroK = ""
+                p_BajoPesoSeveroG = ""
+            if edad_meses == 9:
+                p_SobrepesoK = ""
+                p_SobrepesoG = ""
+                p_ObesoK = ""
+                p_ObesoG = ""
+                p_IdealK = ""
+                p_IdealG = ""
+                p_BajoPesoK = ""
+                p_BajoPesoG = ""
+                p_BajoPesoSeveroK = ""
+                p_BajoPesoSeveroG = ""
+            if  edad_meses == 10:
+                p_SobrepesoK = ""
+                p_SobrepesoG = ""
+                p_ObesoK = ""
+                p_ObesoG = ""
+                p_IdealK = ""
+                p_IdealG = ""
+                p_BajoPesoK = ""
+                p_BajoPesoG = ""
+                p_BajoPesoSeveroK = ""
+                p_BajoPesoSeveroG = ""
+            if edad_meses == 11:
+                p_SobrepesoK = ""
+                p_SobrepesoG = ""
+                p_ObesoK = ""
+                p_ObesoG = ""
+                p_IdealK = ""
+                p_IdealG = ""
+                p_BajoPesoK = ""
+                p_BajoPesoG = ""
+                p_BajoPesoSeveroK = ""
+                p_BajoPesoSeveroG = ""
+            if edad_anios == 1:
+                p_SobrepesoK = ""
+                p_SobrepesoG = ""
+                p_ObesoK = ""
+                p_ObesoG = ""
+                p_IdealK = ""
+                p_IdealG = ""
+                p_BajoPesoK = ""
+                p_BajoPesoG = ""
+                p_BajoPesoSeveroK = ""
+                p_BajoPesoSeveroG = ""
+    else:
+        if edad_anios < 1:
+            if edad_meses == 0:
+                p_SobrepesoK = "4"
+                p_SobrepesoG = "900"
+                p_ObesoK = "4"
+                p_ObesoG = "200"
+                p_IdealK = "3"
+                p_IdealG = "100"
+                p_BajoPesoK = "2"
+                p_BajoPesoG = "300"
+                p_BajoPesoSeveroK = "2"
+                p_BajoPesoSeveroG = "0"
+            if edad_meses == 1:
+                p_SobrepesoK = "6"
+                p_SobrepesoG = "0"
+                p_ObesoK = "5"
+                p_ObesoG = "300"
+                p_IdealK = "4"
+                p_IdealG = "0"
+                p_BajoPesoK = "3"
+                p_BajoPesoG = "100"
+                p_BajoPesoSeveroK = "2"
+                p_BajoPesoSeveroG = "800"
+            if edad_meses == 2:
+                p_SobrepesoK = "7"
+                p_SobrepesoG = "500"
+                p_ObesoK = "6"
+                p_ObesoG = "700"
+                p_IdealK = "5"
+                p_IdealG = "0"
+                p_BajoPesoK = "4"
+                p_BajoPesoG = "0"
+                p_BajoPesoSeveroK = "3"
+                p_BajoPesoSeveroG = "500"
+            if edad_meses == 3:
+                p_SobrepesoK = "8"
+                p_SobrepesoG = "500"
+                p_ObesoK = "7"
+                p_ObesoG = "600"
+                p_IdealK = "6"
+                p_IdealG = "0"
+                p_BajoPesoK = "4"
+                p_BajoPesoG = "600"
+                p_BajoPesoSeveroK = "4"
+                p_BajoPesoSeveroG = "0"
+            if edad_meses == 4:
+                p_SobrepesoK = "9"
+                p_SobrepesoG = "200"
+                p_ObesoK = "8"
+                p_ObesoG = "100"
+                p_IdealK = "6"
+                p_IdealG = "300"
+                p_BajoPesoK = "5"
+                p_BajoPesoG = "0"
+                p_BajoPesoSeveroK = "4"
+                p_BajoPesoSeveroG = "400"
+            if edad_meses == 5:
+                p_SobrepesoK = "10"
+                p_SobrepesoG = "0"
+                p_ObesoK = "8"
+                p_ObesoG = "900"
+                p_IdealK = "7"
+                p_IdealG = "0"
+                p_BajoPesoK = "5"
+                p_BajoPesoG = "400"
+                p_BajoPesoSeveroK = "4"
+                p_BajoPesoSeveroG = "800"
+            if edad_meses == 6:
+                p_SobrepesoK = "10"
+                p_SobrepesoG = "700"
+                p_ObesoK = "9"
+                p_ObesoG = "300"
+                p_IdealK = "7"
+                p_IdealG = "200"
+                p_BajoPesoK = "5"
+                p_BajoPesoG = "800"
+                p_BajoPesoSeveroK = "5"
+                p_BajoPesoSeveroG = "0"
+            if edad_meses == 7:
+                p_SobrepesoK = "11"
+                p_SobrepesoG = "0"
+                p_ObesoK = "9"
+                p_ObesoG = "900"
+                p_IdealK = "7"
+                p_IdealG = "800"
+                p_BajoPesoK = "6"
+                p_BajoPesoG = "0"
+                p_BajoPesoSeveroK = "5"
+                p_BajoPesoSeveroG = "300"
+            if edad_meses == 8:
+                p_SobrepesoK = "11"
+                p_SobrepesoG = "600"
+                p_ObesoK = "10"
+                p_ObesoG = "100"
+                p_IdealK = "8"
+                p_IdealG = "0"
+                p_BajoPesoK = "8"
+                p_BajoPesoG = "200"
+                p_BajoPesoSeveroK = "5"
+                p_BajoPesoSeveroG = "600"
+            if edad_meses == 9:
+                p_SobrepesoK = "12"
+                p_SobrepesoG = "0"
+                p_ObesoK = "10"
+                p_ObesoG = "500"
+                p_IdealK = "8"
+                p_IdealG = "100"
+                p_BajoPesoK = "6"
+                p_BajoPesoG = "500"
+                p_BajoPesoSeveroK = "5"
+                p_BajoPesoSeveroG = "800"
+            if  edad_meses == 10:
+                p_SobrepesoK = "12"
+                p_SobrepesoG = "400"
+                p_ObesoK = "10"
+                p_ObesoG = "900"
+                p_IdealK = "8"
+                p_IdealG = "500"
+                p_BajoPesoK = "6"
+                p_BajoPesoG = "700"
+                p_BajoPesoSeveroK = "6"
+                p_BajoPesoSeveroG = "0"
+            if edad_meses == 11:
+                p_SobrepesoK = "12"
+                p_SobrepesoG = "800"
+                p_ObesoK = "11"
+                p_ObesoG = "200"
+                p_IdealK = "8"
+                p_IdealG = "800"
+                p_BajoPesoK = "6"
+                p_BajoPesoG = "900"
+                p_BajoPesoSeveroK = "6"
+                p_BajoPesoSeveroG = "100"
+        if edad_anios == 1:
+            if edad_meses == 0:
+                p_SobrepesoK = "13"
+                p_SobrepesoG = "100"
+                p_ObesoK = "11"
+                p_ObesoG = "500"
+                p_IdealK = "9"
+                p_IdealG = "0"
+                p_BajoPesoK = "7"
+                p_BajoPesoG = "0"
+                p_BajoPesoSeveroK = "6"
+                p_BajoPesoSeveroG = "300"
+        	if edad_meses == 1:
+        		p_SobrepesoK = "13"
+        		p_SobrepesoG = "500"
+        		p_ObesoK = "11"
+        		p_ObesoG = "900"
+        		p_IdealK = "9"
+        		p_IdealG = "200"
+        		p_BajoPesoK = "7"
+        		p_BajoPesoG = "200"
+        		p_BajoPesoSeveroK = "6"
+        		p_BajoPesoSeveroG = "500"
+        	if edad_meses == 2:
+        		p_SobrepesoK = "13"
+        		p_SobrepesoG = "900"
+        		p_ObesoK = "12"
+        		p_ObesoG = "100"
+        		p_IdealK = "9"
+        		p_IdealG = "300"
+        		p_BajoPesoK = "7"
+        		p_BajoPesoG = "300"
+        		p_BajoPesoSeveroK = "6"
+        		p_BajoPesoSeveroG = "800"
+        	if edad_meses == 3:
+        		p_SobrepesoK = "14"
+        		p_SobrepesoG = "100"
+        		p_ObesoK = "12"
+        		p_ObesoG = "200"
+        		p_IdealK = "9"
+        		p_IdealG = "700"
+        		p_BajoPesoK = "7"
+        		p_BajoPesoG = "600"
+        		p_BajoPesoSeveroK = "6"
+        		p_BajoPesoSeveroG = "800"
+        	if edad_meses == 4:
+        		p_SobrepesoK = "14"
+        		p_SobrepesoG = "500"
+        		p_ObesoK = "12"
+        		p_ObesoG = "800"
+        		p_IdealK = "9"
+        		p_IdealG = "900"
+        		p_BajoPesoK = "7"
+        		p_BajoPesoG = "800"
+        		p_BajoPesoSeveroK = "6"
+        		p_BajoPesoSeveroG = "900"
+        	if edad_meses == 5:
+        		p_SobrepesoK = "14"
+        		p_SobrepesoG = "800"
+        		p_ObesoK = "13"
+        		p_ObesoG = "0"
+        		p_IdealK = "10"
+        		p_IdealG = "0"
+        		p_BajoPesoK = "7"
+        		p_BajoPesoG = "900"
+        		p_BajoPesoSeveroK = "7"
+        		p_BajoPesoSeveroG = "0"
+        	if edad_meses == 6:
+        		p_SobrepesoK = "15"
+        		p_SobrepesoG = "0"
+        		p_ObesoK = "13"
+        		p_ObesoG = "100"
+        		p_IdealK = "10"
+        		p_IdealG = "200"
+        		p_BajoPesoK = "8"
+        		p_BajoPesoG = "0"
+        		p_BajoPesoSeveroK = "7"
+        		p_BajoPesoSeveroG = "200"
+        	if edad_meses == 7:
+        		p_SobrepesoK = "15"
+        		p_SobrepesoG = "500"
+        		p_ObesoK = "13"
+        		p_ObesoG = "500"
+        		p_IdealK = "10"
+        		p_IdealG = "500"
+        		p_BajoPesoK = "8"
+        		p_BajoPesoG = "200"
+        		p_BajoPesoSeveroK = "7"
+        		p_BajoPesoSeveroG = "300"
+        	if edad_meses == 8:
+        		p_SobrepesoK = "15"
+        		p_SobrepesoG = "800"
+        		p_ObesoK = "13"
+        		p_ObesoG = "800"
+        		p_IdealK = "10"
+        		p_IdealG = "800"
+        		p_BajoPesoK = "8"
+        		p_BajoPesoG = "400"
+        		p_BajoPesoSeveroK = "7"
+        		p_BajoPesoSeveroG = "500"
+        	if edad_meses == 9:
+        		p_SobrepesoK = "16"
+        		p_SobrepesoG = "0"
+        		p_ObesoK = "14"
+        		p_ObesoG = "0"
+        		p_IdealK = "10"
+        		p_IdealG = "900"
+        		p_BajoPesoK = "8"
+        		p_BajoPesoG = "600"
+        		p_BajoPesoSeveroK = "7"
+        		p_BajoPesoSeveroG = "700"
+        	if  edad_meses == 10:
+        		p_SobrepesoK = "16"
+        		p_SobrepesoG = "300"
+        		p_ObesoK = "14"
+        		p_ObesoG = "200"
+        		p_IdealK = "11"
+        		p_IdealG = "0"
+        		p_BajoPesoK = "8"
+        		p_BajoPesoG = "800"
+        		p_BajoPesoSeveroK = "7"
+        		p_BajoPesoSeveroG = "900"
+        	if edad_meses == 11:
+        		p_SobrepesoK = "16"
+        		p_SobrepesoG = "800"
+        		p_ObesoK = "14"
+        		p_ObesoG = "600"
+        		p_IdealK = "11"
+        		p_IdealG = "200"
+        		p_BajoPesoK = "8"
+        		p_BajoPesoG = "900"
+        		p_BajoPesoSeveroK = "8"
+        		p_BajoPesoSeveroG = "0"
+        if edad_anios == 2:
+            if edad_meses == 0:
+        		p_SobrepesoK = "17"
+        		p_SobrepesoG = "0"
+        		p_ObesoK = "14"
+        		p_ObesoG = "900"
+        		p_IdealK = "11"
+        		p_IdealG = "400"
+        		p_BajoPesoK = "9"
+        		p_BajoPesoG = "0"
+        		p_BajoPesoSeveroK = "8"
+        		p_BajoPesoSeveroG = "0"
+            if edad_meses == 1:
+                p_SobrepesoK = "17"
+                p_SobrepesoG = "200"
+                p_ObesoK = "15"
+                p_ObesoG = "100"
+                p_IdealK = "10"
+                p_IdealG = "800"
+                p_BajoPesoK = "9"
+                p_BajoPesoG = "200"
+                p_BajoPesoSeveroK = "8"
+                p_BajoPesoSeveroG = "200"
+            if edad_meses == 2:
+                p_SobrepesoK = "17"
+                p_SobrepesoG = "700"
+                p_ObesoK = "15"
+                p_ObesoG = "400"
+                p_IdealK = "12"
+                p_IdealG = "0"
+                p_BajoPesoK = "9"
+                p_BajoPesoG = "300"
+                p_BajoPesoSeveroK = "8"
+                p_BajoPesoSeveroG = "300"
+            if edad_meses == 3:
+                p_SobrepesoK = "18"
+                p_SobrepesoG = "0"
+                p_ObesoK = "15"
+                p_ObesoG = "800"
+                p_IdealK = "12"
+                p_IdealG = "100"
+                p_BajoPesoK = "9"
+                p_BajoPesoG = "500"
+                p_BajoPesoSeveroK = "8"
+                p_BajoPesoSeveroG = "500"
+            if edad_meses == 4:
+                p_SobrepesoK = "18"
+                p_SobrepesoG = "200"
+                p_ObesoK = "16"
+                p_ObesoG = "0"
+                p_IdealK = "12"
+                p_IdealG = "200"
+                p_BajoPesoK = "9"
+                p_BajoPesoG = "800"
+                p_BajoPesoSeveroK = "8"
+                p_BajoPesoSeveroG = "700"
+            if edad_meses == 5:
+                p_SobrepesoK = "18"
+                p_SobrepesoG = "800"
+                p_ObesoK = "16"
+                p_ObesoG = "500"
+                p_IdealK = "40"
+                p_IdealG = "0"
+                p_BajoPesoK = "10"
+                p_BajoPesoG = "200"
+                p_BajoPesoSeveroK = "9"
+                p_BajoPesoSeveroG = "200"
+            if edad_meses == 6:
+                p_SobrepesoK = "19"
+                p_SobrepesoG = "0"
+                p_ObesoK = "16"
+                p_ObesoG = "900"
+                p_IdealK = "13"
+                p_IdealG = "200"
+                p_BajoPesoK = "10"
+                p_BajoPesoG = "500"
+                p_BajoPesoSeveroK = "9"
+                p_BajoPesoSeveroG = "300"
+            if edad_meses == 7:
+                p_SobrepesoK = "19"
+                p_SobrepesoG = "200"
+                p_ObesoK = "17"
+                p_ObesoG = "100"
+                p_IdealK = "13"
+                p_IdealG = "500"
+                p_BajoPesoK = "10"
+                p_BajoPesoG = "800"
+                p_BajoPesoSeveroK = "9"
+                p_BajoPesoSeveroG = "500"
+            if edad_meses == 8:
+                p_SobrepesoK = "19"
+                p_SobrepesoG = "700"
+                p_ObesoK = "17"
+                p_ObesoG = "200"
+                p_IdealK = "13"
+                p_IdealG = "800"
+                p_BajoPesoK = "10"
+                p_BajoPesoG = "900"
+                p_BajoPesoSeveroK = "9"
+                p_BajoPesoSeveroG = "600"
+            if edad_meses == 9:
+                p_SobrepesoK = "19"
+                p_SobrepesoG = "900"
+                p_ObesoK = "17"
+                p_ObesoG = "600"
+                p_IdealK = "13"
+                p_IdealG = "900"
+                p_BajoPesoK = "10"
+                p_BajoPesoG = "900"
+                p_BajoPesoSeveroK = "9"
+                p_BajoPesoSeveroG = "800"
+            if edad_meses == 10:
+                p_SobrepesoK = "20"
+                p_SobrepesoG = "100"
+                p_ObesoK = "19"
+                p_ObesoG = "900"
+                p_IdealK = "14"
+                p_IdealG = "0"
+                p_BajoPesoK = "11"
+                p_BajoPesoG = "0"
+                p_BajoPesoSeveroK = "9"
+                p_BajoPesoSeveroG = "900"
+            if edad_meses == 11:
+                p_SobrepesoK = "20"
+                p_SobrepesoG = "400"
+                p_ObesoK = "18"
+                p_ObesoG = "0"
+                p_IdealK = "14"
+                p_IdealG = "100"
+                p_BajoPesoK = "11"
+                p_BajoPesoG = "100"
+                p_BajoPesoSeveroK = "10"
+                p_BajoPesoSeveroG = "0"
+    t_Ideal = "105"
+    asignarClase(id,pesoK,p_IdealK,pesoG,p_IdealG,talla,t_Ideal,'fuera_rango')
+    c = Controles.objects.get(id=id)
+    c.peso_idealK = p_IdealK
+    c.peso_idealG = p_IdealG
+    c.peso_SobrepesoK = p_SobrepesoK
+    c.peso_SobrepesoG = p_SobrepesoG
+    c.peso_ObesoK = p_ObesoK
+    c.peso_ObesoG = p_ObesoG
+    c.peso_BajoPesoK = p_BajoPesoK
+    c.peso_BajoPesoG = p_BajoPesoG
+    c.peso_BajoPesoSeveroK = p_BajoPesoSeveroK
+    c.peso_BajoPesoSeveroG = p_BajoPesoSeveroG
+    c.talla_ideal = 77
+    c.save()
+
+
+"""
+
+        	if edad_meses == 1:
+        		p_SobrepesoK = "17"
+        		p_SobrepesoG = "200"
+        		p_ObesoK = "15"
+        		p_ObesoG = "100"
+        		p_IdealK = "13"
+        		p_IdealG = "800"
+        		p_BajoPesoK = "9"
+        		p_BajoPesoG = "100"
+        		p_BajoPesoSeveroK = "8"
+        		p_BajoPesoSeveroG = "100"
+        	if edad_meses == 2:
+        		p_SobrepesoK = "17"
+        		p_SobrepesoG = "80"
+        		p_ObesoK = "15"
+        		p_ObesoG = "50"
+        		p_IdealK = "11"
+        		p_IdealG = "99"
+        		p_BajoPesoK = "9"
+        		p_BajoPesoG = "20"
+        		p_BajoPesoSeveroK = "8"
+        		p_BajoPesoSeveroG = "20"
+        	if edad_meses == 3:
+        		p_SobrepesoK = "18"
+        		p_SobrepesoG = "00"
+        		p_ObesoK = "15"
+        		p_ObesoG = "90"
+        		p_IdealK = "12"
+        		p_IdealG = "10"
+        		p_BajoPesoK = "9"
+        		p_BajoPesoG = "60"
+        		p_BajoPesoSeveroK = "8"
+        		p_BajoPesoSeveroG = "60"
+        	if edad_meses == 4:
+        		p_SobrepesoK = "18"
+        		p_SobrepesoG = "20"
+        		p_ObesoK = "16"
+        		p_ObesoG = "00"
+        		p_IdealK = "12"
+        		p_IdealG = "20"
+        		p_BajoPesoK = "9"
+        		p_BajoPesoG = "80"
+        		p_BajoPesoSeveroK = "8"
+        		p_BajoPesoSeveroG = "75"
+        	if edad_meses == 5:
+        		p_SobrepesoK = "18"
+        		p_SobrepesoG = "80"
+        		p_ObesoK = "16"
+        		p_ObesoG = "10"
+        		p_IdealK = "12"
+        		p_IdealG = "60"
+        		p_BajoPesoK = "9"
+        		p_BajoPesoG = "90"
+        		p_BajoPesoSeveroK = "8"
+        		p_BajoPesoSeveroG = "85"
+        	if edad_meses == 6:
+        		p_SobrepesoK = "19"
+        		p_SobrepesoG = "00"
+        		p_ObesoK = "16"
+        		p_ObesoG = "60"
+        		p_IdealK = "12"
+        		p_IdealG = "98"
+        		p_BajoPesoK = "10"
+        		p_BajoPesoG = "00"
+        		p_BajoPesoSeveroK = "8"
+        		p_BajoPesoSeveroG = "98"
+        	if edad_meses == 7:
+        		p_SobrepesoK = "19"
+        		p_SobrepesoG = "20"
+        		p_ObesoK = "16"
+        		p_ObesoG = "97"
+        		p_IdealK = "12"
+        		p_IdealG = "99"
+        		p_BajoPesoK = "10"
+        		p_BajoPesoG = "10"
+        		p_BajoPesoSeveroK = "9"
+        		p_BajoPesoSeveroG = "00"
+        	if edad_meses == 8:
+        		p_SobrepesoK = "19"
+        		p_SobrepesoG = "80"
+        		p_ObesoK = "17"
+        		p_ObesoG = "00"
+        		p_IdealK = "13"
+        		p_IdealG = "10"
+        		p_BajoPesoK = "10"
+        		p_BajoPesoG = "20"
+        		p_BajoPesoSeveroK = "9"
+        		p_BajoPesoSeveroG = "10"
+        	if edad_meses == 9:
+        		p_SobrepesoK = "20"
+        		p_SobrepesoG = "00"
+        		p_ObesoK = "17"
+        		p_ObesoG = "20"
+        		p_IdealK = "13"
+        		p_IdealG = "20"
+        		p_BajoPesoK = "10"
+        		p_BajoPesoG = "50"
+        		p_BajoPesoSeveroK = "9"
+        		p_BajoPesoSeveroG = "10"
+        	if edad_meses == 10:
+        		p_SobrepesoK = "20"
+        		p_SobrepesoG = "10"
+        		p_ObesoK = "17"
+        		p_ObesoG = "80"
+        		p_IdealK = "15"
+        		p_IdealG = "50"
+        		p_BajoPesoK = "10"
+        		p_BajoPesoG = "60"
+        		p_BajoPesoSeveroK = "9"
+        		p_BajoPesoSeveroG = "20"
+        	if  edad_meses == 11:
+        		p_SobrepesoK = "20"
+        		p_SobrepesoG = "80"
+        		p_ObesoK = "17"
+        		p_ObesoG = "98"
+        		p_IdealK = "15"
+        		p_IdealG = "90"
+        		p_BajoPesoK = "10"
+        		p_BajoPesoG = "90"
+        		p_BajoPesoSeveroK = "9"
+        		p_BajoPesoSeveroG = "20"
+
+if edad_anios == :
+	if edad_meses == 1:
+		p_SobrepesoK = "21"
+		p_SobrepesoG = "10"
+		p_ObesoK = "18"
+		p_ObesoG = "50"
+		p_IdealK = "14"
+		p_IdealG = "00"
+		p_BajoPesoK = "11"
+		p_BajoPesoG = "00"
+		p_BajoPesoSeveroK = "9"
+		p_BajoPesoSeveroG = "90"
+
+	if edad_meses == 2:
+		p_SobrepesoK = "21"
+		p_SobrepesoG = "80"
+		p_ObesoK = "18"
+		p_ObesoG = "90"
+		p_IdealK = "14"
+		p_IdealG = "10"
+		p_BajoPesoK = "11"
+		p_BajoPesoG = "00"
+		p_BajoPesoSeveroK = "9"
+		p_BajoPesoSeveroG = "98"
+
+	if edad_meses == 3:
+		p_SobrepesoK = "22"
+		p_SobrepesoG = "00"
+		p_ObesoK = "19"
+		p_ObesoG = "00"
+		p_IdealK = "14"
+		p_IdealG = "50"
+		p_BajoPesoK = "11"
+		p_BajoPesoG = "00"
+		p_BajoPesoSeveroK = "10"
+		p_BajoPesoSeveroG = "00"
+
+	if edad_meses == 4:
+		p_SobrepesoK = "22"
+		p_SobrepesoG = "10"
+		p_ObesoK = "19"
+		p_ObesoG = "10"
+		p_IdealK = "14"
+		p_IdealG = "80"
+		p_BajoPesoK = "11"
+		p_BajoPesoG = "10"
+		p_BajoPesoSeveroK = "10"
+		p_BajoPesoSeveroG = "05"
+
+	if edad_meses == 5:
+		p_SobrepesoK = "22"
+		p_SobrepesoG = "90"
+		p_ObesoK = "18"
+		p_ObesoG = "80"
+		p_IdealK = "14"
+		p_IdealG = "90"
+		p_BajoPesoK = "11"
+		p_BajoPesoG = "50"
+		p_BajoPesoSeveroK = "10"
+		p_BajoPesoSeveroG = "10"
+
+	if edad_meses == 6:
+		p_SobrepesoK = "23"
+		p_SobrepesoG = "00"
+		p_ObesoK = "19"
+		p_ObesoG = "98"
+		p_IdealK = "15"
+		p_IdealG = "00"
+		p_BajoPesoK = "11"
+		p_BajoPesoG = "80"
+		p_BajoPesoSeveroK = "10"
+		p_BajoPesoSeveroG = "10"
+
+	if edad_meses == 7:
+		p_SobrepesoK = "22"
+		p_SobrepesoG = "10"
+		p_ObesoK = "20"
+		p_ObesoG = "10"
+		p_IdealK = "15"
+		p_IdealG = "10"
+		p_BajoPesoK = "11"
+		p_BajoPesoG = "90"
+		p_BajoPesoSeveroK = "10"
+		p_BajoPesoSeveroG = "20"
+
+	if edad_meses == 8:
+		p_SobrepesoK = "23"
+		p_SobrepesoG = "98"
+		p_ObesoK = "20"
+		p_ObesoG = "20"
+		p_IdealK = "15"
+		p_IdealG = "20"
+		p_BajoPesoK = "11"
+		p_BajoPesoG = "99"
+		p_BajoPesoSeveroK = "10"
+		p_BajoPesoSeveroG = "50"
+
+	if edad_meses == 9:
+		p_SobrepesoK = "24"
+		p_SobrepesoG = "00"
+		p_ObesoK = "20"
+		p_ObesoG = "80"
+		p_IdealK = "15"
+		p_IdealG = "10"
+		p_BajoPesoK = "12"
+		p_BajoPesoG = "00"
+		p_BajoPesoSeveroK = "10"
+		p_BajoPesoSeveroG = "90"
+
+	if edad_meses == 10:
+		p_SobrepesoK = "24"
+		p_SobrepesoG = "50"
+		p_ObesoK = "21"
+		p_ObesoG = "00"
+		p_IdealK = "15"
+		p_IdealG = "98"
+		p_BajoPesoK = "12"
+		p_BajoPesoG = "10"
+		p_BajoPesoSeveroK = "9"
+		p_BajoPesoSeveroG = "80"
+
+	if edad_meses == 11:
+		p_SobrepesoK = "24"
+		p_SobrepesoG = "90"
+		p_ObesoK = "21"
+		p_ObesoG = "10"
+		p_IdealK = "16"
+		p_IdealG = "00"
+		p_BajoPesoK = "12"
+		p_BajoPesoG = "10"
+		p_BajoPesoSeveroK = "9"
+		p_BajoPesoSeveroG = "98"
+
+	if edad_meses == 12:
+		p_SobrepesoK = "25"
+		p_SobrepesoG = ""
+		p_ObesoK = "21"
+		p_ObesoG = "50"
+		p_IdealK = "16"
+		p_IdealG = "00"
+		p_BajoPesoK = "12"
+		p_BajoPesoG = "99"
+		p_BajoPesoSeveroK = "11"
+		p_BajoPesoSeveroG = "00"
+
+if edad_anios == :
+	if edad_meses == 1:
+		p_SobrepesoK = "25"
+		p_SobrepesoG = "70"
+		p_ObesoK = "21"
+		p_ObesoG = "90"
+		p_IdealK = "16"
+		p_IdealG = "10"
+		p_BajoPesoK = "12"
+		p_BajoPesoG = "50"
+		p_BajoPesoSeveroK = "11"
+		p_BajoPesoSeveroG = "00"
+
+	if edad_meses == 2:
+		p_SobrepesoK = "26"
+		p_SobrepesoG = "00"
+		p_ObesoK = "22"
+		p_ObesoG = "00"
+		p_IdealK = "16"
+		p_IdealG = "20"
+		p_BajoPesoK = "12"
+		p_BajoPesoG = "00"
+		p_BajoPesoSeveroK = "11"
+		p_BajoPesoSeveroG = "10"
+
+	if edad_meses == 3:
+		p_SobrepesoK = "26"
+		p_SobrepesoG = "10"
+		p_ObesoK = "22"
+		p_ObesoG = "10"
+		p_IdealK = "16"
+		p_IdealG = "70"
+		p_BajoPesoK = "12"
+		p_BajoPesoG = "90"
+		p_BajoPesoSeveroK = "11"
+		p_BajoPesoSeveroG = "00"
+
+	if edad_meses == 4:
+		p_SobrepesoK = "26"
+		p_SobrepesoG = "80"
+		p_ObesoK = "21"
+		p_ObesoG = "90"
+		p_IdealK = "14"
+		p_IdealG = "90"
+		p_BajoPesoK = "12"
+		p_BajoPesoG = "90"
+		p_BajoPesoSeveroK = "11"
+		p_BajoPesoSeveroG = "20"
+
+	if edad_meses == 5:
+		p_SobrepesoK = "27"
+		p_SobrepesoG = "00"
+		p_ObesoK = "23"
+		p_ObesoG = "00"
+		p_IdealK = "17"
+		p_IdealG = "00"
+		p_BajoPesoK = "13"
+		p_BajoPesoG = "00"
+		p_BajoPesoSeveroK = "11"
+		p_BajoPesoSeveroG = "30"
+
+	if edad_meses == 6:
+		p_SobrepesoK = "27"
+		p_SobrepesoG = "10"
+		p_ObesoK = "23"
+		p_ObesoG = "10"
+		p_IdealK = "17"
+		p_IdealG = "20"
+		p_BajoPesoK = "11"
+		p_BajoPesoG = "00"
+		p_BajoPesoSeveroK = "11"
+		p_BajoPesoSeveroG = "20"
+
+
+	if edad_meses == 7:
+		p_SobrepesoK = "27"
+		p_SobrepesoG = "98"
+		p_ObesoK = "23"
+		p_ObesoG = "80"
+		p_IdealK = "17"
+		p_IdealG = "10"
+		p_BajoPesoK = "13"
+		p_BajoPesoG = "00"
+		p_BajoPesoSeveroK = "11"
+		p_BajoPesoSeveroG = "90"
+
+	if edad_meses == 8:
+		p_SobrepesoK = "28"
+		p_SobrepesoG = "00"
+		p_ObesoK = "23"
+		p_ObesoG = "98"
+		p_IdealK = "17"
+		p_IdealG = "20"
+		p_BajoPesoK = "13"
+		p_BajoPesoG = "10"
+		p_BajoPesoSeveroK = "10"
+		p_BajoPesoSeveroG = "6"
+
+	if edad_meses == 9:
+		p_SobrepesoK = "28"
+		p_SobrepesoG = "50"
+		p_ObesoK = "24"
+		p_ObesoG = "00"
+		p_IdealK = "17"
+		p_IdealG = "98"
+		p_BajoPesoK = "13"
+		p_BajoPesoG = "10"
+		p_BajoPesoSeveroK = "11"
+		p_BajoPesoSeveroG = "80"
+
+	if edad_meses == 10:
+		p_SobrepesoK = "29"
+		p_SobrepesoG = "00"
+		p_ObesoK = "24"
+		p_ObesoG = "20"
+		p_IdealK = "18"
+		p_IdealG = "10"
+		p_BajoPesoK = "13"
+		p_BajoPesoG = "20"
+		p_BajoPesoSeveroK = "12"
+		p_BajoPesoSeveroG = "500"
+
+	if edad_meses == 11:
+		p_SobrepesoK = "29"
+		p_SobrepesoG = "10"
+		p_ObesoK = "24"
+		p_ObesoG = "08"
+		p_IdealK = "18"
+		p_IdealG = "0"
+		p_BajoPesoK = "13"
+		p_BajoPesoG = "98"
+		p_BajoPesoSeveroK = "12"
+		p_BajoPesoSeveroG = "00"
+
+		if edad_meses == 12:
+		p_SobrepesoK = "29"
+		p_SobrepesoG = "50"
+		p_ObesoK = "25"
+		p_ObesoG = "00"
+		p_IdealK = "18"
+		p_IdealG = "10"
+		p_BajoPesoK = "13"
+		p_BajoPesoG = "98"
+		p_BajoPesoSeveroK = "12"
+		p_BajoPesoSeveroG = "00"
+
+_________________________________________________________________________
+
         if edad >1 and edad <=2:
             p_IdealK = "12"
             p_IdealG = "9"
@@ -225,16 +1244,7 @@ def peso_talla_Ideal(id,genero,edad,pesoK,pesoG,talla):
             p_IdealK = "17"
             p_IdealG = "4"
             t_Ideal = "105"
-
-    asignarClase(id,pesoK,p_IdealK,pesoG,p_IdealG,talla,t_Ideal,'fuera_rango')
-
-    c = Controles.objects.get(id=id)
-    c.peso_idealK = p_IdealK
-    c.peso_idealG = p_IdealG
-    c.talla_ideal = t_Ideal
-    c.save()
-
-
+"""
 ############## FUNCION ASIGNAR CLASE CUANDO EL PESO ESTA FUERA DE RANGO  #######################
 
 def asignarClase(id,pesoK,p_IdealK,pesoG,p_IdealG,talla,t_Ideal,clase):

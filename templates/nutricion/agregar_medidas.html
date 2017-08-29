@@ -50,12 +50,14 @@
         -webkit-user-select: none;
         -ms-user-select: none;
     }
+		.help-block, .help-inline {
+    	margin-top: 2px;
+    	margin-bottom: 5px;
+		}
 </style>
 {% load static from staticfiles %}
 <script type="text/javascript" src="http://www.chartjs.org/dist/2.6.0/Chart.bundle.js"></script>
 <script type="text/javascript" src="http://www.chartjs.org/samples/latest/utils.js"></script>
-
-
 <div class="content">
   <div class="panel panel-flat">
     <div class="panel-heading">
@@ -78,8 +80,18 @@
                     <th style="text-align: center;"></th>
                   </tr>
                 </thead>
-                {% if controles.count >= 1  %}
+								<script>
+									$( document ).ready(function() {
+										if({{ cantidad }} >= 1){
+											$("#canvas").show()
+										}
+									});
+								</script>
                 <tbody>
+									<script>
+										var Promedio = []
+										var Beneficiario = []
+									</script>
                   {% for control in controles %}
                   <tr>
                     <tr>
@@ -89,7 +101,7 @@
                       <td style="text-align: center;">
                         <input type="date" name="fecha_control" class="form-control" id="fecha_control" value="{{ control.fecha_control }}" disabled="disabled" min="{{ request.session.fecha_min }}" />
                       </td>
-                      <td style="text-align: center">
+                      <td style="text-align: center;">
                         <table>
                           <tbody>
                             <tr>
@@ -129,27 +141,74 @@
                         <span align="center" class="help-block">Cms</span>
                       </td>
                       <td style="text-align: center">
-                        <textarea  id="interpretacion" style="height: 100px; resize: none;" name="interpretacion" class="form-control" disabled="disabled">{{ control.interpretacion }}</textarea>
+                        <textarea  id="interpretacion" style="height: 50px; resize: none;" name="interpretacion" class="form-control" disabled="disabled">{{ control.interpretacion }}</textarea>
                       </td>
                       <td style="text-align: center;"></td>
                     </tr>
                   </tr>
+									<script>
+											Promedio.push({{ control.peso_idealK }}.{{ control.peso_idealG }})
+											Beneficiario.push({{ control.peso_kilos }}.{{ control.peso_gramos }})
+									</script>
                   {% endfor %}
-                  {% endif %}
+									<script>
+										var labels = "{{ label }}".split(",")
+						        var config = {
+						            type: 'line',
+						            data: {
+						                labels: labels,
+						                datasets: [{
+						                    label: "Beneficiario",
+						                    backgroundColor: window.chartColors.red,
+						                    borderColor: window.chartColors.red,
+						                    data: Beneficiario,
+						                    fill: false,
+						                }, {
+						                    label: "Promedio",
+						                    fill: false,
+						                    backgroundColor: window.chartColors.green,
+						                    borderColor: window.chartColors.green,
+						                    data: Promedio,
+						                }]
+						            },
+						            options: {
+						                responsive: true,
+						                title:{
+						                    display:true,
+						                    text:'CURVA DE PESO {{ beneficiario.primer_nombre }} {{ beneficiario.segundo_nombre }} {{ beneficiario.primer_apellido }} {{ beneficiario.segundo_nombre }}'
+						                },
+														tooltips: {
+															mode: 'index',
+															intersect: false,
+														},
+						                scales: {
+						                    yAxes: [{
+						                        ticks: {
+						                            min: 0,
+						                            max: {{ peso }},
+																				stepSize: 1
+						                        }
+						                    }]
+						                }
+						            }
+						        };
+						        window.onload = function() {
+						            var ctx = document.getElementById("canvas").getContext("2d");
+						            window.myLine = new Chart(ctx, config);
+						        };
+									</script>
                   <tr>
                   <td style="text-align: center; width: 140px; max-width: 140px; min-width: 140px">
-                    <input type="text" name="nutricion_numero_orden" class="form-control" id="nutricion_numero_orden" onKeyPress="return soloNumeros(event,'control','numero_orden','NO')" maxlength="10"/>
-                  </td>
+                    <input type="text" name="nutricion_numero_orden" class="form-control" id="nutricion_numero_orden" onKeyPress="return soloNumeros(event,'control','numero_orden','NO')" maxlength="10"/></td>
                   <td style="text-align: center; width: 190px; max-width: 190px; min-width: 190px">
-                    <input type="date" name="nutricion_fecha_control" class="form-control" id="nutricion_fecha_control" min="{{ request.session.fecha_min }}"/ value="{{ request.session.fecha }}">
-                  </td>
+                    <input type="date" name="nutricion_fecha_control" class="form-control" id="nutricion_fecha_control" min="{{ request.session.fecha_min }}"/ value="{{ request.session.fecha }}"></td>
                   <td style="text-align: center; width: 180px; max-width: 180px; min-width: 180px">
                     <table>
                       <tbody>
                         <tr>
                           <td>
                             <span align="center" class="help-block">Años</span>
-                            <input type="text" id="nutricion_edad_anios" name="nutricion_edad_anios" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','edad_anios','NO')" maxlength="2" value="{{ beneficiario.edad_anios }}" readonly>
+                            <input type="text" id="nutricion_edad_anios" name="nutricion_edad_anios" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','edad_anios','NO')" maxlength="2" value="{{ beneficiario.edad_anios }}">
                           </td>
                           <td>&nbsp;&nbsp;</td>
                           <td>
@@ -158,8 +217,7 @@
                           </td>
                         </tr>
                       </tbody>
-                    </table>
-                  </td>
+                    </table></td>
                   <td style="text-align: center">
                     <table>
                       <tbody>
@@ -175,15 +233,11 @@
                           </td>
                         </tr>
                       </tbody>
-                    </table>
-                  </td>
+                    </table></td>
                   <td style="text-align: center">
                     <span align="center" class="help-block">Cms</span>
-                    <input type="text" name="nutricion_talla" class="form-control" id="nutricion_talla" onKeyPress="return soloNumeros(event,'control','talla','NO')" maxlength="4"/>
-                  </td>
-                  <td style="text-align: center">
-                    <textarea  id="nutricion_interpretacion" style="height: 100px; resize: none;" name="nutricion_interpretacion" class="form-control"></textarea>
-                  </td>
+                    <input type="text" name="nutricion_talla" class="form-control" id="nutricion_talla" onKeyPress="return soloNumeros(event,'control','talla','NO')" maxlength="4"/></td>
+                  <td style="text-align: center"><textarea  id="nutricion_interpretacion" style="height: 50px; resize: none;" name="nutricion_interpretacion" class="form-control"></textarea></td>
                   <td style="text-align: center; padding-left: 10px;">
                     <ul class="icons-list">
                       <li class="text-danger-600"><a onclick="ValidarFormulario(['talla','peso_gramos','peso_kilos','edad_meses','edad_anios','fecha_control','numero_orden'],'nutricion','FormNutricion')" class="btn btn-primary btn-icon"><i style="color: white" class="icon-plus2"></i></a></li>
@@ -192,80 +246,7 @@
                 </tr>
                 </tbody>
               </table>
-							<!--
-							<div class="panel panel-flat">
-								<div class="panel-heading">
-
-									<body>
-										<div>
-												<canvas id="canvas"></canvas>
-										</div>
-										<script>
-										var lineChartData = {
-												labels: ["January", "February", "March", "April", "May", "June", "July"],
-												datasets: [{
-														label: "Promedio",
-														borderColor: window.chartColors.red,
-														backgroundColor: window.chartColors.red,
-														fill: false,
-														data: [0, 10, 5, 2, 20, 30, 45],
-														yAxisID: "y-axis-1",
-												}, {
-														label: "Beneficiario",
-														borderColor: window.chartColors.green,
-														backgroundColor: window.chartColors.green,
-														fill: false,
-														data: [
-																randomScalingFactor(),
-																randomScalingFactor(),
-																randomScalingFactor(),
-																randomScalingFactor(),
-																randomScalingFactor(),
-																randomScalingFactor(),
-																randomScalingFactor()
-														],
-														yAxisID: "y-axis-2"
-												}]
-										};
-
-										window.onload = function() {
-												var ctx = document.getElementById("canvas").getContext("2d");
-												window.myLine = Chart.Line(ctx, {
-														data: lineChartData,
-														options: {
-																responsive: true,
-																hoverMode: 'index',
-																stacked: false,
-																title:{
-																		display: true,
-																		text:'VARIACIÓN DEL PESO'
-																},
-																scales: {
-																		yAxes: [{
-																				type: "linear", // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-																				display: true,
-																				position: "left",
-																				id: "y-axis-1",
-																		}, {
-																				type: "linear", // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-																				display: true,
-																				position: "right",
-																				id: "y-axis-2",
-
-																				// grid line settings
-																				gridLines: {
-																						drawOnChartArea: false, // only want the grid lines for one axis to show up
-																				},
-																		}],
-																}
-														}
-												});
-										};
-
-										</script>
-									</body>-->
-								</div>
-							</div>
+							<canvas style="display: none; margin-top: 40px" id="canvas"></canvas>
             </div>
           </fieldset>
         </form>
