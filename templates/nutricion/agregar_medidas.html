@@ -10,6 +10,9 @@ $( document ).ready(function() {
 	if ("{{ message }}" == "Meses Incorrectos"){
 			mensagesWarning("ATENCIÓN","El numero Máximo permitido","en el campo Meses es 11.",4000);
 	}
+	if ("{{ message }}" == "Limite de Edad"){
+			mensagesWarning("ATENCIÓN","El Limite de Edad Máximo permitido","es de 5 Años 0 Meses.",4000);
+	}
 });
 </script>
 {% endfor %}{% endif %}
