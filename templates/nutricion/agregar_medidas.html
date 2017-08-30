@@ -1,10 +1,16 @@
 {% extends 'menu.html' %} {% block content %}{% load static from staticfiles %}{% if messages %}{% for message in messages %}
 <script>
+$( document ).ready(function() {
 	if ("{{ message }}" == "Guardado"){
-		$( document ).ready(function() {
 			mensagesSuccess("EXITO AL GUARDAR","Medidas Antropometricas","Agregadas Exitosamente.");
-		});
 	}
+	if ("{{ message }}" == "Ya Existe"){
+			mensagesWarning("ATENCIÓN","Ya Existe un Registro del Beneficiario","con esa Edad.",4000);
+	}
+	if ("{{ message }}" == "Meses Incorrectos"){
+			mensagesWarning("ATENCIÓN","El numero Máximo permitido","en el campo Meses es 11.",4000);
+	}
+});
 </script>
 {% endfor %}{% endif %}
 <div class="page-header">
@@ -80,17 +86,19 @@
                     <th style="text-align: center;"></th>
                   </tr>
                 </thead>
-								<script>
+                <tbody style="max-height: 500px;">
+									<script>
 									$( document ).ready(function() {
 										if({{ cantidad }} >= 1){
 											$("#canvas").show()
 										}
 									});
-								</script>
-                <tbody>
-									<script>
-										var Promedio = []
-										var Beneficiario = []
+									var Sobrepeso = []
+									var Obeso = []
+									var Promedio = []
+									var Beneficiario = []
+									var Bajo = []
+									var Severo = []
 									</script>
                   {% for control in controles %}
                   <tr>
@@ -147,8 +155,12 @@
                     </tr>
                   </tr>
 									<script>
+											Sobrepeso.push({{ control.peso_SobrepesoK }}.{{ control.peso_SobrepesoG }})
+											Obeso.push({{ control.peso_ObesoK }}.{{ control.peso_ObesoG }})
 											Promedio.push({{ control.peso_idealK }}.{{ control.peso_idealG }})
 											Beneficiario.push({{ control.peso_kilos }}.{{ control.peso_gramos }})
+											Bajo.push({{ control.peso_BajoPesoK }}.{{ control.peso_BajoPesoG }})
+											Severo.push({{ control.peso_BajoPesoSeveroK }}.{{ control.peso_BajoPesoSeveroG }})
 									</script>
                   {% endfor %}
 									<script>
@@ -157,19 +169,84 @@
 						            type: 'line',
 						            data: {
 						                labels: labels,
-						                datasets: [{
-						                    label: "Beneficiario",
-						                    backgroundColor: window.chartColors.red,
-						                    borderColor: window.chartColors.red,
-						                    data: Beneficiario,
+						                datasets: [
+															{
+						                    label: "Sobrepeso",
 						                    fill: false,
-						                }, {
+																data: Sobrepeso,
+																backgroundColor: "rgb(255, 90, 12)",
+																borderColor: "rgb(255, 90, 12)",
+																hoverBackgroundColor: "rgb(255, 90, 12)",
+																strokeColor: "rgb(255, 90, 12)",
+																highlightFill: "rgb(255, 90, 12)",
+																highlightStroke: "rgb(255, 90, 12)",
+																borderDash: [10, 5],
+																pointRadius: 4,
+														    pointHoverRadius: 4,
+														    pointHitRadius: 30,
+
+							                },{
+						                    label: "Obeso",
+																fill: false,
+						                    data: Obeso,
+																backgroundColor: window.chartColors.orange,
+															  borderColor: window.chartColors.orange,
+																borderDash: [10, 5],
+																pointRadius: 4,
+														    pointHoverRadius: 4,
+														    pointHitRadius: 30,
+							                },{
 						                    label: "Promedio",
 						                    fill: false,
-						                    backgroundColor: window.chartColors.green,
-						                    borderColor: window.chartColors.green,
-						                    data: Promedio,
-						                }]
+																data: Promedio,
+																backgroundColor: "rgb(88, 175, 36)",
+																borderColor: "rgb(88, 175, 36)",
+																hoverBackgroundColor: "rgb(88, 175, 36)",
+																strokeColor: "rgb(88, 175, 36)",
+																highlightFill: "rgb(88, 175, 36)",
+																highlightStroke: "rgb(88, 175, 36)",
+																pointRadius: 4,
+														    pointHoverRadius: 4,
+														    pointHitRadius: 30,
+															},{
+						                    label: "Beneficiario",
+																fill: false,
+																data: Beneficiario,
+																backgroundColor: "rgb(38, 50, 56)",
+																borderColor: "rgb(38, 50, 56)",
+																hoverBackgroundColor: "rgb(38, 50, 56)",
+																strokeColor: "rgb(38, 50, 56)",
+																highlightFill: "rgb(38, 50, 56)",
+																highlightStroke: "rgb(38, 50, 56)",
+																pointRadius: 4,
+														    pointHoverRadius: 4,
+														    pointHitRadius: 30,
+						                	},{
+						                    label: "Bajo Peso",
+																fill: false,
+																data: Bajo,
+																backgroundColor: window.chartColors.red,
+																borderColor: window.chartColors.red,
+																borderDash: [10, 5],
+																pointRadius: 4,
+														    pointHoverRadius: 4,
+														    pointHitRadius: 30,
+						                	},{
+																fill: false,
+																data: Severo,
+						                    label: "Bajo Peso Severo",
+																backgroundColor: "rgb(255, 17, 0)",
+																borderColor: "rgb(255, 17, 0)",
+																hoverBackgroundColor: "rgb(255, 17, 0)",
+																strokeColor: "rgb(255, 17, 0)",
+																highlightFill: "rgb(255, 17, 0)",
+																highlightStroke: "rgb(255, 17, 0)",
+																borderDash: [10, 5],
+																pointRadius: 4,
+														    pointHoverRadius: 4,
+														    pointHitRadius: 30,
+						                	}
+						                ]
 						            },
 						            options: {
 						                responsive: true,
@@ -217,7 +294,8 @@
                           </td>
                         </tr>
                       </tbody>
-                    </table></td>
+                    </table>
+									</td>
                   <td style="text-align: center">
                     <table>
                       <tbody>
@@ -233,10 +311,11 @@
                           </td>
                         </tr>
                       </tbody>
-                    </table></td>
+                    </table>
+									</td>
                   <td style="text-align: center">
                     <span align="center" class="help-block">Cms</span>
-                    <input type="text" name="nutricion_talla" class="form-control" id="nutricion_talla" onKeyPress="return soloNumeros(event,'control','talla','NO')" maxlength="4"/></td>
+                    <input type="text" name="nutricion_talla" class="form-control" id="nutricion_talla" onKeyPress="return soloNumeros(event,'control','talla','NO')" maxlength="3"/></td>
                   <td style="text-align: center"><textarea  id="nutricion_interpretacion" style="height: 50px; resize: none;" name="nutricion_interpretacion" class="form-control"></textarea></td>
                   <td style="text-align: center; padding-left: 10px;">
                     <ul class="icons-list">
