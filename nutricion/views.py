@@ -204,7 +204,7 @@ def medidasAntropometricas(request, id=None):
         edad = 0
 
     edad = edad + 1
-    labels = []
+
     for a in range(edad):
         if a == 0 or a == 1 or a == 12 or a == 24 or a == 36 or a == 48 or a == 60:
             if a == 0:
@@ -250,7 +250,7 @@ def guardarMedidasAntropometricas(request):
                     c.edad_anios = request.POST['nutricion_edad_anios']
                     c.edad_meses = request.POST['nutricion_edad_meses']
                     c.total_meses = int(c.edad_anios)*12+int(c.edad_meses)
-                    c.peso_kilos = request.POST['nutricion_peso_kilos']
+                    c.peso_kilos = int(request.POST['nutricion_peso_kilos'])
                     c.peso_gramos = request.POST['nutricion_peso_gramos']
                     c.talla = request.POST['nutricion_talla']
                     c.interpretacion = request.POST['nutricion_interpretacion']
@@ -269,150 +269,7 @@ def peso_talla_Ideal(id,genero,edad_anios,edad_meses,pesoK,pesoG,talla):
     edad_anios = int(edad_anios)
     edad_meses = int(edad_meses)
     if genero == "M":
-        if edad_anios <= 1:
-            if edad_meses == 0:
-                p_SobrepesoK = ""
-                p_SobrepesoG = ""
-                p_ObesoK = ""
-                p_ObesoG = ""
-                p_IdealK = ""
-                p_IdealG = ""
-                p_BajoPesoK = ""
-                p_BajoPesoG = ""
-                p_BajoPesoSeveroK = ""
-                p_BajoPesoSeveroG = ""
-            if edad_meses == 1:
-                p_SobrepesoK = ""
-                p_SobrepesoG = ""
-                p_ObesoK = ""
-                p_ObesoG = ""
-                p_IdealK = ""
-                p_IdealG = ""
-                p_BajoPesoK = ""
-                p_BajoPesoG = ""
-                p_BajoPesoSeveroK = ""
-                p_BajoPesoSeveroG = ""
-            if edad_meses == 2:
-                p_SobrepesoK = ""
-                p_SobrepesoG = ""
-                p_ObesoK = ""
-                p_ObesoG = ""
-                p_IdealK = ""
-                p_IdealG = ""
-                p_BajoPesoK = ""
-                p_BajoPesoG = ""
-                p_BajoPesoSeveroK = ""
-                p_BajoPesoSeveroG = ""
-            if edad_meses == 3:
-                p_SobrepesoK = ""
-                p_SobrepesoG = ""
-                p_ObesoK = ""
-                p_ObesoG = ""
-                p_IdealK = ""
-                p_IdealG = ""
-                p_BajoPesoK = ""
-                p_BajoPesoG = ""
-                p_BajoPesoSeveroK = ""
-                p_BajoPesoSeveroG = ""
-            if edad_meses == 4:
-                p_SobrepesoK = ""
-                p_SobrepesoG = ""
-                p_ObesoK = ""
-                p_ObesoG = ""
-                p_IdealK = ""
-                p_IdealG = ""
-                p_BajoPesoK = ""
-                p_BajoPesoG = ""
-                p_BajoPesoSeveroK = ""
-                p_BajoPesoSeveroG = ""
-            if edad_meses == 5:
-                p_SobrepesoK = ""
-                p_SobrepesoG = ""
-                p_ObesoK = ""
-                p_ObesoG = ""
-                p_IdealK = ""
-                p_IdealG = ""
-                p_BajoPesoK = ""
-                p_BajoPesoG = ""
-                p_BajoPesoSeveroK = ""
-                p_BajoPesoSeveroG = ""
-            if edad_meses == 6:
-                p_SobrepesoK = ""
-                p_SobrepesoG = ""
-                p_ObesoK = ""
-                p_ObesoG = ""
-                p_IdealK = ""
-                p_IdealG = ""
-                p_BajoPesoK = ""
-                p_BajoPesoG = ""
-                p_BajoPesoSeveroK = ""
-                p_BajoPesoSeveroG = ""
-            if edad_meses == 7:
-                p_SobrepesoK = ""
-                p_SobrepesoG = ""
-                p_ObesoK = ""
-                p_ObesoG = ""
-                p_IdealK = ""
-                p_IdealG = ""
-                p_BajoPesoK = ""
-                p_BajoPesoG = ""
-                p_BajoPesoSeveroK = ""
-                p_BajoPesoSeveroG = ""
-            if edad_meses == 8:
-                p_SobrepesoK = ""
-                p_SobrepesoG = ""
-                p_ObesoK = ""
-                p_ObesoG = ""
-                p_IdealK = ""
-                p_IdealG = ""
-                p_BajoPesoK = ""
-                p_BajoPesoG = ""
-                p_BajoPesoSeveroK = ""
-                p_BajoPesoSeveroG = ""
-            if edad_meses == 9:
-                p_SobrepesoK = ""
-                p_SobrepesoG = ""
-                p_ObesoK = ""
-                p_ObesoG = ""
-                p_IdealK = ""
-                p_IdealG = ""
-                p_BajoPesoK = ""
-                p_BajoPesoG = ""
-                p_BajoPesoSeveroK = ""
-                p_BajoPesoSeveroG = ""
-            if  edad_meses == 10:
-                p_SobrepesoK = ""
-                p_SobrepesoG = ""
-                p_ObesoK = ""
-                p_ObesoG = ""
-                p_IdealK = ""
-                p_IdealG = ""
-                p_BajoPesoK = ""
-                p_BajoPesoG = ""
-                p_BajoPesoSeveroK = ""
-                p_BajoPesoSeveroG = ""
-            if edad_meses == 11:
-                p_SobrepesoK = ""
-                p_SobrepesoG = ""
-                p_ObesoK = ""
-                p_ObesoG = ""
-                p_IdealK = ""
-                p_IdealG = ""
-                p_BajoPesoK = ""
-                p_BajoPesoG = ""
-                p_BajoPesoSeveroK = ""
-                p_BajoPesoSeveroG = ""
-            if edad_anios == 1:
-                p_SobrepesoK = ""
-                p_SobrepesoG = ""
-                p_ObesoK = ""
-                p_ObesoG = ""
-                p_IdealK = ""
-                p_IdealG = ""
-                p_BajoPesoK = ""
-                p_BajoPesoG = ""
-                p_BajoPesoSeveroK = ""
-                p_BajoPesoSeveroG = ""
+        pass
     else:
         if edad_anios < 1:
             if edad_meses == 0:
@@ -1092,50 +949,65 @@ def peso_talla_Ideal(id,genero,edad_anios,edad_meses,pesoK,pesoG,talla):
                 p_BajoPesoSeveroK = "13"
                 p_BajoPesoSeveroG = "800"
 
-    t_Ideal = "105"
-    asignarClase(id,pesoK,p_IdealK,pesoG,p_IdealG,talla,t_Ideal,'fuera_rango')
     c = Controles.objects.get(id=id)
-    c.peso_idealK = p_IdealK
-    c.peso_idealG = p_IdealG
     c.peso_SobrepesoK = p_SobrepesoK
     c.peso_SobrepesoG = p_SobrepesoG
     c.peso_ObesoK = p_ObesoK
     c.peso_ObesoG = p_ObesoG
+    c.peso_idealK = p_IdealK
+    c.peso_idealG = p_IdealG
     c.peso_BajoPesoK = p_BajoPesoK
     c.peso_BajoPesoG = p_BajoPesoG
     c.peso_BajoPesoSeveroK = p_BajoPesoSeveroK
     c.peso_BajoPesoSeveroG = p_BajoPesoSeveroG
-    c.talla_ideal = 77
+    #c.talla_ideal = t_Ideal
     c.save()
 
-############## FUNCION ASIGNAR CLASE CUANDO EL PESO ESTA FUERA DE RANGO  #######################
+    asignarClase(id,p_SobrepesoK,p_SobrepesoG,p_ObesoK,p_ObesoG,p_IdealK,p_IdealG,p_BajoPesoK,p_BajoPesoG,p_BajoPesoSeveroK,p_BajoPesoSeveroG,pesoK,pesoG)
 
-def asignarClase(id,pesoK,p_IdealK,pesoG,p_IdealG,talla,t_Ideal,clase):
+############## FUNCION ASIGNAR CLASE CUANDO EL PESO O TALLA ESTA FUERA DE RANGO  #######################
 
-    c_talla = ""
-    c_peso = ""
+def asignarClase(id,p_SobrepesoK,p_SobrepesoG,p_ObesoK,p_ObesoG,p_IdealK,p_IdealG,p_BajoPesoK,p_BajoPesoG,p_BajoPesoSeveroK,p_BajoPesoSeveroG,pesoK,pesoG):
+    pesok = int(pesoK)
+    pesoG = int(pesoG)
+    p_SobrepesoK = int(p_SobrepesoK)
+    p_SobrepesoG = int(p_SobrepesoG)
+    p_ObesoK = int(p_ObesoK)
+    p_ObesoG = int(p_ObesoG)
+    p_IdealK = int(p_IdealK)
+    p_IdealG = int(p_IdealG)
+    p_BajoPesoK = int(p_BajoPesoK)
+    p_BajoPesoG = int(p_BajoPesoG)
+    p_BajoPesoSeveroK = int(p_BajoPesoSeveroK)
+    p_BajoPesoSeveroG = int(p_BajoPesoSeveroG)
 
-    if pesoK < p_IdealK:
-        c_peso = clase
-
-    if pesoG < p_IdealG:
-        c_peso = clase
-
-    if pesoK > p_IdealK:
-        c_peso = clase
-
-    if pesoG > p_IdealG:
-        c_peso = clase
-
-    if talla < t_Ideal:
-        c_talla = clase
-
-    if talla > t_Ideal:
-        c_talla = clase
+    if pesoK >= p_SobrepesoK and pesoG >= p_SobrepesoG:
+        c_peso = "Sobrepeso"
+        interpretacion = "Sobrepeso"
+    else:
+        if pesoK >= p_ObesoK and pesoG >= p_ObesoG:
+            c_peso = "Obeso"
+            interpretacion = "Obeso"
+        else:
+            if pesoK >= p_IdealK and pesoG >= p_IdealG:
+                c_peso = ""
+                interpretacion = "Peso Ideal"
+            else:
+                if pesoK >= p_BajoPesoK and pesoG >= p_BajoPesoG:
+                    c_peso = "Bajo"
+                    interpretacion = "Bajo Peso"
+                else:
+                    if pesoK >= p_BajoPesoSeveroK and pesoG >= p_BajoPesoSeveroG:
+                        c_peso = "Severo"
+                        interpretacion = "Bajo Peso Severo"
+                    else:
+                        c_peso = "Severo"
+                        interpretacion = "Bajo Peso Severo"
 
     c = Controles.objects.get(id=id)
     c.clase_peso = c_peso
-    c.clase_talla = c_talla
+    #c.clase_talla = c_talla
+    c.interpretacion = interpretacion
     c.save()
 
 ############## FUNCION GENERAR PDF MEDIDAS ANTROPOMETRICAS ######################

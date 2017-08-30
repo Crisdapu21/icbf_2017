@@ -31,7 +31,6 @@ class Controles(models.Model):
     peso_BajoPesoSeveroK = models.CharField( max_length = 4,  null=False ,blank=True)
     peso_BajoPesoSeveroG = models.CharField( max_length = 4,  null=False ,blank=True)
     talla_ideal = models.CharField( max_length=3,  null=False ,blank=True)
-    estado = models.CharField( max_length=20,  null=False ,blank=True)
     clase_peso = models.CharField( max_length=20,  null=False ,blank=True)
     clase_talla = models.CharField( max_length=20,  null=False ,blank=True)
 

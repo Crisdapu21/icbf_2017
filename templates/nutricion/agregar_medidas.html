@@ -63,6 +63,25 @@ $( document ).ready(function() {
     	margin-top: 2px;
     	margin-bottom: 5px;
 		}
+
+		.Sobrepeso{
+	    background-color: rgb(255, 90, 12);
+	    background: rgb(255, 90, 12);
+		}
+		.Obeso{
+	    background-color: #ff5a0c;
+	    background: #ff5a0c;
+		}
+		.Bajo{
+	    background-color: #ff6384;
+	    background: #ff6384;
+		}
+		.Severo{
+	    background-color: #ff1100;
+	    background: #ff1100;
+		}
+
+
 </style>
 {% load static from staticfiles %}
 <script type="text/javascript" src="{% static 'js-icbf/Chart.bundle.js' %}"></script>
@@ -129,7 +148,7 @@ $( document ).ready(function() {
                           </tbody>
                         </table>
                       </td>
-                      <td style="text-align: center" class="{{ control.clase_peso }}">
+                      <td style="text-align: center">
                         <table>
                           <tbody>
                             <tr>
@@ -145,13 +164,12 @@ $( document ).ready(function() {
                             </tr>
                           </tbody>
                         </table>
-                          <span class="text-danger-800"> {{ control.estado }}</span>
                       </td>
-                      <td style="text-align: center" class="{{ control.clase_talla }}">
+                      <td style="text-align: center">
                         <input type="text" name="talla" class="form-control" id="talla" onKeyPress="return soloNumeros(event,'control','talla','NO')" maxlength="4" value="{{ control.talla }}" disabled="disabled"/>
                         <span align="center" class="help-block">Cms</span>
                       </td>
-                      <td style="text-align: center">
+                      <td style="text-align: center" class="{{ control.clase_peso }}">
                         <textarea  id="interpretacion" style="height: 50px; resize: none;" name="interpretacion" class="form-control" disabled="disabled">{{ control.interpretacion }}</textarea>
                       </td>
                       <td style="text-align: center;"></td>
