@@ -43,7 +43,7 @@ def actualizar_password(request):
         usu.password = make_password(request.POST['password'])
         usu.save()
         messages.success(request, 'Actualizado')
-        registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Operarios','Actualizar Password',usu.first_name + " " + usu.last_name)
+        registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Operarios','Contraseña Actualizada Exitosamente.',usu.first_name + " " + usu.last_name)
         return HttpResponseRedirect('/logout')
     else:
         return HttpResponseRedirect('/')
@@ -114,7 +114,7 @@ def guardarOperario(request):
             e.estado = "REALIZADA"
             e.save()
 
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Operarios','Guardar Operario',usu.first_name + " " + usu.last_name)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Operarios','Operario Creado Exitosamente.',usu.first_name + " " + usu.last_name)
             messages.success(request, 'Creado')
             return HttpResponseRedirect('/operarios')
         else:
@@ -134,7 +134,7 @@ def activarOperario(request):
             operario.estado = "A"
             operario.intentos = 5
             operario.save()
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Operarios','Reiniciar Intentos Operario', operario.id.first_name + " " + operario.id.last_name)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Operarios','Intentos Reiniciados Exitosamente.', operario.id.first_name + " " + operario.id.last_name)
             return HttpResponse("Operario Activado", status=200)
         else:
             return HttpResponse("Permisos Incorrectos", status=200)
@@ -209,7 +209,7 @@ def actualizarOperario(request):
                 messages.success(request, 'Actualizado')
                 redireccion = "/operarios"
 
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Operarios','Actualizar Operario',usu.first_name + " " + usu.last_name)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Operarios','Operario Actualizado Exitosamente.',usu.first_name + " " + usu.last_name)
             operario.save()
             return HttpResponseRedirect(redireccion)
         else:
@@ -237,7 +237,7 @@ def eliminarOperario(request, id=None):
            except OSError as e:
              print(e)
            operario.delete()
-           registrarLogs(request.user.first_name+" "+request.user.last_name,'ELIMINAR','Operarios','Eliminar Operario',usu.first_name + " " + usu.last_name)
+           registrarLogs(request.user.first_name+" "+request.user.last_name,'ELIMINAR','Operarios','Operario Eliminado Exitosamente.',usu.first_name + " " + usu.last_name)
            usu.delete()
            messages.success(request, 'Borrado')
            return HttpResponse(status=200)

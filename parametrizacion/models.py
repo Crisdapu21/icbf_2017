@@ -117,11 +117,11 @@ class Ciudades(models.Model):
 ################ LOGS ##################
 
 class Logs(models.Model):
-    usuario = models.CharField( max_length=40,  null=False ,blank=False)
-    accion = models.CharField( max_length=40,  null=False ,blank=False)
-    modelo = models.CharField( max_length=40,  null=False ,blank=False)
-    detalle = models.CharField( max_length=40,  null=False ,blank=False)
-    referencia = models.CharField( max_length=40,  null=False ,blank=False)
+    usuario = models.TextField(null=False ,blank=False)
+    accion = models.TextField(null=False ,blank=False)
+    modelo = models.TextField(null=False ,blank=False)
+    detalle = models.TextField(null=False ,blank=False)
+    referencia = models.TextField(null=False ,blank=False)
     fecha = models.DateField(default=datetime.now, blank=True)
     hora  = models.TimeField(default=datetime.now, blank=True)
 

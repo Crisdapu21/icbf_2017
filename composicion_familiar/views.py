@@ -46,7 +46,7 @@ def guardarComposicionFamiliar(request):
             f.nombre_eps_id = request.POST['cf_eps']
             f.save()
             b = Beneficiario.objects.get(id=request.POST['cf_beneficiario'])
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Familiar','Guardar Familiar',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Familiar','Familiar Creado Exitosamente.',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
             messages.success(request, 'g_composicion')
         else:
             f = Familiar.objects.get(id=request.POST['cf_familiar_id'])
@@ -69,7 +69,7 @@ def guardarComposicionFamiliar(request):
             f.nombre_eps_id = request.POST['cf_eps']
             f.save()
             b = Beneficiario.objects.get(id=request.POST['cf_beneficiario'])
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Familiar','Actualizar Familiar',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Familiar','Familiar Actualizado Exitosamente.',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
             messages.success(request, 'a_composicion')
         return HttpResponseRedirect('/beneficiario/editar/'+str(request.POST['cf_beneficiario']))
     else:
@@ -146,7 +146,7 @@ def guardarCabeza_Nucleo(request):
             c.modulo_c = "COMPLETADO"
             c.save()
 
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Cabeza de Nucleo','Guardar Cabeza de Nucleo',c.primer_nombre+" "+c.segundo_nombre+" "+c.primer_apellido+" "+c.segundo_apellido)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Cabeza de Nucleo','Cabeza de Nucleo Creada Exitosamente.',c.primer_nombre+" "+c.segundo_nombre+" "+c.primer_apellido+" "+c.segundo_apellido)
         else:
             c = Cabeza_Nucleo.objects.get(beneficiario=request.POST['c_ben'])
             c.beneficiario_id = request.POST['c_ben']
@@ -186,7 +186,7 @@ def guardarCabeza_Nucleo(request):
             c.save()
 
             b = Beneficiario.objects.get(id=request.POST['c_ben'])
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Cabeza de Nucleo','Actualizar Cabeza de Nucleo',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Cabeza de Nucleo','Cabeza de Nucleo Actualizada Exitosamente.',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
         messages.success(request, 'Cabeza')
         return HttpResponseRedirect('/beneficiarios')
     else:

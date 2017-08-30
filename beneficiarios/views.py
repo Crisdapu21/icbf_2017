@@ -142,7 +142,7 @@ def guardarBeneficiario(request):
         b.save()
 
         VacunasTask.delay(b.id,b.uds.id,b.fecha_nacimiento)
-        registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Beneficiarios','Guardar Beneficiario',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
+        registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Beneficiarios','Beneficiario Creado Exitosamente.',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
         messages.success(request, 'Creado')
         return HttpResponseRedirect('/beneficiarios')
     else:
@@ -279,7 +279,7 @@ def actualizarBeneficiario(request):
             b.foto = f_anterior
 
         b.save()
-        registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Beneficiarios','Actualizar Beneficiario',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
+        registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Beneficiarios','Beneficiario Actualizado Exitosamente.',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
         messages.success(request, 'Actualizado')
         return HttpResponseRedirect('/beneficiarios')
     else:
@@ -302,7 +302,7 @@ def eliminarBeneficiario(request, id=None):
          conn.delete('media/beneficiarios/'+str(id))
        except OSError as e:
          print(e)
-       registrarLogs(request.user.first_name+" "+request.user.last_name,'ELIMINAR','Beneficiarios','Eliminar Beneficiario',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
+       registrarLogs(request.user.first_name+" "+request.user.last_name,'ELIMINAR','Beneficiarios','Beneficiario Eliminado Exitosamente',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
        b.delete()
        messages.success(request, 'Borrado')
        return HttpResponse(status=200)

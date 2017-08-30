@@ -16,6 +16,7 @@ from icbf.settings import URL, GRUPO1, GRUPO2
 from operarios.models import Operario
 import django.conf as conf
 from datetime import datetime, timedelta
+from parametrizacion.views import registrarLogs
 
 ################### FUNCION LOGIN  #######################
 
@@ -54,6 +55,7 @@ def login(request):
 
 @login_required(login_url="login:login")
 def logout(request):
+    registrarLogs(request.user.first_name+' '+request.user.last_name,'CIERRE DE SESSIÓN','Login','Sessión Terminada Exitosamente.','')
     auth.logout(request)
     return HttpResponseRedirect("/")
 

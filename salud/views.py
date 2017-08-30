@@ -66,7 +66,7 @@ def guardarSalud(request):
             f = Beneficiario.objects.get(id=request.POST['f_ben'])
             f.modulo_f = "COMPLETADO"
             f.save()
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Salud','Guardar Salud',f.primer_nombre+" "+f.segundo_nombre+" "+f.primer_apellido+" "+f.segundo_apellido)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Salud','Salud Creada Exitosamente.',f.primer_nombre+" "+f.segundo_nombre+" "+f.primer_apellido+" "+f.segundo_apellido)
         else:
             s = Salud.objects.get(beneficiario=request.POST['f_ben'])
             #F1. El niño o niña se encuentra afiliado al Sistema General de seguridad social en salud
@@ -107,46 +107,8 @@ def guardarSalud(request):
             s.save()
 
             f = Beneficiario.objects.get(id=request.POST['f_ben'])
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Salud','Actualizar Salud',f.primer_nombre+" "+f.segundo_nombre+" "+f.primer_apellido+" "+f.segundo_apellido)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Salud','Salud Actualizada Exitosamente.',f.primer_nombre+" "+f.segundo_nombre+" "+f.primer_apellido+" "+f.segundo_apellido)
         messages.success(request, 'Salud')
         return HttpResponseRedirect('/beneficiarios')
     else:
         return HttpResponseRedirect("/")
-
-"""
-def VacunasBeneficiario(id,edad,fecha_nacimiento):
-    edad = int(edad)
-
-    nacimiento = datetime.strptime(fecha_n  acimiento,'%Y-%m-%d')
-
-
-
-        if edad <= 1:
-            p_IdealK = "10"
-            p_IdealG = "2"
-            t_Ideal = "76"
-        if edad >1 and edad <=2:
-            p_IdealK = "12"
-            p_IdealG = "9"
-            t_Ideal = "88"
-        if edad >2 and edad <=3:
-            p_IdealK = "15"
-            p_IdealG = "1"
-            t_Ideal = "96"
-        if edad >3 and edad <=4:
-            p_IdealK = "16"
-            p_IdealG = "07"
-            t_Ideal = "100"
-        if edad >4 and edad <=5:
-            p_IdealK = "18"
-            p_IdealG = "03"
-            t_Ideal = "106"
-
-    asignarClase(id,pesoK,p_IdealK,pesoG,p_IdealG,talla,t_Ideal,'fuera_rango')
-
-    c = Controles.objects.get(id=id)
-    c.peso_idealK = p_IdealK
-    c.peso_idealG = p_IdealG
-    c.talla_ideal = t_Ideal
-    c.save()
-"""
