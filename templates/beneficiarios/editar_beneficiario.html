@@ -856,12 +856,12 @@ $(document).ready(function() {
                                                       <table class="table datatable-responsive table-striped">
                                                           <thead>
                                                               <tr>
-                                                                  <th style="text-align: center">PARENTEZCO</th>
+                                                                  <th style="text-align: center; max-width: 220px; width: 220px">PARENTEZCO</th>
                                                                   <th style="text-align: center; max-width: 220px; width: 220px">NOMBRE COMPLETO</th>
                                                                   <th style="text-align: center; width: 145px; min-width: 145px">DOCUMENTO</th>
                                                                   <th style="text-align: center">EDAD</th>
-                                                                  <th style="text-align: center; max-width: 100px; width: 100px">NIVEL ESCOLARIDAD</th>
-                                                                  <th style="text-align: center; max-width: 100px; width: 100px">OCUPACIÓN</th>
+                                                                  <th style="text-align: center; max-width: 220px; width: 220px">NIVEL ESCOLARIDAD</th>
+                                                                  <th style="text-align: center; max-width: 220px; width: 220px">OCUPACIÓN</th>
                                                                   <th style="text-align: center">SABE LEER</th>
                                                                   <th style="text-align: center">SABE ESCRIBIR</th>
                                                                   <th style="text-align: center; max-width: 220px; width: 220px">ESTADO LABORAL</th>
@@ -870,8 +870,8 @@ $(document).ready(function() {
                                                                   <th style="text-align: center; max-width: 220px; width: 220px">CONDICIONES ESPECIALES</th>
                                                                   <th style="text-align: center">APORTA AL SUSTENTO</th>
                                                                   <th style="text-align: center">ESTADO SGSSS</th>
-                                                                  <th style="text-align: center; max-width: 100px; width: 100px">NOMBRE EPS</th>
-                                                                  <th style="text-align: center; max-width: 140px; width: 140px">ACCIONES</th>
+                                                                  <th style="text-align: center; max-width: 180px; width: 180px">NOMBRE EPS</th>
+                                                                  <th style="text-align: center; max-width: 100px; width: 100px">ACCIONES</th>
                                                               </tr>
                                                           </thead>
                                                           <tbody>
@@ -888,20 +888,20 @@ $(document).ready(function() {
                                                               </script>
                                                               {% for miembros in miembros_familia %}
                                                               <tr>
-                                                                  <td style="text-align: center">{{ miembros.parentezco }}</td>
-                                                                  <td style="text-align: center">{{ miembros.nombres }}</td>
-                                                                  <td style="text-align: center"><span id="mf3_{{ miembros.id }}"></span><br>{{ miembros.numero_documento }}</td>
+                                                                  <td style="text-align: center; max-width: 220px; width: 220px">{{ miembros.parentezco }}</td>
+                                                                  <td style="text-align: center; max-width: 220px; width: 220px">{{ miembros.nombres }}</td>
+                                                                  <td style="text-align: center; width: 145px; min-width: 145px"><span id="mf3_{{ miembros.id }}"></span><br>{{ miembros.numero_documento }}</td>
                                                                   <td style="text-align: center">{{ miembros.edad }}</td>
-                                                                  <td style="text-align: center"><span id="mf6_{{ miembros.id }}"></span></td>
-                                                                  <td style="text-align: center"><span id="mf7_{{ miembros.id }}"></span></td>
+                                                                  <td style="text-align: center; max-width: 220px; width: 220px"><span id="mf6_{{ miembros.id }}"></span></td>
+                                                                  <td style="text-align: center; max-width: 220px; width: 220px"><span id="mf7_{{ miembros.id }}"></span></td>
                                                                   <td style="text-align: center"><span id="mf8_{{ miembros.id }}"></span></td>
                                                                   <td style="text-align: center"><span id="mf9_{{ miembros.id }}"></span></td>
-                                                                  <td style="text-align: center"><span id="mf10_{{ miembros.id }}"></span></td>
+                                                                  <td style="text-align: center; max-width: 220px; width: 220px"><span id="mf10_{{ miembros.id }}"></span></td>
                                                                   <td style="text-align: center">{{ miembros.n_dias_labora }}</td>
                                                                   <td style="text-align: center">{{ miembros.n_horas_labora }}</td>
-                                                                  <td style="text-align: center"><span id="mf13_{{ miembros.id }}"></span></td>
-                                                                  <td style="text-align: center"><span id="mf14_{{ miembros.id }}"></span></td>
-                                                                  <td style="text-align: center"><span id="mf15_{{ miembros.id }}"></span></td>
+                                                                  <td style="text-align: center; max-width: 220px; width: 220px"><span id="mf13_{{ miembros.id }}"></span></td>
+                                                                  <td style="text-align: center; max-width: 180px; width: 180px"><span id="mf14_{{ miembros.id }}"></span></td>
+                                                                  <td style="text-align: center; max-width: 100px; width: 100px"><span id="mf15_{{ miembros.id }}"></span></td>
                                                                   <script>
                                                                     MiembroFamilia('{{ miembros.id }}','{{ miembros.tipo_documento }}','{{ miembros.nivel_escolaridad }}','{{ miembros.ocupacion }}','{{ miembros.sabe_leer }}','{{ miembros.sabe_escribir }}','{{ miembros.estado_laboral }}','{{ miembros.condiciones_especiales }}','{{ miembros.aporta_sustento }}','{{ miembros.estado_sgsss }}','{{ miembros.nombre_eps }}',listS,listN,listVC,listCD,listVD,listOC,listNA,listmf_15A,listmf_15D)
                                                                   </script>
