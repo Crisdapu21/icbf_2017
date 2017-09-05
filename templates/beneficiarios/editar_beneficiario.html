@@ -860,13 +860,13 @@ $(document).ready(function() {
                                                                   <th style="text-align: center; width: 145px; min-width: 145px">DOCUMENTO</th>
                                                                   <th style="text-align: center; max-width: 220px; width: 220px">NIVEL ESCOLARIDAD</th>
                                                                   <th style="text-align: center; max-width: 220px; width: 220px">OCUPACIÓN</th>
-                                                                  <th style="text-align: center; max-width: 100px; width: 100px">ALFABETIZADO</th>
+                                                                  <th style="text-align: center; max-width: 170px; width: 170px">ALFABETIZADO</th>
                                                                   <th style="text-align: center; max-width: 220px; width: 220px">ESTADO LABORAL</th>
                                                                   <th style="text-align: center; max-width: 220px; width: 220px">LABORA</th>
                                                                   <th style="text-align: center; max-width: 220px; width: 220px">CONDICIONES ESPECIALES</th>
-                                                                  <th style="text-align: center">APORTA AL SUSTENTO</th>
+                                                                  <th style="text-align: center; max-width: 180px; width: 180px">APORTA AL SUSTENTO</th>
                                                                   <th style="text-align: center; max-width: 180px; width: 180px">EPS</th>
-                                                                  <th style="text-align: center; max-width: 100px; width: 100px">ACCIONES</th>
+                                                                  <th style="text-align: center; max-width: 140px; width: 140px">ACCIONES</th>
                                                               </tr>
                                                           </thead>
                                                           <tbody>
@@ -883,18 +883,17 @@ $(document).ready(function() {
                                                               </script>
                                                               {% for miembros in miembros_familia %}
                                                               <tr>
-                                                                  <td style="text-align: center; max-width: 220px; width: 220px">{{ miembros.parentezco }}<br>{{ miembros.nombres }}<br>{{ miembros.edad }}</td>
-                                                                  <td style="text-align: center; max-width: 220px; width: 220px"></td>
+                                                                  <td style="text-align: center; max-width: 220px; width: 220px">{{ miembros.nombres }}<br>{{ miembros.parentezco }}<br>{{ miembros.edad }}</td>
                                                                   <td style="text-align: center; width: 145px; min-width: 145px"><span id="mf3_{{ miembros.id }}"></span><br>{{ miembros.numero_documento }}</td>
                                                                   <td style="text-align: center; max-width: 220px; width: 220px"><span id="mf6_{{ miembros.id }}"></span></td>
                                                                   <td style="text-align: center; max-width: 220px; width: 220px"><span id="mf7_{{ miembros.id }}"></span></td>
-                                                                  <td style="text-align: center; max-width: 100px; width: 100px">Sabe Leer : <span id="mf8_{{ miembros.id }}"></span><br>Sabe Escribir : <span id="mf9_{{ miembros.id }}"></span></td>
+                                                                  <td style="text-align: center; max-width: 170px; width: 170px">Sabe Leer : <span id="mf8_{{ miembros.id }}"></span><br>Sabe Escribir : <span id="mf9_{{ miembros.id }}"></span></td>
                                                                   <td style="text-align: center; max-width: 220px; width: 220px"><span id="mf10_{{ miembros.id }}"></span></td>
                                                                   <td style="text-align: center; max-width: 220px; width: 220px">{{ miembros.n_dias_labora }} Dias/Semana<br>{{ miembros.n_horas_labora }} Horas/semana</td>
-                                                                  <td style="text-align: center; max-width: 180px; width: 180px"><span id="mf13_{{ miembros.id }}"></span><br><span id="mf14_{{ miembros.id }}"></span></td>
-                                                                  <td style="text-align: center; max-width: 100px; width: 100px"><span id="mf15_{{ miembros.id }}"></span></td>
-                                                                  <td style="text-align: center"><span id="mf16_{{ miembros.id }}"></span></td>
-                                                                  <td class="text-center">
+                                                                  <td style="text-align: center; max-width: 100px; width: 100px"><span id="mf13_{{ miembros.id }}"></span>
+                                                                  <td style="text-align: center; max-width: 180px; width: 180px"><span id="mf14_{{ miembros.id }}"></span></td>
+                                                                  <td style="text-align: center; max-width: 180px; width: 180px"><span id="mf16_{{ miembros.id }}"></span><br><span id="mf15_{{ miembros.id }}"></span></td>
+                                                                  <td style="text-center; max-width: 140px; width: 140px">
                                                                       <ul class="icons-list">
                                                                           <li class="text-warning-600"><a onclick='eliminar("sucursal/eliminar/","{{ sucursal.id }}","Eliminando Sucursal por favor espere....")' data-popup="tooltip" title="" data-placement="top" data-original-title="ELIMINAR"><i class="icon-bin"></i>&nbsp;&nbsp;&nbsp;</a></li>
                                                                           <li class="text-success-600"><a onclick="datosFamiliar({{ miembros.id }})" data-toggle="modal" data-target="#modal_large" data-popup="tooltip" title="" data-placement="top" data-original-title="EDITAR" /><i class="icon-pencil7"></i>&nbsp;&nbsp;&nbsp;</a>
@@ -903,7 +902,7 @@ $(document).ready(function() {
                                                                   </td>
                                                               </tr>
                                                               <script>
-                                                                MiembroFamilia('{{ miembros.id }}','{{ miembros.tipo_documento }}','{{ miembros.nivel_escolaridad }}','{{ miembros.ocupacion }}','{{ miembros.sabe_leer }}','{{ miembros.sabe_escribir }}','{{ miembros.estado_laboral }}','{{ miembros.condiciones_especiales }}','{{ miembros.aporta_sustento }}','{{ miembros.estado_sgsss }}','{{ miembros.nombre_eps }}',listS,listN,listVC,listCD,listVD,listOC,listNA,listmf_15A,listmf_15D)
+                                                                MiembroFamilia('{{ miembros.id }}','{{ miembros.tipo_documento }}','{{ miembros.nivel_escolaridad.id }}','{{ miembros.nivel_escolaridad }}','{{ miembros.ocupacion.id }}','{{ miembros.ocupacion }}','{{ miembros.sabe_leer }}','{{ miembros.sabe_escribir }}','{{ miembros.estado_laboral }}','{{ miembros.condiciones_especiales }}','{{ miembros.aporta_sustento }}','{{ miembros.estado_sgsss }}','{{ miembros.nombre_eps }}',listS,listN,listVC,listCD,listVD,listOC,listNA,listmf_15A,listmf_15D)
                                                               </script>
                                                               {% endfor %}
                                                               <script>

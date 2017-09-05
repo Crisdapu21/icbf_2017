@@ -1,4 +1,4 @@
-function MiembroFamilia(id,f3,f6,f7,f8,f9,f10,f13,f14,f15,f16,listS,listN,listVC,listCD,listVD,listOC,listNA,listmf_15A,listmf_15D){
+function MiembroFamilia(id,f3,f6,f6_detalle,f7,f7_detalle,f8,f9,f10,f13,f14,f15,f16,listS,listN,listVC,listCD,listVD,listOC,listNA,listmf_15A,listmf_15D){
   if (f8  == "S") {
       VerificarArray("mf8_"+id,listS);
   }
@@ -42,10 +42,10 @@ function MiembroFamilia(id,f3,f6,f7,f8,f9,f10,f13,f14,f15,f16,listS,listN,listVC
       $("#mf3_"+id).text(f3)
   }
   if (f6 != "None") {
-      $("#mf6_"+f6).text(f6)
+      $("#mf6_"+id).text(f6_detalle)
   }
   if (f7 != "None") {
-      $("#mf7_"+f7).text(f7)
+      $("#mf7_"+id).text(f7_detalle)
   }
   if (f10 != "None") {
       $("#mf10_"+id).text(f10)
