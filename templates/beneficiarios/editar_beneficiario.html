@@ -857,22 +857,21 @@ $(document).ready(function() {
                                                           <thead>
                                                               <tr>
                                                                   <th style="text-align: center">PARENTEZCO</th>
-                                                                  <th style="text-align: center">NOMBRE COMPLETO</th>
-                                                                  <th style="text-align: center; width: 145px; min-width: 145px">TIPO DOC</th>
-                                                                  <th style="text-align: center">NUMERO</th>
+                                                                  <th style="text-align: center; max-width: 220px; width: 220px">NOMBRE COMPLETO</th>
+                                                                  <th style="text-align: center; width: 145px; min-width: 145px">DOCUMENTO</th>
                                                                   <th style="text-align: center">EDAD</th>
                                                                   <th style="text-align: center">NIVEL ESCOLARIDAD</th>
                                                                   <th style="text-align: center">OCUPACIÓN</th>
                                                                   <th style="text-align: center">SABE LEER</th>
                                                                   <th style="text-align: center">SABE ESCRIBIR</th>
-                                                                  <th style="text-align: center">ESTADO LABORAL</th>
+                                                                  <th style="text-align: center; max-width: 220px; width: 220px">ESTADO LABORAL</th>
                                                                   <th style="text-align: center">Dias/Semana LABORA</th>
                                                                   <th style="text-align: center">Horas/Dia LABORA</th>
-                                                                  <th style="text-align: center">CONDICIONES ESPECIALES</th>
+                                                                  <th style="text-align: center; max-width: 220px; width: 220px">CONDICIONES ESPECIALES</th>
                                                                   <th style="text-align: center">APORTA AL SUSTENTO</th>
                                                                   <th style="text-align: center">ESTADO SGSSS</th>
-                                                                  <th style="text-align: center">NOMBRE EPS</th>
-                                                                  <th style="text-align: center">ACCIONES</th>
+                                                                  <th style="text-align: center; max-width: 100px; width: 100px">NOMBRE EPS</th>
+                                                                  <th style="text-align: center; max-width: 140px; width: 140px">ACCIONES</th>
                                                               </tr>
                                                           </thead>
                                                           <tbody>
@@ -891,8 +890,7 @@ $(document).ready(function() {
                                                               <tr>
                                                                   <td style="text-align: center">{{ miembros.parentezco }}</td>
                                                                   <td style="text-align: center">{{ miembros.nombres }}</td>
-                                                                  <td style="text-align: center"><span id="mf3_{{ miembros.id }}"></span></td>
-                                                                  <td style="text-align: center">{{ miembros.numero_documento }}</td>
+                                                                  <td style="text-align: center"><span id="mf3_{{ miembros.id }}"></span><br>{{ miembros.numero_documento }</td>
                                                                   <td style="text-align: center">{{ miembros.edad }}</td>
                                                                   <td style="text-align: center"><span id="mf6_{{ miembros.id }}"></span></td>
                                                                   <td style="text-align: center"><span id="mf7_{{ miembros.id }}"></span></td>
@@ -910,8 +908,8 @@ $(document).ready(function() {
                                                                   <td style="text-align: center"><span id="mf16_{{ miembros.id }}"></span></td>
                                                                   <td class="text-center">
                                                                       <ul class="icons-list">
-                                                                          <li class="text-danger-600"><a onclick='eliminar("sucursal/eliminar/","{{ sucursal.id }}","Eliminando Sucursal por favor espere....")' data-popup="tooltip" title="" data-placement="top" data-original-title="ELIMINAR"><i class="icon-bin"></i>&nbsp;&nbsp;&nbsp;</a></li>
-                                                                          <li class="text-primary-600"><a onclick="datosFamiliar({{ miembros.id }})" data-toggle="modal" data-target="#modal_large" data-popup="tooltip" title="" data-placement="top" data-original-title="EDITAR" /><i class="icon-pencil7"></i>&nbsp;&nbsp;&nbsp;</a>
+                                                                          <li class="text-warning-600"><a onclick='eliminar("sucursal/eliminar/","{{ sucursal.id }}","Eliminando Sucursal por favor espere....")' data-popup="tooltip" title="" data-placement="top" data-original-title="ELIMINAR"><i class="icon-bin"></i>&nbsp;&nbsp;&nbsp;</a></li>
+                                                                          <li class="text-success-600"><a onclick="datosFamiliar({{ miembros.id }})" data-toggle="modal" data-target="#modal_large" data-popup="tooltip" title="" data-placement="top" data-original-title="EDITAR" /><i class="icon-pencil7"></i>&nbsp;&nbsp;&nbsp;</a>
                                                                           </li>
                                                                       </ul>
                                                                   </td>
