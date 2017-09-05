@@ -1,8 +1,8 @@
-{% include "head.html" %}{% if messages %}{% for message in messages %}
+{% include "head.html" %}{% if messages %}{% for message in messages %}{% load static from staticfiles %}
 <script>
 	if ("{{ message }}" == "Actualizado"){
 		$( document ).ready(function() {
-			mensagesSuccess("EXITO AL ACTUALIZAR","Contraseña","Actualizada.");
+			mensagesSuccess("EXITO AL ACTUALIZAR","Contraseña","Actualizada Exitosamente");
 		});
 	}
 </script>
@@ -12,38 +12,7 @@
         <div class="page-content">
             <div class="content-wrapper">
                 <div class="content">
-                    <style>
-                      body {
-                          background-position: center center;
-                          background-repeat: no-repeat;
-                          background-attachment: fixed;
-                          -webkit-background-size: cover;
-                          -moz-background-size: cover;
-                          -o-background-size: cover;
-                          background-size: cover;
-                          color: #fff;
-                          background-color: #000000;
-                          font-family: 'Open Sans', sans-serif
-                      }
-                      .centrado-porcentual {
-                          position: absolute;
-                          left: 50%;
-                          top: 50%;
-                          transform: translate(-50%, -50%);
-                          -webkit-transform: translate(-50%, -50%);
-                      }
-                      .panel {
-                          margin-bottom: 20px;
-                          border-color: #ddd;
-                          color: #333;
-                          width: 320px;
-                      }
-                      .panel-body {
-                          padding: 40px;
-                      }
-                      .has-feedback-left .form-control {
-                          margin-bottom: 20px;
-                      }
+                    <style>body{background-position:center center;background-repeat:no-repeat;background-attachment:fixed;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;color:#fff;background-color:#000000}.centrado-porcentual{position:absolute;left:50%;top:50%;transform:translate(-50%, -50%);-webkit-transform:translate(-50%, -50%)}.panel{margin-bottom:20px;border-color:#ddd;color:#333;width:320px}.panel-body{padding:40px}.has-feedback-left .form-control{margin-bottom:20px}
                     </style>
                     <form action="{% url 'login:login' %}" method="post">{% csrf_token %}
                         <div class="panel panel-body login-form">
@@ -58,7 +27,7 @@
         								    </div>
                             {% endif %}
                             <div class="form-group has-feedback has-feedback-left">
-                                <input type="email" name="txtEmail" class="form-control" placeholder="Correo">
+                                <input type="email" name="txtEmail" class="form-control" placeholder="Correo" required="required">
                                 <div class="form-control-feedback">
                                     <i class="icon-user text-muted"></i>
                                 </div>
@@ -80,4 +49,7 @@
         </div>
     </div>
 </body>
+<script type="text/javascript" src="{% static 'js-icbf/notificaciones.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/components_notifications_pnotify.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/notifications/pnotify.min.js' %}"></script>
 {% include "footer.html" %}

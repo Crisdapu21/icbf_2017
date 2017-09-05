@@ -249,7 +249,7 @@ def guardarMedidasAntropometricas(request):
                     c.interpretacion = request.POST['nutricion_interpretacion']
                     c.save()
                     e = Beneficiario.objects.get(id=request.POST['e_ben'])
-                    registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Nutrición','Medidas Antropometricas Creadas Exitosamente.',e.primer_nombre+" "+e.segundo_nombre+" "+e.primer_apellido+" "+e.segundo_apellido)
+                    registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Nutrición','Medidas Antropometricas Creadas Exitosamente',e.primer_nombre+" "+e.segundo_nombre+" "+e.primer_apellido+" "+e.segundo_apellido)
                     peso_talla_Ideal(c.id,e.genero,c.edad_anios,c.edad_meses,c.peso_kilos,c.peso_gramos,c.talla)
                     messages.success(request, 'Guardado')
                 else:

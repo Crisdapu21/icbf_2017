@@ -50,23 +50,23 @@ class FormLoginValidator(Validator):
                     operario.intentos = int(operario.intentos) - 1
                     operario.save()
                     self._message = 'CONTRASEÑA INCORRECTA\n'+'Intentos Restantes: '+ str(operario.intentos)
-                    registrarLogs(usuario.first_name+' '+usuario.last_name,'INICIO DE SESSIÓN','Login','Inicio de Sessión Fallido Contraseña Incorrecta.','')
+                    registrarLogs(usuario.first_name+' '+usuario.last_name,'INICIO DE SESSIÓN','Login','Inicio de Sessión Fallido Contraseña Incorrecta','')
                     return False
                 else:
                     operario.estado = 'I'
                     operario.save()
                     self._message = 'INTENTOS SUPERADOS\n'+'Contacta con el Administrador'
-                    registrarLogs(usuario.first_name+' '+usuario.last_name,'CUENTA BLOQUEADA','Login','Intentos de Contraseña Superados.','')
+                    registrarLogs(usuario.first_name+' '+usuario.last_name,'CUENTA BLOQUEADA','Login','Intentos de Contraseña Superados','')
                     return False
             else:
                 if operario.intentos >= '1' and operario.estado != 'I':
                     operario.intentos = 5
                     operario.save()
-                    registrarLogs(usuario.first_name+' '+usuario.last_name,'INICIO DE SESSIÓN','Login','Inicio de Sessión Exitoso.','')
+                    registrarLogs(usuario.first_name+' '+usuario.last_name,'INICIO DE SESSIÓN','Login','Inicio de Sessión Exitoso','')
                     return True
                 else:
                     self._message = 'INTENTOS SUPERADOS\n'+'Contacta con el Administrador'
-                    registrarLogs(usuario.first_name+' '+usuario.last_name,'CUENTA BLOQUEADA','Login','Intentos de Contraseña Superados.','')
+                    registrarLogs(usuario.first_name+' '+usuario.last_name,'CUENTA BLOQUEADA','Login','Intentos de Contraseña Superados','')
                     return False
         else:
             self._message = 'El Correo NO se encuentra Registrado'

@@ -46,7 +46,7 @@ def guardarComposicionFamiliar(request):
             f.nombre_eps_id = request.POST['cf_eps']
             f.save()
             b = Beneficiario.objects.get(id=request.POST['cf_beneficiario'])
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Familiar','Familiar Creado Exitosamente.',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Familiar','Familiar Creado Exitosamente',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
             messages.success(request, 'g_composicion')
         else:
             f = Familiar.objects.get(id=request.POST['cf_familiar_id'])
@@ -69,7 +69,7 @@ def guardarComposicionFamiliar(request):
             f.nombre_eps_id = request.POST['cf_eps']
             f.save()
             b = Beneficiario.objects.get(id=request.POST['cf_beneficiario'])
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Familiar','Familiar Actualizado Exitosamente.',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Familiar','Familiar Actualizado Exitosamente',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
             messages.success(request, 'a_composicion')
         return HttpResponseRedirect('/beneficiario/editar/'+str(request.POST['cf_beneficiario']))
     else:

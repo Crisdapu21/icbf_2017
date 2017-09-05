@@ -1,0 +1,66 @@
+{% extends 'menu.html' %}{% block content %}{% load static from staticfiles %}
+<body>
+<div class="page-header">
+    <div class="page-header-content">
+      <div class="page-title">
+        <ul class="breadcrumb">
+          <li><h4><a href="javascript:history.back(1)" id="volver_atras" class="icon-arrow-left52 position-left"></a><span class="no-margin text-bold">{{ entidad.nombre }}</span></h4></li>
+        </ul>
+      </div>
+    </div>
+    <div class="breadcrumb-line">
+      <ul class="breadcrumb">
+          <li><a href="{% url 'login:panel' %}"><i class="icon-meter-fast position-left"></i>Panel Administrativo</a></li>
+          <li><a href="{% url 'entidad_administradora_servicio:entidades' %}">Entidades</a></li>
+          <li class="active">{{ entidad.nombre }}</li>
+      </ul>
+    </div>
+</div>
+<div class="content">
+  <div class="panel panel-flat">
+    <div class="panel-heading" style="padding-top: 10px; padding-bottom: 0px;">
+      <h5 class="panel-title"></h5>
+    </div>
+    <div class="panel-body" style="padding: 40px">
+    <form class="form-horizontal form-validate-jquery"  action="{% url 'entidad_administradora_servicio:actualizarEntidad' %}" method="POST"> {% csrf_token %}
+      <input type="hidden" id="entidad_id" name="entidad_id" value="{{ entidad.id }}">
+      <fieldset class="content-group">
+        <div class="form-group">
+          <label class="control-label col-lg-2">Nombre de la Entidad :<span class="text-danger">*</span></label>
+          <div class="col-lg-10"><input type="text" id="nombre_entidad" name="nombre_entidad" maxlength="60" class="form-control" required="required" placeholder="Nombre de la Entidad Administradora" value="{{ entidad.nombre }}"></div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-lg-2">Tipo de Documento : <span class="text-danger">*</span></label>
+          <div class="col-lg-10">
+            <select name="tip_doc" id="tip_doc" class="form-control" required="required">
+              <option value="">-- Selecciona un Tipo de Documento --</option>
+              {% for tipdoc in tipos_documentos %}
+              <option value="{{ tipdoc.id }}">{{ tipdoc.tipo }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-lg-2">Numero Documento :<span class="text-danger">*</span></label>
+          <div class="col-lg-10">
+            <input type="text" id="numero_documento" name="numero_documento" maxlength="15" class="form-control" placeholder="Numero del Documento" onKeyPress="return soloNumeros(event,'beneficiario','numero_documento','NO')" required="required" value="{{ entidad.numero_documento }}">
+          </div>
+        </div>
+      </fieldset>
+      <div class="form-group text-right">
+  			<label class="control-label col-lg-2"></label>
+  			<div class="col-lg-10">
+          <a href="javascript:history.back(1)" class="btn bg-warning-800 btn-labeled btn-xlg" id="reset"><b><i class="icon-undo position-right"></i></b>&nbsp;VOLVER&nbsp;&nbsp;</a>
+  				<button type="submit" class="btn bg-primary-800 btn-labeled btn-xlg"><b><i class="icon-floppy-disk"></i></b>GUARDAR</button>
+  			</div>
+  		</div>
+    </form>
+  </div>
+  </div>
+</div>
+</body>
+{% endblock %}{% block javascript %}
+<script>setSelect('{{ entidad.tipo_documento }}','""','tip_doc','{{ entidad.tipo_documento.id }}')</script>
+<script type="text/javascript" src="{% static 'assets/js/pages/form_validation.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/validation/validate.min.js' %}"></script>
+{% endblock %}

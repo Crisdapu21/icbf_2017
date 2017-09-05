@@ -18,16 +18,23 @@ import json
 
 @login_required(login_url="/login")
 def ajaxDepartamentos(request):
-    departamento =  Departamentos.objects.filter(pais_id = request.GET['pais'])
-    data = serializers.serialize('json', departamento, fields=('id','departamento'))
-    return HttpResponse( data , content_type ='application/json' )
+    if request.GET['pais'] != "":
+        departamento =  Departamentos.objects.filter(pais_id = request.GET['pais'])
+        data = serializers.serialize('json', departamento, fields=('id','departamento'))
+        return HttpResponse( data , content_type ='application/json' )
+    else:
+        data = {}
+        return HttpResponse( data , content_type ='application/json' )
 
 @login_required(login_url="/login")
 def ajaxCiudades(request):
-    ciudad =  Ciudades.objects.filter(departamento_id = request.GET['departamento'])
-    data = serializers.serialize('json', ciudad, fields=('id','ciudad'))
-    return HttpResponse( data , content_type ='application/json' )
-
+    if request.GET['departamento'] != "":
+        ciudad =  Ciudades.objects.filter(departamento_id = request.GET['departamento'])
+        data = serializers.serialize('json', ciudad, fields=('id','ciudad'))
+        return HttpResponse( data , content_type ='application/json' )
+    else:
+        data = {}
+        return HttpResponse( data , content_type ='application/json' )
 
 ################### FUNCION GUARDAR LOGS #######################
 

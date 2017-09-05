@@ -1,0 +1,89 @@
+{% extends 'menu.html' %}{% block content %}{% load static from staticfiles %}{% if messages %}{% for message in messages %}
+<script>
+$( document ).ready(function() {
+	if ("{{ message }}" == "Creada"){
+			mensagesSuccess("EXITO AL GUARDAR","UDS","Creada Exitosamente");
+	}
+	if ("{{ message }}" == "Actualizada"){
+			mensagesSuccess("EXITO AL EDITAR","UDS","Actualizada Exitosamente");
+	}
+	if ("{{ message }}" == "Borrada"){
+			mensagesSuccess("EXITO AL BORRAR","UDS","Borrada Exitosamente");
+	}
+});
+</script>
+{% endfor %}{% endif %}
+<div class="page-header ">
+    <div class="page-header-content">
+      <div class="page-title">
+        <div class="row">
+         <div class="col-xs-12 col-sm-12 col-md-1"></div>
+         <div class="col-xs-12 col-sm-12 col-md-10">
+           <div class="breadcrumb container">
+              <ul id="breadcrumb">
+                <li><h4 style="margin-top: 5px;"><span id="titulo_breadcrumb" class="no-margin text-bold">LISTADO DE UNIDADES DEL SERVICIO</span></h4></li>
+                <li>&nbsp;&nbsp;</li>
+                <li><a href="{% url 'entidad_administradora_servicio:crearUDS' %}"><button class="btn btn bg-warning-800 btn-labeled heading-btn" type="button"><b><i class="icon-store"></i></b>&nbsp;&nbsp;CREAR UNIDAD DEL SERVICIO&nbsp;&nbsp;</button></a></li>
+              </ul>
+           </div>
+         </div>
+         <div class="col-xs-12 col-sm-12 col-md-1"></div>
+       </div>
+      </div>
+    </div>
+    <div class="breadcrumb-line">
+      <ul class="breadcrumb">
+          <li><a href="{% url 'login:panel' %}"><i class="icon-meter-fast position-left"></i>Panel Administrativo</a></li>
+          <li class="active">Unidades del Servicio</a></li>
+      </ul>
+    </div>
+</div>
+<div class="content">
+	<div class="panel panel-flat">
+		<table class="table datatable-responsive">
+			<thead>
+				<tr>
+          <th style="text-align: center;">ENTIDAD</th>
+					<th style="text-align: center;">UDS</th>
+					<th style="text-align: center;">MODALIDAD</th>
+          <th style="text-align: center;">PAIS</th>
+					<th style="text-align: center;">DEPARTAMENTO</th>
+          <th style="text-align: center;">CIUDAD</th>
+					<th style="text-align: center;">DIRECCION</th>
+        	<th style="text-align: center; max-width: 140px; width: 140px">ACCIONES</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% if uds.count >= 1  %}
+      {% for ud in uds %}
+				<tr>
+          <td style="text-align: center; max-width: 180px; width: 180px">{{ ud.entidad }}</td>
+          <td style="text-align: center; max-width: 140px; width: 140px">{{ ud.nombre }}</td>
+          <td style="text-align: center; max-width: 170px; width: 170px">{{ ud.modalidad }}</td>
+          <td style="text-align: center; max-width: 140px; width: 140px">{{ ud.pais }}</td>
+          <td style="text-align: center; max-width: 100px; width: 100px">{{ ud.departamento }}</td>
+					<td style="text-align: center; max-width: 100px; width: 100px">{{ ud.ciudad }}</td>
+					<td style="text-align: center; max-width: 100px; width: 100px">{{ ud.direccion }}</td>
+          <td style="text-align: center">
+    				<ul class="icons-list">
+    					<li class="text-warning-600"><a onclick='eliminar("uds/eliminar/","{{ ud.id }}","Eliminando Unidad del Servicio por favor espere ....")' data-popup="tooltip" title="ELIMINAR" data-placement="top" data-original-title="ELIMINAR"><i class="icon-bin"></i></a></li>
+              <li class="text-success-600"><a href="{% url 'entidad_administradora_servicio:editarUDS' ud.id  %}"  data-popup="tooltip" title="EDITAR" data-placement="top" data-original-title="EDITAR"/><i class="icon-pencil7"></i></a></li>
+						</ul>
+			    </td>
+				</tr>
+      {% endfor %}
+			</tbody>
+		</table>
+    {% endif %}
+	</div>
+</div>
+{% endblock %}{% block javascript %}
+<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/extensions/responsive.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/datatables_responsive.js' %}"></script>
+<script type="text/javascript" src="{% static 'js-icbf/notificaciones.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/components_notifications_pnotify.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/notifications/pnotify.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/loaders/pace.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/loaders/blockui.min.js' %}"></script>
+{% endblock %}

@@ -10,6 +10,7 @@ urlpatterns = [
    url(r'^', include('beneficiarios.urls', namespace='beneficiarios')),
    url(r'^', include('caracteristicas_vivienda.urls', namespace='caracteristicas_vivienda')),
    url(r'^', include('composicion_familiar.urls', namespace='composicion_familiar')),
+   url(r'^', include('entidad_administradora_servicio.urls', namespace='entidad_administradora_servicio')),
    url(r'^', include('relaciones_comunitarias.urls', namespace='relaciones_comunitarias')),
    url(r'^', include('nutricion.urls', namespace='nutricion')),
    url(r'^', include('salud.urls', namespace='salud')),

@@ -78,7 +78,7 @@ def guardarCaracteristicas(request):
             b.modulo_b = "COMPLETADO"
             b.save()
 
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Caracteristicas de Vivienda','Caracteristicas de Vivienda Creadas Exitosamente.',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Caracteristicas de Vivienda','Caracteristicas de Vivienda Creadas Exitosamente',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
         else:
             b = Beneficiario.objects.get(id = request.POST['b_ben'])
             c = CaracteristicasVivienda.objects.get(beneficiario=request.POST['b_ben'])
@@ -129,7 +129,7 @@ def guardarCaracteristicas(request):
             c.b24_nombre = request.POST['servicios_comunitarios']
             c.save()
 
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Caracteristicas de Vivienda','Caracteristicas de Vivienda Actualizadas Exitosamente.',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Caracteristicas de Vivienda','Caracteristicas de Vivienda Actualizadas Exitosamente',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
         messages.success(request, 'Caracteristicas')
         return HttpResponseRedirect('/beneficiarios')
     else:

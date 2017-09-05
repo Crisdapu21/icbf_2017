@@ -1,17 +1,12 @@
-{% extends 'menu.html' %}
-{% block content %}
-{% load static from staticfiles %}
-{% if messages %}
-    {% for message in messages %}
-				<script>
-					if ("{{ message }}" == "PerfilActualizado"){
-						$( document ).ready(function() {
-							mensagesSuccess("EXITO AL EDITAR","Perfil","Actualizado Exitosamente.");
-						});
-					}
-				</script>
-    {% endfor %}
-{% endif %}
+{% extends 'menu.html' %}{% block content %}{% load static from staticfiles %}{% if messages %}{% for message in messages %}
+<script>
+	if ("{{ message }}" == "PerfilActualizado"){
+		$( document ).ready(function() {
+			mensagesSuccess("EXITO AL EDITAR","Perfil","Actualizado Exitosamente.");
+		});
+	}
+</script>
+{% endfor %}{% endif %}
 <div class="page-header">
 	<div class="page-header-content">
 			<div class="page-title">
@@ -125,23 +120,19 @@
 	</div>
 </div>
 {% endblock %}
-{% block javascript %}>
+{% block javascript %}
 <script type="text/javascript" src="{% static 'assets/js/pages/form_validation.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/forms/tags/tokenfield.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/pages/form_tags_input.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/uploaders/fileinput.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery_ui/interactions.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/pages/form_select2.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/validation/validate.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js-icbf/notificaciones.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/components_notifications_pnotify.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/notifications/pnotify.min.js' %}"></script>
 <script>
 obtenerGenero();
 fijarGenero();
-
 //VERIFICAR QUE EL CORREO NO EXISTA
 $('#email').on('input', function() {
 	$('#email').val().trim()
 	verificarEmail();
 });
-
 </script>
 {% endblock %}

@@ -2,13 +2,13 @@
 <script>
 $( document ).ready(function() {
 	if ("{{ message }}" == "Creado"){
-			mensagesSuccess("EXITO AL GUARDAR","Operario","Creado Exitosamente.");
+			mensagesSuccess("EXITO AL GUARDAR","Operario","Creado Exitosamente");
 	}
 	if ("{{ message }}" == "Actualizado"){
-			mensagesSuccess("EXITO AL ACTUALIZAR","Operario","Actualizado Exitosamente.");
+			mensagesSuccess("EXITO AL ACTUALIZAR","Operario","Actualizado Exitosamente");
 	}
 	if ("{{ message }}" == "Borrado"){
-			mensagesSuccess("EXITO AL BORRAR","Operario","Borrado Exitosamente.");
+			mensagesSuccess("EXITO AL BORRAR","Operario","Borrado Exitosamente");
 	}
 });
 </script>
@@ -43,55 +43,42 @@ $( document ).ready(function() {
 		<table class="table datatable-responsive">
 			<thead>
 				<tr>
-          <th class="text-center">OPERARIO</th>
-          <th class="text-center">GENERO</th>
-          <th class="text-center">DIRECCIÓN</th>
-          <th class="text-center">TELEFONO</th>
-          <th class="text-center">CELULAR</th>
-          <th class="text-center">ESTADO</th>
-					<th class="text-center">ACCIONES</th>
+					<th style="text-align: center;">UDS</th>
+          <th style="text-align: center;">OPERARIO</th>
+          <th style="text-align: center;">GENERO</th>
+          <th style="text-align: center;">DIRECCIÓN</th>
+          <th style="text-align: center;">TELEFONO</th>
+          <th style="text-align: center;">ESTADO</th>
+					<th style="text-align: center; max-width: 140px; width: 140px">ACCIONES</th>
 				</tr>
 			</thead>
 			<tbody>
+			<script>
+				var listM = [];
+				var listF = [];
+				var listA = [];
+				var listI = [];
+			</script>
       {% if operarios.count >= 1  %}
-        <script>
-          var listM = [];
-          var listF = [];
-          var listA = [];
-          var listI = [];
-        </script>
         {% for operario in operarios %}
         <tr>
-          <td class="text-center">{{ operario.id.first_name }} {{ operario.id.last_name }}<br>{{ operario.id.email }}</td>
-          <td class="text-center"><span id="g{{ operario.id_id }}"></span></td>
-          <script>
-          if ("{{ operario.genero }}" == "M"){
-              VerificarArray("g{{ operario.id_id }}",listM);
-          }
-          if ("{{ operario.genero }}" == "F"){
-              VerificarArray("g{{ operario.id_id }}",listF);
-          }
-          </script>
-          <td class="text-center">{{ operario.direccion }}</td>
-          <td class="text-center">{{ operario.telefono }}</td>
-          <td class="text-center">{{ operario.celular }}</td>
-          <td class="text-center"><ul id="list{{ operario.id_id }}" class="icons-list"><li id="e{{ operario.id_id }}"></li></ul></td>
-          <script>
-          if ("{{ operario.estado }}" == "A"){
-            VerificarArray("e{{ operario.id_id }}",listA);
-          }
-          if ("{{ operario.estado }}" == "I"){
-              VerificarArray("e{{ operario.id_id }}",listI);
-              $('#list{{ operario.id_id }}').append("<a onclick='activarOperario({{ operario.id_id }})' style='padding-left: 10px;' data-popup='tooltip' title='ACTIVAR OPERARIO' data-placement='top' data-original-title='ACTIVAR OPERARIO'><li class='icon-unlocked2'></li></a>");
-          }
-          </script>
+					<td style="text-align: center;">{{ operario.uds }}</td>
+          <td style="text-align: center;">{{ operario.id.first_name }} {{ operario.id.last_name }}<br>{{ operario.id.email }}</td>
+          <td style="text-align: center;"><span id="g{{ operario.id_id }}"></span></td>
+          <td style="text-align: center;">{{ operario.direccion }}</td>
+          <td style="text-align: center;">{{ operario.celular }}<br>{{ operario.telefono }}</td>
+          <td style="text-align: center;"><ul id="list{{ operario.id_id }}" class="icons-list"><li id="e{{ operario.id_id }}"></li></ul></td>
           <td style="text-align: center;">
             <ul class="icons-list">
-              <li class="text-danger-600"><a onclick='eliminar("operario/eliminar/","{{ operario.id_id }}","Eliminando Operario por favor espere ....")' title="ELIMINAR" data-popup="tooltip" title=""data-placement="top" data-original-title="ELIMINAR"><i class="icon-bin"></i>&nbsp;&nbsp;&nbsp;</a></li>
-              <li class="text-violet-800"><a href="{% url 'operarios:editarOperario' operario.id_id %}" data-popup="tooltip" title="EDITAR" data-placement="top" data-original-title="EDITAR" /><i class="icon-pencil7"></i>&nbsp;&nbsp;&nbsp;</a>
+              <li class="text-warning-600"><a onclick='eliminar("operario/eliminar/","{{ operario.id_id }}","Eliminando Operario por favor espere ....")' title="ELIMINAR" data-popup="tooltip" data-placement="top" data-original-title="ELIMINAR"><i class="icon-bin"></i></a></li>
+              <li class="text-success-600"><a href="{% url 'operarios:editarOperario' operario.id_id %}" data-popup="tooltip" title="EDITAR" data-placement="top" data-original-title="EDITAR"/><i class="icon-pencil7"></i></a></li>
             </ul>
           </td>
 				</tr>
+				<script>
+					setGeneroBeneficiario('{{ operario.id_id }}','{{ operario.genero }}');
+					setEstadoOperario('{{ operario.id_id }}','{{ operario.estado }}');
+				</script>
         {% endfor %}
         <script>
           RemplazarTexto(listM,"Masculino");
@@ -104,12 +91,13 @@ $( document ).ready(function() {
     {% endif %}
 	</div>
 </div>
-{% endblock %}
-{% block javascript %}
+{% endblock %}{% block javascript %}
 <script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/extensions/responsive.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/pages/datatables_responsive.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/ui/prism.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/pages/extension_blockui.js' %}"></script>
+<script type="text/javascript" src="{% static 'js-icbf/notificaciones.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/components_notifications_pnotify.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/notifications/pnotify.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/loaders/pace.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/loaders/blockui.min.js' %}"></script>
 {% endblock %}

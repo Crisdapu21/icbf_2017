@@ -1,0 +1,105 @@
+{% extends 'menu.html' %}{% block content %}{% load static from staticfiles %}
+<body>
+<div class="page-header">
+    <div class="page-header-content">
+      <div class="page-title">
+        <ul class="breadcrumb">
+          <li><h4><a href="javascript:history.back(1)" id="volver_atras" class="icon-arrow-left52 position-left"></a><span class="no-margin text-bold">CREAR UNIDAD DEL SERVICIO</span></h4></li>
+        </ul>
+      </div>
+    </div>
+    <div class="breadcrumb-line">
+      <ul class="breadcrumb">
+          <li><a href="{% url 'login:panel' %}"><i class="icon-meter-fast position-left"></i>Panel Administrativo</a></li>
+          <li><a href="{% url 'entidad_administradora_servicio:uds' %}">Unidades del Servicio</a></li>
+          <li class="active">Nueva</li>
+      </ul>
+    </div>
+</div>
+<div class="content">
+  <div class="panel panel-flat">
+    <div class="panel-heading" style="padding-top: 10px; padding-bottom: 0px;">
+      <h5 class="panel-title"></h5>
+    </div>
+    <div class="panel-body" style="padding: 40px">
+      <form class="form-horizontal form-validate-jquery"  action="{% url 'entidad_administradora_servicio:guardarUDS' %}" method="POST"> {% csrf_token %}
+        <fieldset class="content-group">
+          <div class="form-group">
+            <label class="control-label col-lg-2">Entidad Administradora :<span class="text-danger">*</span></label>
+            <div class="col-lg-10">
+              <select name="entidad" id="entidad" class="form-control" required="required">
+                <option value="">-- Selecciona una Entidad --</option>
+                {% for entidad in entidades %}
+                <option value="{{ entidad.id }}">{{ entidad.nombre }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-lg-2">Nombre UDS :<span class="text-danger">*</span></label>
+            <div class="col-lg-10">
+              <input type="text" id="nombre_uds" name="nombre_uds" maxlength="40" class="form-control" placeholder="Nombre de la Unidad del Servicio" required="required">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-lg-2">Modalidad del Servicio : <span class="text-danger">*</span></label>
+            <div class="col-lg-10">
+              <select name="modalidad" id="modalidad" class="form-control" required="required">
+                <option value="">-- Selecciona una Modalidad --</option>
+                {% for modalidad in modalidades %}
+                <option value="{{ modalidad.id }}">{{ modalidad.modalidad }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-lg-2">Pais :<span class="text-danger">*</span></label>
+            <div class="col-lg-10">
+              <select name="pais" id="pais" onchange="paises('pais','departamento','ciudad')" class="select-search select2-offscreen" required="required">
+                <option value="">-- Selecciona un Pais --</option>
+                {% for pais in paises %}
+                <option value="{{ pais.id }}">{{ pais.pais }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-lg-2">Departamento :<span class="text-danger">*</span></label>
+            <div class="col-lg-10">
+              <select name="departamento" id="departamento" required="required" onchange="departamentos('departamento','ciudad')" class="select-search">
+                <option value="">-- Selecciona un Departamento --</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-lg-2">Ciudad :<span class="text-danger">*</span></label>
+            <div class="col-lg-10">
+              <select name="ciudad" id="ciudad" required="required" class="select-search">
+                <option value="">-- Selecciona una Ciudad o Municipio --</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-lg-2">Dirección :<span class="text-danger">*</span></label>
+            <div class="col-lg-10">
+              <input type="text" id="direccion" name="direccion" maxlength="40" class="form-control" placeholder="Dirección de la Unidad del Servicio" required="required">
+            </div>
+          </div>
+        </fieldset>
+        <div class="form-group text-right">
+  				<label class="control-label col-lg-2"></label>
+  				<div class="col-lg-10">
+  					<a href="javascript:history.back(1)" class="btn bg-warning-800 btn-labeled btn-xlg" id="reset"><b><i class="icon-undo position-right"></i></b>&nbsp;VOLVER&nbsp;&nbsp;</a>
+  					<button type="submit" class="btn bg-primary-800 btn-labeled btn-xlg"><b><i class="icon-floppy-disk"></i></b>GUARDAR</button>
+  				</div>
+  			</div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+{% endblock %}{% block javascript %}
+<script type="text/javascript" src="{% static 'js-icbf/geo.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/form_validation.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/validation/validate.min.js' %}"></script>
+{% endblock %}

@@ -66,7 +66,7 @@ def guardarSalud(request):
             f = Beneficiario.objects.get(id=request.POST['f_ben'])
             f.modulo_f = "COMPLETADO"
             f.save()
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Salud','Salud Creada Exitosamente.',f.primer_nombre+" "+f.segundo_nombre+" "+f.primer_apellido+" "+f.segundo_apellido)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Salud','Salud Creada Exitosamente',f.primer_nombre+" "+f.segundo_nombre+" "+f.primer_apellido+" "+f.segundo_apellido)
         else:
             s = Salud.objects.get(beneficiario=request.POST['f_ben'])
             #F1. El niño o niña se encuentra afiliado al Sistema General de seguridad social en salud
@@ -107,7 +107,7 @@ def guardarSalud(request):
             s.save()
 
             f = Beneficiario.objects.get(id=request.POST['f_ben'])
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Salud','Salud Actualizada Exitosamente.',f.primer_nombre+" "+f.segundo_nombre+" "+f.primer_apellido+" "+f.segundo_apellido)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Salud','Salud Actualizada Exitosamente',f.primer_nombre+" "+f.segundo_nombre+" "+f.primer_apellido+" "+f.segundo_apellido)
         messages.success(request, 'Salud')
         return HttpResponseRedirect('/beneficiarios')
     else:

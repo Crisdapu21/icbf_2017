@@ -1,24 +1,4 @@
-{% extends 'menu.html' %}{% block content %}{% load static from staticfiles %}{% if messages %}{% for message in messages %}
-<script>
-$(document).ready(function() {
-  if ("{{ message }}" == "Composicion") {
-    mensagesSuccess("EXITO AL GUARDAR", "Familiar Agregado", "Exitosamente.");
-  }
-});
-</script>
-{% endfor %}{% endif %}
-<style>
-    .list-group-item {
-        padding: 10px 20px;
-        border: 0;
-        margin-bottom: 20px;
-    }
-
-    .modal-footer {
-        padding-top: 20px;
-        padding: 11px;
-    }
-</style>
+{% extends 'menu.html' %}{% block content %}{% load static from staticfiles %}
 <div class="page-header">
     <div class="page-header-content">
         <div class="page-title">
@@ -32,11 +12,8 @@ $(document).ready(function() {
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li><a href="{% url 'login:panel' %}"><i class="icon-meter-fast position-left"></i>Panel Administrativo</a></li>
-            <li>
-                <a href="{% url 'beneficiarios:beneficiarios' %}"></i>Beneficiarios</a>
-            </li>
-            <li class="active">Nuevo</a>
-            </li>
+            <li><a href="{% url 'beneficiarios:beneficiarios' %}"></i>Beneficiarios</a></li>
+            <li class="active">Nuevo</a></li>
         </ul>
     </div>
 </div>
@@ -331,12 +308,7 @@ $(document).ready(function() {
     </div>
 </div>
 {% endblock %}{% block javascript %}
-<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/extensions/responsive.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/pages/datatables_responsive.js' %}"></script>
+<script type="text/javascript" src="{% static 'js-icbf/geo.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/pages/form_validation.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery_ui/interactions.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/pages/form_select2.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/validation/validate.min.js' %}"></script>
 {% endblock %}

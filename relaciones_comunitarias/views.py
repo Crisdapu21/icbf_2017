@@ -61,7 +61,7 @@ def guardarRelaciones(request):
             d = Beneficiario.objects.get(id=request.POST['d_ben'])
             d.modulo_d = "COMPLETADO"
             d.save()
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Relaciones Comunitarias','Relaciones Comunitarias Creadas Exitosamente.',d.primer_nombre+" "+d.segundo_nombre+" "+d.primer_apellido+" "+d.segundo_apellido)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'GUARDAR','Relaciones Comunitarias','Relaciones Comunitarias Creadas Exitosamente',d.primer_nombre+" "+d.segundo_nombre+" "+d.primer_apellido+" "+d.segundo_apellido)
         else:
             r = Relaciones.objects.get(beneficiario = request.POST['d_ben'])
             #D1. El núcleo familiar se apoya de sus vecinos cuando
@@ -96,7 +96,7 @@ def guardarRelaciones(request):
             r.save()
 
             d = Beneficiario.objects.get(id= request.POST['d_ben'])
-            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Relaciones Comunitarias','Relaciones Comunitarias Creadas Exitosamente.',d.primer_nombre+" "+d.segundo_nombre+" "+d.primer_apellido+" "+d.segundo_apellido)
+            registrarLogs(request.user.first_name+" "+request.user.last_name,'ACTUALIZAR','Relaciones Comunitarias','Relaciones Comunitarias Creadas Exitosamente',d.primer_nombre+" "+d.segundo_nombre+" "+d.primer_apellido+" "+d.segundo_apellido)
         messages.success(request, 'Relaciones')
         return HttpResponseRedirect('/beneficiarios')
     else:

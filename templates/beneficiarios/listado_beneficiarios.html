@@ -2,28 +2,28 @@
 <script>
 $( document ).ready(function() {
 	if ("{{ message }}" == "Creado"){
-			mensagesSuccess("EXITO AL GUARDAR","Beneficiario","Creado Exitosamente.");
+			mensagesSuccess("EXITO AL GUARDAR","Beneficiario","Creado Exitosamente");
 	}
 	if ("{{ message }}" == "Actualizado"){
-			mensagesSuccess("EXITO AL EDITAR","Información del Beneficiario","Actualizada Exitosamente.");
+			mensagesSuccess("EXITO AL EDITAR","Información del Beneficiario","Actualizada Exitosamente");
 	}
 	if ("{{ message }}" == "Borrado"){
-			mensagesSuccess("EXITO AL BORRAR","Beneficiario","Borrado Exitosamente.");
+			mensagesSuccess("EXITO AL BORRAR","Beneficiario","Borrado Exitosamente");
 	}
 	if ("{{ message }}" == "Caracteristicas"){
-			mensagesSuccess("EXITO AL GUARDAR","Catacteristicas de Vivienda","Actualizadas Exitosamente.");
+			mensagesSuccess("EXITO AL GUARDAR","Catacteristicas de Vivienda","Actualizadas Exitosamente");
 	}
 	if ("{{ message }}" == "Cabeza"){
-			mensagesSuccess("EXITO AL GUARDAR","Cabeza de Nucleo","Actualizada Exitosamente.");
+			mensagesSuccess("EXITO AL GUARDAR","Cabeza de Nucleo","Actualizada Exitosamente");
 	}
 	if ("{{ message }}" == "Relaciones"){
-			mensagesSuccess("EXITO AL GUARDAR","Relaciones Comunitarias","Actualizadas Exitosamente.");
+			mensagesSuccess("EXITO AL GUARDAR","Relaciones Comunitarias","Actualizadas Exitosamente");
 	}
   if ("{{ message }}" == "Nutricion"){
-			mensagesSuccess("EXITO AL GUARDAR","Nutrición","Actualizada Exitosamente.");
+			mensagesSuccess("EXITO AL GUARDAR","Nutrición","Actualizada Exitosamente");
 	}
   if ("{{ message }}" == "Salud"){
-			mensagesSuccess("EXITO AL GUARDAR","Salud","Actualizada Exitosamente.");
+			mensagesSuccess("EXITO AL GUARDAR","Salud","Actualizada Exitosamente");
 	}
 });
 </script>
@@ -58,36 +58,34 @@ $( document ).ready(function() {
 		<table class="table datatable-responsive">
 			<thead>
 				<tr>
-        	<th class="text-center">UDS</th>
-          <th class="text-center">TIPO</th>
-          <th class="text-center">BENEFICIARIO</th>
-          <th class="text-center">TIPO DOCUMENTO</th>
-					<th class="text-center">NUMERO</th>
-          <th class="text-center">EDAD</th>
-          <th class="text-center">GENERO</th>
-          <th class="text-center">REPORTES</th>
-					<th class="text-center">ACCIONES</th>
+        	<th style="text-align: center;">UDS</th>
+          <th style="text-align: center;">TIPO</th>
+          <th style="text-align: center;">BENEFICIARIO</th>
+          <th style="text-align: center;">DOCUMENTO</th>
+          <th style="text-align: center;">EDAD</th>
+          <th style="text-align: center;">GENERO</th>
+          <th style="text-align: center;">REPORTES</th>
+					<th style="text-align: center; max-width: 140px; width: 140px">ACCIONES</th>
 				</tr>
 			</thead>
 			<tbody>
+			<script>
+        var listBH = [];
+        var listBM = [];
+        var listM = [];
+        var listF = [];
+				var listA = [];
+				var listM = [];
+      </script>
       {% if beneficiarios.count >= 1  %}
-        <script>
-          var listBH = [];
-          var listBM = [];
-          var listM = [];
-          var listF = [];
-					var listA = [];
-					var listM = [];
-        </script>
         {% for beneficiario in beneficiarios %}
         <tr>
-          <td class="text-center">{{ beneficiario.uds }}</td>
-          <td class="text-center"><span id="t{{ beneficiario.id }}">{{ beneficiario.tipo_beneficiario }}</span></td>
-          <td class="text-center">{{ beneficiario.primer_nombre }} {{ beneficiario.segundo_nombre }}<br>{{ beneficiario.primer_apellido }} {{ beneficiario.segundo_apellido }}</td>
-          <td class="text-center">{{ beneficiario.tipo_documento }}</td>
-          <td class="text-center">{{ beneficiario.numero_documento }}</td>
-          <td class="text-center">{{ beneficiario.edad_anios }} {{ beneficiario.edad_anios_detalle }} {{ beneficiario.edad_meses }} {{ beneficiario.edad_meses_detalle }}</td>
-          <td class="text-center"><span id="g{{ beneficiario.id }}"></span></td>
+          <td style="text-align: center;">{{ beneficiario.uds }}</td>
+          <td style="text-align: center;"><span id="t{{ beneficiario.id }}">{{ beneficiario.tipo_beneficiario }}</span></td>
+          <td style="text-align: center;">{{ beneficiario.primer_nombre }} {{ beneficiario.segundo_nombre }}<br>{{ beneficiario.primer_apellido }} {{ beneficiario.segundo_apellido }}</td>
+          <td style="text-align: center;">{{ beneficiario.tipo_documento }}<br>{{ beneficiario.numero_documento }}</td>
+          <td style="text-align: center;">{{ beneficiario.edad_anios }} {{ beneficiario.edad_anios_detalle }} {{ beneficiario.edad_meses }} {{ beneficiario.edad_meses_detalle }}</td>
+          <td style="text-align: center;"><span id="g{{ beneficiario.id }}"></span></td>
           <td style="text-align: center;">
             <ul class="icons-list">
               <li class="text-bg-grey-600"><a href="{{ servidor }}/beneficiarios/medidas_antropometricas/{{ beneficiario.id }}/reporte" target="_blank" data-popup="tooltip" title="MEDIDAS ANTROPOMETRICAS" data-placement="top" data-original-title="MEDIDAS ANTROPOMETRICAS"><i class="icon-file-pdf"></i>&nbsp;&nbsp;&nbsp;</a></li>
@@ -98,8 +96,8 @@ $( document ).ready(function() {
           </td>
           <td style="text-align: center;">
             <ul class="icons-list">
-              <li class="text-danger-600"><a onclick='eliminar("beneficiario/eliminar/","{{ beneficiario.id }}","Eliminando Beneficiario por favor espere ....")' title="ELIMINAR" data-popup="tooltip" title=""data-placement="top" data-original-title="ELIMINAR"><i class="icon-bin"></i>&nbsp;&nbsp;&nbsp;</a></li>
-              <li class="text-violet-800"><a href="{% url 'beneficiarios:editarBeneficiario' beneficiario.id %}" data-popup="tooltip" title="EDITAR" data-placement="top" data-original-title="EDITAR" /><i class="icon-pencil7"></i>&nbsp;&nbsp;&nbsp;</a>
+              <li class="text-warning-600"><a onclick='eliminar("beneficiario/eliminar/","{{ beneficiario.id }}","Eliminando Beneficiario por favor espere ....")' title="ELIMINAR" data-popup="tooltip" data-placement="top" data-original-title="ELIMINAR"><i class="icon-bin"></i></a></li>
+              <li class="text-success-600"><a href="{% url 'beneficiarios:editarBeneficiario' beneficiario.id %}" data-popup="tooltip" title="EDITAR" data-placement="top" data-original-title="EDITAR" /><i class="icon-pencil7"></i></a></li>
             </ul>
           </td>
 					<script>
@@ -123,8 +121,10 @@ $( document ).ready(function() {
 {% block javascript %}
 <script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/extensions/responsive.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/pages/datatables_responsive.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/ui/prism.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/pages/extension_blockui.js' %}"></script>
+<script type="text/javascript" src="{% static 'js-icbf/notificaciones.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/components_notifications_pnotify.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/notifications/pnotify.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/loaders/pace.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/loaders/blockui.min.js' %}"></script>
 {% endblock %}

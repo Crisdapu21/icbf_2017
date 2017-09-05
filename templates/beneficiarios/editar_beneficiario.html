@@ -11,11 +11,6 @@ $(document).ready(function() {
 </script>
 {% endfor %}{% endif %}
 <style>
-    .list-group-item {
-        padding: 10px 20px;
-        border: 0;
-        margin-bottom: 20px;
-    }
     .modal-footer {
         padding-top: 20px;
         padding: 11px;
@@ -79,11 +74,6 @@ $(document).ready(function() {
                                                               <option value="{{ uds.id }}">{{ uds.nombre }}</option>
                                                               {% endfor %}
                                                           </select>
-                                                          <script>
-                                                              if ("{{ beneficiario.uds }}" != "") {
-                                                                  $("#uds> option[value=" + {{ beneficiario.uds_id }} + "]").attr("selected", "selected");
-                                                              }
-                                                          </script>
                                                       </div>
                                                   </div>
                                                   <div class="form-group">
@@ -145,11 +135,6 @@ $(document).ready(function() {
                                                                   <option value="{{ tipdoc.id }}">{{ tipdoc.tipo }}</option>
                                                                   {% endfor %}
                                                               </select>
-                                                              <script>
-                                                                  if ("{{ beneficiario.tipo_documento }}" != "") {
-                                                                      $("#tip_doc> option[value=" + {{  beneficiario.tipo_documento_id }} + "]").attr("selected", "selected");
-                                                                  }
-                                                              </script>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -179,11 +164,6 @@ $(document).ready(function() {
                                                                   <option value="{{ lug_exp.id }}">{{ lug_exp.ciudad }}</option>
                                                                   {% endfor %}
                                                               </select>
-                                                              <script>
-                                                                  if ("{{ beneficiario.lugar_expedicion }}" != "") {
-                                                                      $("#lug_exp> option[value=" + {{ beneficiario.lugar_expedicion }} + "]").attr("selected", "selected");
-                                                                  }
-                                                              </script>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -207,9 +187,7 @@ $(document).ready(function() {
                                                                   <option value="M">Masculino</option>
                                                                   <option value="F">Femenino</option>
                                                               </select>
-                                                              <script>
-                                                                  fijarValorSelect('sexo', '{{ beneficiario.genero }}')
-                                                              </script>
+                                                              <script>fijarValorSelect('sexo', '{{ beneficiario.genero }}')</script>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -265,11 +243,6 @@ $(document).ready(function() {
                                                                   <option value="5">Palenquero</option>
                                                                   <option value="6">No se Autoreconze</option>
                                                               </select>
-                                                              <script>
-                                                                  if ("{{ beneficiario.grupo_etnico }}" != "") {
-                                                                      $("#grupo_etnico> option[value=" + "{{ beneficiario.grupo_etnico }}" + "]").attr("selected", "selected");
-                                                                  }
-                                                              </script>
                                                           </div>
                                                       </div>
                                                       <div class="form-group">
@@ -359,11 +332,6 @@ $(document).ready(function() {
                                                                   <option value="{{ miembro.id }}">{{ miembro.parentezco }}</option>
                                                                   {% endfor %}
                                                               </select>
-                                                              <script>
-                                                                  if ("{{ beneficiario.a20 }}" != "") {
-                                                                      $("#a20> option[value=" + "{{ beneficiario.a20_id }}" + "]").attr("selected", "selected");
-                                                                  }
-                                                              </script>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -428,11 +396,6 @@ $(document).ready(function() {
                                                               <option value="1">Cabecera</option>
                                                               <option value="2">Resto</option>
                                                           </select>
-                                                          <script>
-                                                              if ("{{ caracteristicas.zona_ubicacion }}" != "") {
-                                                                  $("#z_ubicacion> option[value=" + "{{  caracteristicas.zona_ubicacion }}" + "]").attr("selected", "selected");
-                                                              }
-                                                          </script>
                                                       </div>
                                                   </div>
                                                 </div>
@@ -473,11 +436,6 @@ $(document).ready(function() {
                                                                 <option value="{{ tip_vivienda.id }}">{{ tip_vivienda.tipo_vivienda }}</option>
                                                                 {% endfor %}
                                                             </select>
-                                                            <script>
-                                                                if ("{{ caracteristicas.tipo_vivienda }}" != "") {
-                                                                    $("#tip_vivienda> option[value=" + "{{  caracteristicas.tipo_vivienda_id }}" + "]").attr("selected", "selected");
-                                                                }
-                                                            </script>
                                                         </div>
                                                     </div>
                                                   </div>
@@ -491,11 +449,6 @@ $(document).ready(function() {
                                                                   <option value="{{ tip_tenencia.id }}">{{ tip_tenencia.tipo_tenencia_vivienda }}</option>
                                                                   {% endfor %}
                                                               </select>
-                                                              <script>
-                                                                  if ("{{ caracteristicas.tipo_tenencia }}" != "") {
-                                                                      $("#tip_tenencia> option[value=" + "{{  caracteristicas.tipo_tenencia_id }}" + "]").attr("selected", "selected");
-                                                                  }
-                                                              </script>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -601,11 +554,6 @@ $(document).ready(function() {
                                                                 <option value="{{ tipo.id }}">{{ tipo.tipo_cama }}</option>
                                                                 {% endfor %}
                                                             </select>
-                                                            <script>
-                                                                if ("{{ caracteristicas.b16 }}" != "") {
-                                                                    $("#b16> option[value=" + "{{  caracteristicas.b16_id }}" + "]").attr("selected", "selected");
-                                                                }
-                                                            </script>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <input type="text" id="b16_otro" name="b16_otro" class="form-control" placeholder="Si Selecciono Otro, indique Cual" value="{{ caracteristicas.b16_otro }}">
@@ -630,11 +578,6 @@ $(document).ready(function() {
                                                                 <option value="{{ fu_agua.id }}">{{ fu_agua.fuente_agua_consumible }}</option>
                                                                 {% endfor %}
                                                             </select>
-                                                            <script>
-                                                                if ("{{ caracteristicas.b18 }}" != "") {
-                                                                    $("#b18> option[value=" + "{{  caracteristicas.b18_id }}" + "]").attr("selected", "selected");
-                                                                }
-                                                            </script>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -646,11 +589,6 @@ $(document).ready(function() {
                                                                 <option value="{{ periodo.id }}">{{ periodo.periodo_servicio_agua }}</option>
                                                                 {% endfor %}
                                                             </select>
-                                                            <script>
-                                                                if ("{{ caracteristicas.b19 }}" != "") {
-                                                                    $("#b19> option[value=" + "{{  caracteristicas.b19_id }}" + "]").attr("selected", "selected");
-                                                                }
-                                                            </script>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <input type="text" id="b19_otra" name="b19_otra"  class="form-control" placeholder="Si Selecciona Otra, indique Cual" value="{{ caracteristicas.b19_otro }}">
@@ -665,11 +603,6 @@ $(document).ready(function() {
                                                                 <option value="{{ uso_agua.id }}">{{ uso_agua.uso_agua }}</option>
                                                                 {% endfor %}
                                                             </select>
-                                                            <script>
-                                                                if ("{{ caracteristicas.b20 }}" != "") {
-                                                                    $("#b20> option[value=" + "{{  caracteristicas.b20_id }}" + "]").attr("selected", "selected");
-                                                                }
-                                                            </script>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <label> <strong>B21.</strong> ¿Cuál es el tratamiento que le dan a las basuras?</label>
@@ -679,11 +612,6 @@ $(document).ready(function() {
                                                                 <option value="{{ basuras.id }}">{{ basuras.tratamiento_basuras }}</option>
                                                                 {% endfor %}
                                                             </select>
-                                                            <script>
-                                                                if ("{{ caracteristicas.b21 }}" != "") {
-                                                                    $("#b21> option[value=" + "{{  caracteristicas.b21_id }}" + "]").attr("selected", "selected");
-                                                                }
-                                                            </script>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -695,11 +623,6 @@ $(document).ready(function() {
                                                                 <option value="{{ sanitarios.id }}">{{ sanitarios.tipo_sanitario }}</option>
                                                                 {% endfor %}
                                                             </select>
-                                                            <script>
-                                                                if ("{{ caracteristicas.b22 }}" != "") {
-                                                                    $("#b22> option[value=" + "{{  caracteristicas.b22_id }}" + "]").attr("selected", "selected");
-                                                                }
-                                                            </script>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <label> <strong>B23.</strong> El sanitario es de uso: </label>
@@ -708,11 +631,6 @@ $(document).ready(function() {
                                                                 <option value="EX">Exclusivo para el núcleo familiar</option>
                                                                 <option value="CO">Compartido con otros núcleos</option>
                                                             </select>
-                                                            <script>
-                                                                if ("{{ caracteristicas.b23 }}" != "") {
-                                                                    $("#b23> option[value=" + "{{  caracteristicas.b23 }}" + "]").attr("selected", "selected");
-                                                                }
-                                                            </script>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -958,118 +876,38 @@ $(document).ready(function() {
                                                               </tr>
                                                           </thead>
                                                           <tbody>
-                                                              {% for miembros in miembros_familia %}
                                                               <script>
-                                                                  var listmf_8 = [];
-                                                                  var listmf_9 = [];
-                                                                  var listmf_13 = [];
-                                                                  var listmf_14 = [];
-                                                                  var listmf_15 = [];
+                                                                  var listS = []
+                                                                  var listN = []
+                                                                  var listVC = []
+                                                                  var listCD = []
+                                                                  var listVD = []
+                                                                  var listOC = []
+                                                                  var listNA = []
+                                                                  var listmf_15A = []
+                                                                  var listmf_15D = []
                                                               </script>
+                                                              {% for miembros in miembros_familia %}
                                                               <tr>
                                                                   <td style="text-align: center">{{ miembros.parentezco }}</td>
                                                                   <td style="text-align: center">{{ miembros.nombres }}</td>
                                                                   <td style="text-align: center"><span id="mf3_{{ miembros.id }}"></span></td>
-                                                                  <script>
-                                                                      if ("{{ miembros.tipo_documento }}" != "None") {
-                                                                          $("#mf3_{{ miembros.id }}").text("{{ miembros.tipo_documento }}")
-                                                                      }
-                                                                  </script>
                                                                   <td style="text-align: center">{{ miembros.numero_documento }}</td>
                                                                   <td style="text-align: center">{{ miembros.edad }}</td>
                                                                   <td style="text-align: center"><span id="mf6_{{ miembros.id }}"></span></td>
-                                                                  <script>
-                                                                      if ("{{ miembros.nivel_escolaridad }}" != "None") {
-                                                                          $("#mf6_{{ miembros.id }}").text("{{ miembros.nivel_escolaridad }}")
-                                                                      }
-                                                                  </script>
                                                                   <td style="text-align: center"><span id="mf7_{{ miembros.id }}"></span></td>
-                                                                  <script>
-                                                                      if ("{{ miembros.ocupacion }}" != "None") {
-                                                                          $("#mf7_{{ miembros.id }}").text("{{ miembros.ocupacion }}")
-                                                                      }
-                                                                  </script>
                                                                   <td style="text-align: center"><span id="mf8_{{ miembros.id }}"></span></td>
-                                                                  <script>
-                                                                      if ("{{ miembros.sabe_leer }}" == "S") {
-                                                                          VerificarArray("mf8_{{ miembros.id }}", listmf_8);
-                                                                          RemplazarTexto(listmf_8, "SI")
-                                                                      }
-                                                                      if ("{{ miembros.sabe_leer }}" == "N") {
-                                                                          VerificarArray("mf8_{{ miembros.id }}", listmf_8);
-                                                                          RemplazarTexto(listmf_8, "NO")
-                                                                      }
-                                                                  </script>
                                                                   <td style="text-align: center"><span id="mf9_{{ miembros.id }}"></span></td>
-                                                                  <script>
-                                                                      if ("{{ miembros.sabe_escribir }}" == "S") {
-                                                                          VerificarArray("mf9_{{ miembros.id }}", listmf_9);
-                                                                          RemplazarTexto(listmf_9, "SI")
-                                                                      }
-                                                                      if ("{{ miembros.sabe_escribir }}" == "N") {
-                                                                          VerificarArray("mf9_{{ miembros.id }}", listmf_9);
-                                                                          RemplazarTexto(listmf_9, "NO")
-                                                                      }
-                                                                  </script>
                                                                   <td style="text-align: center"><span id="mf10_{{ miembros.id }}"></span></td>
-                                                                  <script>
-                                                                      if ("{{ miembros.estado_laboral }}" != "None") {
-                                                                          $("#mf10_{{ miembros.id }}").text("{{ miembros.estado_laboral }}")
-                                                                      }
-                                                                  </script>
                                                                   <td style="text-align: center">{{ miembros.n_dias_labora }}</td>
                                                                   <td style="text-align: center">{{ miembros.n_horas_labora }}</td>
                                                                   <td style="text-align: center"><span id="mf13_{{ miembros.id }}"></span></td>
-                                                                  <script>
-                                                                      if ("{{ miembros.condiciones_especiales }}" == "1") {
-                                                                          VerificarArray("mf13_{{ miembros.id }}", listmf_13);
-                                                                          RemplazarTexto(listmf_13, "Victima Conflicto")
-                                                                      }
-                                                                      if ("{{ miembros.condiciones_especiales }}" == "2") {
-                                                                          VerificarArray("mf13_{{ miembros.id }}", listmf_13);
-                                                                          RemplazarTexto(listmf_13, "Con Discapacidad")
-                                                                      }
-                                                                      if ("{{ miembros.condiciones_especiales }}" == "3") {
-                                                                          VerificarArray("mf13_{{ miembros.id }}", listmf_13);
-                                                                          RemplazarTexto(listmf_13, "Victima Desastres")
-                                                                      }
-                                                                      if ("{{ miembros.condiciones_especiales }}" == "4") {
-                                                                          VerificarArray("mf13_{{ miembros.id }}", listmf_13);
-                                                                          RemplazarTexto(listmf_13, "Otra Condicion")
-                                                                      }
-                                                                      if ("{{ miembros.condiciones_especiales }}" == "5") {
-                                                                          VerificarArray("mf13_{{ miembros.id }}", listmf_13);
-                                                                          RemplazarTexto(listmf_13, "Ninguna de las Anteriores")
-                                                                      }
-                                                                  </script>
                                                                   <td style="text-align: center"><span id="mf14_{{ miembros.id }}"></span></td>
-                                                                  <script>
-                                                                      if ("{{ miembros.aporta_sustento }}" == "S") {
-                                                                          VerificarArray("mf14_{{ miembros.id }}", listmf_14);
-                                                                          RemplazarTexto(listmf_14, "SI")
-                                                                      }
-                                                                      if ("{{ miembros.aporta_sustento }}" == "N") {
-                                                                          VerificarArray("mf14_{{ miembros.id }}", listmf_14);
-                                                                          RemplazarTexto(listmf_14, "NO")
-                                                                      }
-                                                                  </script>
                                                                   <td style="text-align: center"><span id="mf15_{{ miembros.id }}"></span></td>
                                                                   <script>
-                                                                      if ("{{ miembros.estado_sgsss }}" == "1") {
-                                                                          VerificarArray("mf15_{{ miembros.id }}", listmf_15);
-                                                                          RemplazarTexto(listmf_15, "Afiliado")
-                                                                      }
-                                                                      if ("{{ miembros.estado_sgsss }}" == "2") {
-                                                                          VerificarArray("mf15_{{ miembros.id }}", listmf_15);
-                                                                          RemplazarTexto(listmf_15, "Desafiliado")
-                                                                      }
+                                                                    MiembroFamilia('{{ miembros.id }}','{{ miembros.tipo_documento }}','{{ miembros.nivel_escolaridad }}','{{ miembros.ocupacion }}','{{ miembros.sabe_leer }}','{{ miembros.sabe_escribir }}','{{ miembros.estado_laboral }}','{{ miembros.condiciones_especiales }}','{{ miembros.aporta_sustento }}','{{ miembros.estado_sgsss }}','{{ miembros.nombre_eps }}',listS,listN,listVC,listCD,listVD,listOC,listNA,listmf_15A,listmf_15D)
                                                                   </script>
                                                                   <td style="text-align: center"><span id="mf16_{{ miembros.id }}"></span></td>
-                                                                  <script>
-                                                                      if ("{{ miembros.nombre_eps }}" != "None") {
-                                                                          $("#mf16_{{ miembros.id }}").text("{{ miembros.nombre_eps }}")
-                                                                      }
-                                                                  </script>
                                                                   <td class="text-center">
                                                                       <ul class="icons-list">
                                                                           <li class="text-danger-600"><a onclick='eliminar("sucursal/eliminar/","{{ sucursal.id }}","Eliminando Sucursal por favor espere....")' data-popup="tooltip" title="" data-placement="top" data-original-title="ELIMINAR"><i class="icon-bin"></i>&nbsp;&nbsp;&nbsp;</a></li>
@@ -1079,6 +917,17 @@ $(document).ready(function() {
                                                                   </td>
                                                               </tr>
                                                               {% endfor %}
+                                                              <script>
+                                                                RemplazarTexto(listS,"SI")
+                                                                RemplazarTexto(listN,"NO")
+                                                                RemplazarTexto(listVC,"Victima Conflicto")
+                                                                RemplazarTexto(listCD,"Con Discapacidad")
+                                                                RemplazarTexto(listVD,"Victima Desastres")
+                                                                RemplazarTexto(listOC,"Otra Condición")
+                                                                RemplazarTexto(listNA,"Ninguna de las Anteriores")
+                                                                RemplazarTexto(listmf_15A,"Afiliado")
+                                                                RemplazarTexto(listmf_15D,"Desafiliado")
+                                                              </script>
                                                           </tbody>
                                                       </table>
                                                   </div>
@@ -1181,11 +1030,6 @@ $(document).ready(function() {
                                                                   <option value="3">ONG</option>
                                                                   <option value="4">Otro</option>
                                                               </select>
-                                                              <script>
-                                                                  if ("{{ cabeza_nucleo.c6_beneficio }}" != "") {
-                                                                      $("#c6_cual> option[value=" + "{{ cabeza_nucleo.c6_beneficio }}" + "]").attr("selected", "selected");
-                                                                  }
-                                                              </script>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -1199,11 +1043,6 @@ $(document).ready(function() {
                                                                   <option value="2">Lactando</option>
                                                                   <option value="3">Ninguna</option>
                                                               </select>
-                                                              <script>
-                                                                  if ("{{ cabeza_nucleo.c7 }}" != "") {
-                                                                      $("#c7> option[value=" + "{{ cabeza_nucleo.c7 }}" + "]").attr("selected", "selected");
-                                                                  }
-                                                              </script>
                                                           </div>
                                                           <div class="col-lg-6">
                                                               <label><strong>C8.</strong> Si no esta afiliado al Sistema de Salud ¿Cuál es la razón?</label>
@@ -1593,11 +1432,6 @@ $(document).ready(function() {
                                                                  <option value="6">Leche de otro mamífero y alimentación familiar</option>
                                                                  <option value="7">Otra</option>
                                                              </select>
-                                                             <script>
-                                                                 if ("{{ nutricion.e6 }}" != "") {
-                                                                     $("#e6> option[value=" + {{ nutricion.e6 }} + "]").attr("selected", "selected");
-                                                                 }
-                                                             </script>
                                                          </div>
                                                          <div class="col-lg-6">
                                                              <input id="e6_otra" name="e6_otra" maxlength="15" type="text" class="form-control" placeholder="Si Selecciono otra Indique Cual" value="{{ nutricion.e6_otra }}">
@@ -1618,11 +1452,6 @@ $(document).ready(function() {
                                                                <option value="6">Leche de otro mamífero y alimentación familiar</option>
                                                                <option value="7">Otra</option>
                                                          </select>
-                                                         <script>
-                                                             if ("{{ nutricion.e7 }}" != "") {
-                                                                 $("#e7> option[value=" + {{ nutricion.e7 }} + "]").attr("selected", "selected");
-                                                             }
-                                                         </script>
                                                          </div>
                                                          <div class="col-lg-6">
                                                              <input id="e7_otra" name="e7_otra" maxlength="15" type="text" class="form-control" placeholder="Si Selecciono otra Indique Cual" value="{{ nutricion.e7_otra }}">
@@ -1918,11 +1747,6 @@ $(document).ready(function() {
                                                                <option value="2">Subsidiado</option>
                                                                <option value="3">Especial</option>
                                                            </select>
-                                                           <script>
-                                                               if ("{{ salud.f2 }}" != "") {
-                                                                   $("#f2> option[value=" + {{ salud.f2 }} + "]").attr("selected", "selected");
-                                                               }
-                                                           </script>
                                                          </div>
                                                      </div>
                                                  </div>
@@ -1936,11 +1760,6 @@ $(document).ready(function() {
                                                              <option value="{{ eps.id }}">{{ eps.nombre }}</option>
                                                              {% endfor %}
                                                            </select>
-                                                           <script>
-                                                               if ("{{ salud.f3 }}" != "") {
-                                                                    $("#f3> option[value=" + {{ salud.f3.id }} + "]").attr("selected", "selected");
-                                                               }
-                                                           </script>
                                                          </div>
                                                      </div>
                                                  </div>
@@ -1961,11 +1780,6 @@ $(document).ready(function() {
                                                                <option value="1">Asistido</option>
                                                                <option value="2">No Asistido</option>
                                                            </select>
-                                                           <script>
-                                                               if ("{{ salud.tipo_parto }}" != "") {
-                                                                   $("#f3_parto> option[value=" + {{ salud.tipo_parto }} + "]").attr("selected", "selected");
-                                                               }
-                                                           </script>
                                                          </div>
                                                      </div>
                                                  </div>
@@ -1978,11 +1792,6 @@ $(document).ready(function() {
                                                                <option value="1">Hospitalario</option>
                                                                <option value="2">No Hospitalario</option>
                                                            </select>
-                                                           <script>
-                                                               if ("{{ salud.servicio_parto }}" != "") {
-                                                                   $("#f3_servicio> option[value=" + {{ salud.servicio_parto }} + "]").attr("selected", "selected");
-                                                               }
-                                                           </script>
                                                          </div>
                                                      </div>
                                                  </div>
@@ -2244,19 +2053,10 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
-{% endblock %} {% block javascript %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/extensions/responsive.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/pages/datatables_responsive.js' %}"></script>
+{% endblock %}{% block javascript %}
+<script type="text/javascript" src="{% static 'js-icbf/geo.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/pages/form_validation.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/forms/tags/tokenfield.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/pages/form_tags_input.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery_ui/interactions.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/pages/form_select2.js' %}"></script>
-
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/validation/validate.min.js' %}"></script>
 <script>
 $( document ).ready(function() {
 
@@ -2323,6 +2123,30 @@ $( document ).ready(function() {
     fijarRespuesta('f7','{{ salud.f7 }}');
     fijarRespuesta('f9','{{ salud.f9 }}');
     fijarRespuesta('f10','{{ salud.f10 }}');
+
+    setSelect2('{{ beneficiario.uds }}','""','uds','{{ beneficiario.uds.id }}')
+    setSelect2('{{ beneficiario.tipo_documento }}','""','tip_doc','{{ beneficiario.tipo_documento_id }}')
+    setSelect2('{{ beneficiario.lugar_expedicion }}','""','lug_exp','{{ beneficiario.lugar_expedicion }}')
+    setSelect('{{ beneficiario.grupo_etnico }}','""','grupo_etnico','{{ beneficiario.grupo_etnico }}')
+    setSelect2('{{ beneficiario.a20 }}','""','a20','{{ beneficiario.a20.id }}')
+    setSelect('{{ caracteristicas.zona_ubicacion }}','""','z_ubicacion','{{ caracteristicas.zona_ubicacion }}')
+    setSelect2('{{ caracteristicas.tipo_vivienda }}','""','tip_vivienda','{{ caracteristicas.tipo_vivienda.id }}')
+    setSelect2('{{ caracteristicas.tipo_tenencia }}','""','tip_tenencia','{{ caracteristicas.tipo_tenencia.id }}')
+    setSelect2('{{ caracteristicas.b16 }}','""','b16','{{  caracteristicas.b16.id }}')
+    setSelect2('{{ caracteristicas.b18 }}','""','b18','{{  caracteristicas.b18.id }}')
+    setSelect2('{{ caracteristicas.b19 }}','""','b19','{{  caracteristicas.b19.id }}')
+    setSelect2('{{ caracteristicas.b20 }}','""','b20','{{  caracteristicas.b20.id }}')
+    setSelect2('{{ caracteristicas.b21 }}','""','b21','{{  caracteristicas.b21.id }}')
+    setSelect2('{{ caracteristicas.b22 }}','""','b22','{{  caracteristicas.b22.id }}')
+    setSelect2('{{ caracteristicas.b23 }}','""','b23','{{  caracteristicas.b23.id }}')
+    setSelect('{{ cabeza_nucleo.c6_beneficio }}','""','c6_cual','{{ cabeza_nucleo.c6_beneficio }}')
+    setSelect('{{ cabeza_nucleo.c7 }}','""','c7','{{ cabeza_nucleo.c7 }}')
+    setSelect2('{{ nutricion.e6 }}','""','e6','{{ nutricion.e6 }}')
+    setSelect2('{{ nutricion.e7 }}','""','e7','{{ nutricion.e7 }}')
+    setSelect2('{{ salud.f2 }}','""','f2','{{ salud.f2 }}')
+    setSelect2('{{ salud.f3 }}','""','f3','{{ salud.f3.id }}')
+    setSelect('{{ salud.tipo_parto }}','""','f3_parto','{{ salud.tipo_parto }}')
+    setSelect('{{ salud.servicio_parto }}','""','f3_servicio','{{ salud.servicio_parto }}')
 
     if ("{{ nutricion.e4 }}" != ""){
     	setChek("{{ nutricion.e4 }}",'controles_tomados');

@@ -3,11 +3,7 @@
 	<div class="page-header-content">
 			<div class="page-title">
 					<ul class="breadcrumb">
-							<li>
-                <h4>
-                  <a href="javascript:history.back(1)" id="volver_atras" class="icon-arrow-left52 position-left"></a><span id="titulo_breadcrumb" class="no-margin text-bold">CREAR OPERARIO</span>
-                </h4>
-							</li>
+							<li><h4><a href="javascript:history.back(1)" id="volver_atras" class="icon-arrow-left52 position-left"></a><span id="titulo_breadcrumb" class="no-margin text-bold">CREAR OPERARIO</span></h4></li>
 					</ul>
 			</div>
 	</div>
@@ -110,8 +106,7 @@
                 </div>
               </fieldset>
               <div class="form-group text-right">
-                  <label class="control-label col-lg-2">
-                  </label>
+                  <label class="control-label col-lg-2"></label>
                   <div class="col-lg-10">
                     <a href="javascript:history.back(1)" class="btn bg-warning-800 btn-labeled btn-xlg" id="reset"><b><i class="icon-undo position-right"></i></b>&nbsp;&nbsp;&nbsp;VOLVER&nbsp;&nbsp;</a>
                     <button type="submit" class="btn bg-primary-800 btn-labeled btn-xlg"><b><i class="icon-floppy-disk"></i></b>GUARDAR</button>
@@ -124,20 +119,16 @@
 </div>
 {% endblock %}{% block javascript %}
 <script type="text/javascript" src="{% static 'assets/js/pages/form_validation.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/forms/tags/tokenfield.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/pages/form_tags_input.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/uploaders/fileinput.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery_ui/interactions.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/pages/form_select2.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/validation/validate.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js-icbf/notificaciones.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/components_notifications_pnotify.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/notifications/pnotify.min.js' %}"></script>
 <script>
 obtenerGenero();
 fijarGenero();
-
 $('#email').on('input', function() {
 	$('#email').val().trim()
 	verificarEmail();
 });
-
 </script>
 {% endblock %}

@@ -1,3 +1,60 @@
+function MiembroFamilia(id,f3,f6,f7,f8,f9,f10,f13,f14,f15,f16,listS,listN,listVC,listCD,listVD,listOC,listNA,listmf_15A,listmf_15D){
+  if (f8  == "S") {
+      VerificarArray("mf8_"+id,listS);
+  }
+  if (f8 == "N") {
+      VerificarArray("mf8_"+id,listN);
+  }
+  if (f9 == "S") {
+      VerificarArray("mf9_"+id,listS);
+  }
+  if (f9 == "N") {
+      VerificarArray("mf9_"+id,listN);
+  }
+  if (f13 == "1") {
+      VerificarArray("mf13_"+id,listVC);
+  }
+  if (f13 == "2") {
+      VerificarArray("mf13_"+id,listCD);
+  }
+  if (f13 == "3") {
+      VerificarArray("mf13_"+id,listVD);
+  }
+  if (f13 == "4") {
+      VerificarArray("mf13_"+id,listOC);
+  }
+  if (f13 == "5") {
+      VerificarArray("mf13_"+id,listNA);
+  }
+  if (f14 == "S") {
+      VerificarArray("mf14_"+id,listS);
+  }
+  if (f14 == "N") {
+      VerificarArray("mf14_"+id,listN);
+  }
+  if (f15 == "1") {
+      VerificarArray("mf15_"+id,listmf_15A);
+  }
+  if (f15 == "2") {
+      VerificarArray("mf15_"+id,listmf_15D);
+  }
+  if (f3 != "None") {
+      $("#mf3_"+id).text(f3)
+  }
+  if (f6 != "None") {
+      $("#mf6_"+f6).text(f6)
+  }
+  if (f7 != "None") {
+      $("#mf7_"+f7).text(f7)
+  }
+  if (f10 != "None") {
+      $("#mf10_"+id).text(f10)
+  }
+  if (f16 != "None") {
+      $("#mf16_"+id).text(f16)
+  }
+}
+
 function AddEventos(id,estado,tipo,beneficiario,allday,detalle,f_inicio,f_fin){
   if (tipo == "PENDIENTES") {
       var title = beneficiario+'\n'+detalle
@@ -22,6 +79,25 @@ function AddEventos(id,estado,tipo,beneficiario,allday,detalle,f_inicio,f_fin){
         color: colores
   }
   eventos.push(e);
+}
+
+
+function setEstadoOperario(id,estado){
+    if (estado == "A"){
+        VerificarArray("e"+id,listA);
+    }
+    if (estado == "I"){
+        VerificarArray("e"+id,listI);
+        $("#list"+id).append("<a onclick=activarOperario("+id+")"+" style='padding-left: 10px;' data-popup='tooltip' title='ACTIVAR OPERARIO' data-placement='top' data-original-title='ACTIVAR OPERARIO'>&nbsp;&nbsp;<li class='icon-unlocked2'></li></a>");
+    }
+}
+function setGeneroBeneficiario(id,genero){
+  if (genero == "M"){
+    VerificarArray("g"+id,listM);
+  }
+  if (genero == "F"){
+    VerificarArray("g"+id,listF);
+  }
 }
 
 function setGeneroBeneficiario(id,genero){
@@ -56,6 +132,17 @@ function ValidarFormulario(lista,modelo,formulario){
   }
 }
 
+function setSelect2(campo,valor,select,multi){
+  if (campo != valor){
+    setMultiSelect2(select,[multi])
+  }
+}
+function setSelect(campo,valor,select,multi){
+  if (campo != valor){
+    setMultiSelect(select,[multi])
+  }
+}
+
 function saveMultiSelect(select,campo){
   lista = [];
   $("#"+select+" :selected").each(function (i,sel) {
@@ -78,7 +165,7 @@ function setMultiSelect2(select,multi){
   for (i=0; i<multi.length; i++) {
     lista.push(multi[i]);
   }
-  ('#'+select).select2('val',multi);
+  $('#'+select).select2('val',multi);
 }
 
 

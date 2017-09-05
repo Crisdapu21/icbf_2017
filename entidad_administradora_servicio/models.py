@@ -12,6 +12,9 @@ class Entidad_Administradora(models.Model):
     nombre = models.CharField(max_length=50, blank=False)
     tipo_documento = models.ForeignKey(Tipo_Documento, null=False ,blank=False)
     numero_documento = models.CharField( max_length=15,  null=False ,blank=False)
+    fecha  = models.DateField(default=datetime.now, blank=True)
+    hora  = models.TimeField(default=datetime.now, blank=True)
+
     def __str__(self):
         return self.nombre
     class Meta:

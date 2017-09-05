@@ -55,7 +55,7 @@ def login(request):
 
 @login_required(login_url="login:login")
 def logout(request):
-    registrarLogs(request.user.first_name+' '+request.user.last_name,'CIERRE DE SESSIÓN','Login','Sessión Terminada Exitosamente.','')
+    registrarLogs(request.user.first_name+' '+request.user.last_name,'CIERRE DE SESSIÓN','Login','Sessión Terminada Exitosamente','')
     auth.logout(request)
     return HttpResponseRedirect("/")
 
