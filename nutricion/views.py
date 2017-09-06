@@ -1631,47 +1631,36 @@ def peso_talla_Ideal(id,genero,edad_anios,edad_meses,pesoK,pesoG,talla):
     c.peso_BajoPesoSeveroG = p_BajoPesoSeveroG
     #c.talla_ideal = t_Ideal
     c.save()
-
     asignarClase(id,p_SobrepesoK,p_SobrepesoG,p_ObesoK,p_ObesoG,p_IdealK,p_IdealG,p_BajoPesoK,p_BajoPesoG,p_BajoPesoSeveroK,p_BajoPesoSeveroG,pesoK,pesoG)
 
 ############## FUNCION ASIGNAR CLASE CUANDO EL PESO O TALLA ESTA FUERA DE RANGO  #######################
 
 def asignarClase(id,p_SobrepesoK,p_SobrepesoG,p_ObesoK,p_ObesoG,p_IdealK,p_IdealG,p_BajoPesoK,p_BajoPesoG,p_BajoPesoSeveroK,p_BajoPesoSeveroG,pesoK,pesoG):
-    pesok = int(pesoK)
-    pesoG = int(pesoG)
-    p_SobrepesoK = int(p_SobrepesoK)
-    p_SobrepesoG = int(p_SobrepesoG)
-    p_ObesoK = int(p_ObesoK)
-    p_ObesoG = int(p_ObesoG)
-    p_IdealK = int(p_IdealK)
-    p_IdealG = int(p_IdealG)
-    p_BajoPesoK = int(p_BajoPesoK)
-    p_BajoPesoG = int(p_BajoPesoG)
-    p_BajoPesoSeveroK = int(p_BajoPesoSeveroK)
-    p_BajoPesoSeveroG = int(p_BajoPesoSeveroG)
+    peso = float(str(pesoK)+"."+str(pesoG))
+    Sobrepeso = float(str(p_SobrepesoK)+"."+str(p_SobrepesoG))
+    Obeso = float(str(p_ObesoK)+"."+str(p_ObesoG))
+    Ideal = float(str(p_IdealK)+"."+str(p_IdealG))
+    BajoPeso = float(str(p_BajoPesoK)+"."+str(p_BajoPesoG))
+    BajoPesoSevero = float(str(p_BajoPesoSeveroK)+"."+str(p_BajoPesoSeveroG))
 
-    if pesoK >= p_SobrepesoK and pesoG >= p_SobrepesoG:
+    if peso >= Sobrepeso:
         c_peso = "Sobrepeso"
         interpretacion = "Sobrepeso"
     else:
-        if pesoK >= p_ObesoK and pesoG >= p_ObesoG:
+        if peso >= Obeso and pesoG < Sobrepeso:
             c_peso = "Obeso"
             interpretacion = "Obeso"
         else:
-            if pesoK >= p_IdealK and pesoG >= p_IdealG:
+            if peso >= Promedio and peso < Obeso:
                 c_peso = "Promedio"
                 interpretacion = "Peso Ideal"
             else:
-                if pesoK >= p_BajoPesoK and pesoG >= p_BajoPesoG:
+                if peso >= BajoPesoSevero and peso < Ideal:
                     c_peso = "Bajo"
                     interpretacion = "Bajo Peso"
                 else:
-                    if pesoK >= p_BajoPesoSeveroK and pesoG >= p_BajoPesoSeveroG:
-                        c_peso = "Severo"
-                        interpretacion = "Bajo Peso Severo"
-                    else:
-                        c_peso = "Severo"
-                        interpretacion = "Bajo Peso Severo"
+                    c_peso = "Severo"
+                    interpretacion = "Bajo Peso Severo"
 
     c = Controles.objects.get(id=id)
     c.clase_peso = c_peso
@@ -1697,7 +1686,6 @@ def MedidasAntropometricasPDF(request, id=None):
         return HttpResponse(result.getvalue(),content_type='application/pdf')
     except ObjectDoesNotExist:
         return HttpResponseRedirect("/")
-
 
 ############## FUNCION GENERAR PDF ENFERMEDADES ######################
 

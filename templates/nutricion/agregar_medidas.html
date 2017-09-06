@@ -88,6 +88,9 @@ $( document ).ready(function() {
 
 </style>
 {% load static from staticfiles %}
+<script type="text/javascript" src="{% static 'js-icbf/notificaciones.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/components_notifications_pnotify.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/notifications/pnotify.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js-icbf/Chart.bundle.js' %}"></script>
 <script type="text/javascript" src="{% static 'js-icbf/utils.js' %}"></script>
 <div class="content">
@@ -162,7 +165,7 @@ $( document ).ready(function() {
                               </td>
                               <td>&nbsp;&nbsp;</td>
                               <td>
-                                <input type="text" id="peso_gramos" name="peso_gramos" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','peso_gramos','NO')" maxlength="4" value="{{ control.peso_gramos }}" disabled="disabled"/>
+                                <input type="text" id="peso_gramos" name="peso_gramos" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','peso_gramos','NO')" maxlength="3" value="{{ control.peso_gramos }}" disabled="disabled"/>
                                 <span align="center" class="help-block">Gms</span>
                               </td>
                             </tr>
@@ -332,7 +335,7 @@ $( document ).ready(function() {
                           <td>&nbsp;&nbsp;</td>
                           <td>
                             <span align="center" class="help-block">Gms</span>
-                            <input type="text" id="nutricion_peso_gramos" name="nutricion_peso_gramos" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','peso_gramos','NO')" maxlength="4">
+                            <input type="text" id="nutricion_peso_gramos" name="nutricion_peso_gramos" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','peso_gramos','NO')" maxlength="3">
                           </td>
                         </tr>
                       </tbody>
