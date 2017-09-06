@@ -1651,7 +1651,7 @@ def asignarClase(id,p_SobrepesoK,p_SobrepesoG,p_ObesoK,p_ObesoG,p_IdealK,p_Ideal
             c_peso = "Obeso"
             interpretacion = "Obeso"
         else:
-            if peso >= Promedio and peso < Obeso:
+            if peso >= Ideal and peso < Obeso:
                 c_peso = "Promedio"
                 interpretacion = "Peso Ideal"
             else:
