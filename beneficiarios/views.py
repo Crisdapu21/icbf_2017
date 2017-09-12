@@ -360,6 +360,61 @@ def HechosVictimizantesPDF(request, id=None):
         return HttpResponseRedirect("/")
 
 
+############## FUNCION GENERAR PDF GENERAL ######################
+
+@login_required(login_url="login:login")
+def reporteGeneralPDF(request):
+    o = Operario.objects.get(id=request.user.id)
+    uds = UDS.objects.get(id=o.uds_id)
+    logo = "icbf-reporte.png"
+
+    cantidad_ben = Beneficiario.objects.filter(uds = o.uds).count()
+    ninos = Beneficiario.objects.filter(Q(uds = o.uds) & Q(genero = "M")).count()
+    ninas = Beneficiario.objects.filter(Q(uds = o.uds) & Q(genero = "F")).count()
+    afro = Beneficiario.objects.filter(Q(grupo_etnico = 1) & Q(uds = o.uds)).count()
+    indigena = Beneficiario.objects.filter(Q(grupo_etnico = 2) & Q(uds = o.uds)).count()
+    gitano = Beneficiario.objects.filter(Q(grupo_etnico = 3) & Q(uds = o.uds)).count()
+    raizal = Beneficiario.objects.filter(Q(grupo_etnico = 4) & Q(uds = o.uds)).count()
+    palenquero = Beneficiario.objects.filter(Q(grupo_etnico = 5) & Q(uds = o.uds)).count()
+    ninguno = Beneficiario.objects.filter(Q(grupo_etnico = 6) & Q(uds = o.uds)).count()
+    menor = Beneficiario.objects.filter(Q(uds = o.uds) & Q(edad_anios = 0)).count()
+    uno = Beneficiario.objects.filter(Q(uds = o.uds) & Q(edad_anios = 1)).count()
+    dos = Beneficiario.objects.filter(Q(uds = o.uds) & Q(edad_anios = 2)).count()
+    tres = Beneficiario.objects.filter(Q(uds = o.uds) & Q(edad_anios = 3)).count()
+    cuatro = Beneficiario.objects.filter(Q(uds = o.uds) & Q(edad_anios = 4)).count()
+    cinco = Beneficiario.objects.filter(Q(uds = o.uds) & Q(edad_anios = 5)).count()
+    victimas = Beneficiario.objects.filter(Q(uds = o.uds) & Q(a18 = "S")).count()
+    victimas_ninos = Beneficiario.objects.filter(Q(uds = o.uds) & Q(a18 = "S") & Q(genero="M")).count()
+    victimas_ninas = Beneficiario.objects.filter(Q(uds = o.uds) & Q(a18 = "S") & Q(genero="F")).count()
+
+    beneficiarios = Beneficiario.objects.filter(uds = o.uds)
+    B = []
+    BM = []
+    BF = []
+    for i in beneficiarios:
+        B.append(i.id)
+        if i.genero == "M":
+            BM.append(i.id)
+        else:
+            BF.append(i.id)
+
+    beneficio = Cabeza_Nucleo.objects.filter(Q(beneficiario__in = B) & Q(c5 = "S")).count()
+    beneficio_ninos = Cabeza_Nucleo.objects.filter(Q(beneficiario__in = BM) & Q(c5 = "S")).count()
+    beneficio_ninas = Cabeza_Nucleo.objects.filter(Q(beneficiario__in = BF) & Q(c5 = "S")).count()
+
+    servicios = CaracteristicasVivienda.objects.filter(Q(beneficiario__in = B) & Q(b17_nombre__icontains="Energía") & Q(b17_nombre__icontains="Acueducto")).count()
+    servicios_ninos = CaracteristicasVivienda.objects.filter(Q(beneficiario__in = BM) & Q(b17_nombre__icontains="Energía") & Q(b17_nombre__icontains="Acueducto")).count()
+    servicios_ninas = CaracteristicasVivienda.objects.filter(Q(beneficiario__in = BF) & Q(b17_nombre__icontains="Energía") & Q(b17_nombre__icontains="Acueducto")).count()
+
+    result = StringIO()
+    html= render_to_string("reportes/general_pdf.html",{"url": URL, "logo": logo, "titulo": "REPORTE GENERAL UDS", 'uds':uds,
+    'cantidad_ben':cantidad_ben, 'ninos':ninos,'ninas':ninas, 'afro':afro,'indigena':indigena,'gitano':gitano,'raizal':raizal,
+    'palenquero':palenquero,'ninguno':ninguno,'menor':menor,'uno':uno,'dos':dos,'tres':tres,'cuatro':cuatro,'cinco':cinco,
+    'victimas':victimas, 'victimas_ninos': victimas_ninos, 'victimas_ninas':victimas_ninas, 'beneficio':beneficio,
+    'beneficio_ninos':beneficio_ninos, 'beneficio_ninas':beneficio_ninas, 'servicios':servicios, 'servicios_ninos': servicios_ninos, 'servicios_ninas':servicios_ninas })
+    pdf = pisa.pisaDocument(html,result)
+    return HttpResponse(result.getvalue(),content_type='application/pdf')
+
 ################### FUNCIÓN GUARDAR NOTA  #######################
 
 @login_required(login_url="login:login")

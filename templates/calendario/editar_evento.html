@@ -186,23 +186,19 @@ $( document ).ready(function() {
 </div>
 {% endblock %}
 {% block javascript %}
-<script>
-$( document ).ready(function() {
-	if ("{{ evento.tipo }}" == "TAREAS"){
-   	$("#modal_tareas").show();
-    setEstado("tareas_estado","tareas_Estado","header_tareas","bg-brown","bg-grey-400","f_tareas","b_tareas");
- 	}
- 	if ("{{ evento.tipo }}" == "PENDIENTES"){
-	 	$("#modal_pendientes").show();
-		$("#form_notas").show();
-    setEstado("pendientes_estado","pendientes_Estado","header_pendientes","bg-orange","bg-grey-400","f_pendientes","b_pendientes");
- 	}
-});
-</script>
 <script type="text/javascript" src="{% static 'assets/js/pages/form_validation.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/forms/tags/tokenfield.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/pages/form_tags_input.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery_ui/interactions.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/pages/form_select2.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/validation/validate.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/styling/switch.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/forms/styling/switchery.min.js' %}"></script>
+<script>
+if ("{{ evento.tipo }}" == "TAREAS"){
+	$("#modal_tareas").show();
+	setEstado("tareas_estado","tareas_Estado","header_tareas","bg-brown","bg-grey-400","f_tareas","b_tareas");
+}
+if ("{{ evento.tipo }}" == "PENDIENTES"){
+	$("#modal_pendientes").show();
+	$("#form_notas").show();
+	setEstado("pendientes_estado","pendientes_Estado","header_pendientes","bg-orange","bg-grey-400","f_pendientes","b_pendientes");
+}
+</script>
 {% endblock %}

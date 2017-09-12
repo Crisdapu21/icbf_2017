@@ -1,0 +1,242 @@
+{% load tags %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+{% load static from staticfiles %}{% load tags %}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ titulo }}</title>
+<link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+<link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+<style>
+.negrita {
+		font-weight: bold;
+}
+.container {
+		margin-left: 200%;
+		margin-right: 200%;
+		text-align: justify;
+		font-size: 14px;
+		margin-top: 40px;
+		margin-bottom: 500px
+}
+
+.td_limites{
+	padding-top: 4px;
+	color: #333;
+}
+
+.Sobrepeso{
+  background-color: #ffcfa7;
+  background: #ffcfa7;
+}
+.Obeso{
+  background-color: #ffe6ce;
+  background: #ffe6ce;
+}
+.Promedio{
+  background-color: #e5f3e6;
+  background: #e5f3e6;
+}
+.Bajo{
+  background-color: #ffdce4;
+  background: #ffdce4;
+}
+.Severo{
+  background-color: #ffb6b1;
+  background: #ffb6b1;
+}
+
+@page {
+		size: a4 portrait;
+		@frame header_frame {
+				-pdf-frame-content: header_content;
+				left: 1cm;
+				right: 1cm;
+				width: 19cm;
+				top: 1.3cm;
+				bottom: 1cm;
+				height: 40pt;
+		}
+		@frame content_frame {
+				left: 1.6cm;
+				right: 1.6cm;
+				top: 40pt;
+				bottom: 4cm;
+		}
+		@frame footer_frame {
+				-pdf-frame-content: footer_content;
+				/*-pdf-frame-border: 1;*/
+
+				right: 1.6cm;
+				width: 512pt;
+				bottom: 1.1cm;
+				height: 0.6cm;
+		}
+		@frame footer_frame {
+				-pdf-frame-content: razon_social;
+				left: 1.6cm;
+				right: 1.6cm;
+				bottom: 1.1cm;
+				width: 10cm;
+				height: 0.6cm;
+		}
+		@frame footer_frame {
+				-pdf-frame-content: footer_sucursal;
+				left: 2cm;
+				right: 2cm;
+				bottom: 1cm;
+				width: 20cm;
+				height: 0.6cm;
+		}
+}
+.reporte {
+		border-collapse: collapse;
+		border: 1px solid black;
+		width: 100%;
+}
+.td_reporte {
+		text-align: center;
+		font-size: 12px;
+	 	padding-top: 5px;
+}
+.tr_primera {
+		background-color: #f2f2f2;
+}
+.borde {
+		border: 1px solid red;
+}
+.titulo {
+		font-family: arial, sans-serif;
+		font-size: 15px;
+		color: #333;
+}
+.td_ben {
+		font-family: arial, sans-serif;
+		font-size: 13px;
+		color: #333;
+}
+.sin_datos {
+		padding: 40px;
+		text-align: center;
+}
+.table-header {
+		background-color: rgb(88, 175, 36);
+		background: rgb(88, 175, 36);
+		border: 1px solid #ddd;
+		padding-top: 4px;
+		color: white;
+		font-size: 13px
+}
+.table-content {
+		border: 1px solid #ddd;
+}
+</style>
+</head>
+<body>
+	<div id="footer_content" align="right">Pagina <pdf:pagenumber> de <pdf:pagecount> </div>
+	<div style="color: #333; font-size: 12px" id="razon_social"><span>Control y Desarrollo App | https://controlydesarrollo.herokuapp.com</span></div>
+  <table style="width:100%">
+    <tr>
+      <th style="width:10%"><img src="{{ url }}{{ logo }}" style="height: 80px; width: 70px;" alt="" /></th>
+      <th style="width:90%">
+        <span class="titulo">
+          <strong>REPORTE {{ titulo }}</strong><br><br>
+          <strong>{{ uds.nombre }}</strong>
+        </span>
+      </th>
+    </tr>
+  </table><br><br>
+  <table style="width:100%;">
+    <tr>
+      <th style="width:70%"></th>
+      <th style="width:30%"></th>
+    </tr>
+    <tr>
+      <td>
+				<div class="td_ben"><strong>Entidad Administradora :</strong><span> {{ uds.entidad }}</span></div>
+        <div class="td_ben"><strong>Unidad de Servicio :</strong><span> {{ uds.nombre  }}</span></div>
+        <div class="td_ben"><strong>Modalidad :</strong><span> {{ uds.modalidad }}</span></div>
+      </td>
+      <td>
+				<div class="td_ben"><strong>Pais :</strong><span> {{ uds.pais }}</span></div>
+				<div class="td_ben"><strong>Departamento :</strong><span> {{ uds.departamento }}</span></div>
+				<div class="td_ben"><strong>Ciudad :</strong><span> {{ uds.ciudad }}</span></div>
+				<div class="td_ben"><strong>Direccion :</strong><span> {{ uds.direccion }}</span></div>
+			</td>
+    </tr>
+  </table><br><br>
+	<table style="width:100%;">
+    <tbody>
+      <table style="width:100%">
+        <tr class="table">
+          <th class="table-header"><strong>CANTIDAD BENEFICIARIOS</strong></th>
+          <th class="table-header"><strong>CANTIDAD NIÑOS</strong></th>
+          <th class="table-header"><strong>CANTIDAD NIÑAS</strong></th>
+          <tr>
+            <td class="td_reporte table-content">{{ cantidad_ben }}</td>
+            <td class="td_reporte table-content">{{ ninos }}</td>
+            <td class="td_reporte table-content">{{ ninas }}</td>
+          </tr>
+				</tr>
+      </table><br>
+			<table style="width:100%">
+        <tr class="table">
+          <th class="table-header"><strong># AFROS</strong></th>
+          <th class="table-header"><strong># INDÍGENAS</strong></th>
+          <th class="table-header"><strong># GITANOS</strong></th>
+					<th class="table-header"><strong># RAIZALES</strong></th>
+					<th class="table-header"><strong># PALENQUEROS</strong></th>
+          <tr>
+            <td class="td_reporte table-content">{{ afro }}</td>
+            <td class="td_reporte table-content">{{ indigena }}</td>
+            <td class="td_reporte table-content">{{ gitano }}</td>
+						<td class="td_reporte table-content">{{ raizal }}</td>
+						<td class="td_reporte table-content">{{ palenquero }}</td>
+          </tr>
+				</tr>
+      </table><br>
+			<table style="width:100%">
+        <tr class="table">
+          <th class="table-header"><strong>0 AÑOS</strong></th>
+          <th class="table-header"><strong>1 AÑO</strong></th>
+          <th class="table-header"><strong>2 AÑOS</strong></th>
+					<th class="table-header"><strong>3 AÑOS</strong></th>
+					<th class="table-header"><strong>4 AÑOS</strong></th>
+					<th class="table-header"><strong>5 AÑOS</strong></th>
+          <tr>
+            <td class="td_reporte table-content">{{ menor }}</td>
+            <td class="td_reporte table-content">{{ uno }}</td>
+            <td class="td_reporte table-content">{{ dos }}</td>
+						<td class="td_reporte table-content">{{ tres }}</td>
+						<td class="td_reporte table-content">{{ cuatro }}</td>
+						<td class="td_reporte table-content">{{ cinco }}</td>
+          </tr>
+				</tr>
+      </table>
+    </tbody>
+  </table><br><br><br>
+  <table style="width:100%;">
+    <tbody>
+      <div style="overflow-x:auto;">
+        <table style="width:100%">
+          <tr class="table">
+            <th></th>
+          </tr>
+          <tr class="table-content">
+            <td style="padding: 10px;">
+              <div class="td_ben"><strong> Total de Victimas del desplazamiento forzado u otro hecho victimizante : </strong> {{ victimas }}</div>
+							<div class="td_ben"><span>En total  {{ victimas_ninos|beneficiarios:'M' }} y {{ victimas_ninas|beneficiarios:'F' }} Han sido Victimas de Hechos Victimizantes. </span></div><br>
+              <div class="td_ben"><strong> Total de Beneficiarios que reciben ayudas de Familias en Acción : </strong>{{ beneficio }}</div>
+							<div class="td_ben"><span>En total  {{ beneficio_ninos|beneficiarios:'M' }} y {{ beneficio_ninas|beneficiarios:'F' }} Reciben ayudas de Familias en Acción.</span></div><br>
+              <div class="td_ben"><strong> Total de Beneficiarios que reciben Servicios Públicos de LUZ y AGUA: </strong>{{ servicios }}</div>
+							<div class="td_ben"><span>En total  {{ servicios_ninos|beneficiarios:'M' }} y {{ servicios_ninas|beneficiarios:'F'}} Reciben los Servicios de Luz y Agua.</span></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </tbody>
+  </table>
+</body>
+</html>

@@ -5,6 +5,19 @@ from django import template
 register = template.Library()
 
 @register.filter
+def beneficiarios(value,bandera):
+    if bandera == "M":
+        if  value == 1:
+            return (str(value)+" Niño")
+        else:
+            return (str(value)+" Niños")
+    else:
+        if  value == 1:
+            return (str(value)+" Niña")
+        else:
+            return (str(value)+" Niñas")
+
+@register.filter
 def respuestas(value):
     if value == "S":
         return ("SI")
@@ -37,14 +50,6 @@ def edades(value,bandera):
             return (str(value)+" Mes")
         else:
             return (str(value)+" Meses")
-
-@register.filter
-def cantidadad_beneficiario(value):
-    if value == 1:
-        return (str(value)+" Beneficiario")
-    else:
-
-        return (str(value)+" Beneficiarios")
 
 @register.filter
 def cantidades(value):

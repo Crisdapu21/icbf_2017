@@ -38,7 +38,9 @@ $( document ).ready(function() {
               <ul id="breadcrumb">
                 <li><h4 style="margin-top: 5px;"><span id="titulo_breadcrumb" class="no-margin text-bold">LISTADO DE BENEFICIARIOS</span></h4></li>
                 <li>&nbsp;&nbsp;</li>
-                <li>   <a href="{% url 'beneficiarios:crearBeneficiario' %}"><button class="btn btn bg-warning-800 btn-labeled heading-btn" type="button"><b><i class=" icon-user-plus"></i></b>&nbsp;&nbsp;CREAR BENEFICIARIO&nbsp;&nbsp;</button></a></li>
+                <li><a href="{% url 'beneficiarios:crearBeneficiario' %}"><button class="btn btn bg-warning-800 btn-labeled heading-btn" type="button"><b><i class="icon-user-plus"></i></b>&nbsp;&nbsp;CREAR BENEFICIARIO&nbsp;&nbsp;</button></a></li>
+								<li>&nbsp;&nbsp;</li>
+                <li><a href="{% url 'beneficiarios:reporteGeneralPDF' %}" target="_blank" ><button class="btn btn bg-danger btn-labeled heading-btn" type="button"><b><i class="icon-file-pdf"></i></b>&nbsp;&nbsp;REPORTE GENERAL&nbsp;&nbsp;</button></a></li>
               </ul>
            </div>
          </div>
