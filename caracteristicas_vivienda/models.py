@@ -87,7 +87,7 @@ class CaracteristicasVivienda(models.Model):
     pais = models.ForeignKey(Paises,null=True ,blank=True)
     departamento = models.ForeignKey(Departamentos,null=True ,blank=True)
     ciudad = models.ForeignKey(Ciudades,null=True ,blank=True)
-    zona_ubicacion =  models.CharField( max_length=2, null=False ,blank=False)
+    zona_ubicacion =  models.CharField( max_length=2, null=False ,blank=True)
     nombre_corregimiento = models.TextField(null=False ,blank=True)
     nombre_barrio = models.TextField(null=False ,blank=True)
     direccion_vivienda = models.TextField(null=False ,blank=True)
@@ -100,13 +100,13 @@ class CaracteristicasVivienda(models.Model):
     #B11. Excluyendo la sala y el comedor de cuantos cuartos dispone el núcleo familiar del beneficiario para que duerman los niños y/o niñas menores de 5 años
     b11 = models.CharField( max_length=2,blank=True)
     #B12. Los niños y niñas duermen con adultos en la misma habitación SI NO
-    b12 = models.CharField( max_length=2, null=False ,blank=False)
+    b12 = models.CharField( max_length=2, null=False ,blank=True)
     #B13. Los niños y niñas duermen con adultos en la misma cama SI NO
-    b13 = models.CharField( max_length=2, null=False ,blank=False)
+    b13 = models.CharField( max_length=2, null=False ,blank=True)
     #B14. La vivienda cuenta con espacios independientes para dormitorio, cocina y baños (Verificación a través de visita domiciliaria) SI NO
-    b14 = models.CharField( max_length=2, null=False ,blank=False)
+    b14 = models.CharField( max_length=2, null=False ,blank=True)
     #B15. La vivienda cuenta con espacios aseados (Verificación a través de visita domiciliaria)
-    b15 = models.CharField( max_length=2, null=False ,blank=False)
+    b15 = models.CharField( max_length=2, null=False ,blank=True)
     #B16. En el núcleo familiar del beneficiario los niños o niñas menores de 5 años duermen en (Solo una opción) (Verificación a través de visita domiciliaria
     b16 = models.ForeignKey(Tipo_Cama,null=True ,blank=True)
     b16_otro = models.TextField(null=False ,blank=True)
@@ -125,7 +125,7 @@ class CaracteristicasVivienda(models.Model):
     #¿Con qué tipo de sanitario cuenta el hogar? (Verificación a través de visita domiciliaria)
     b22 = models.ForeignKey(Tipo_Sanitario,null=True ,blank=True)
     #B23. El sanitario es de uso:
-    b23 = models.CharField( max_length=2, null=False ,blank=False)
+    b23 = models.CharField( max_length=2, null=False ,blank=True)
     #B24. Cerca de la vivienda se cuenta con
     b24_codigo = models.TextField(null=False,blank=True)
     b24_nombre = models.TextField(null=False,blank=True)

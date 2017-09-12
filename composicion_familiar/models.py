@@ -48,7 +48,7 @@ class Cabeza_Nucleo(models.Model):
     id_c2 = models.TextField(null=False ,blank=True)
     #C3. ¿Presenta declaración de los hechos de victimización en el marco del conflicto armado ante la personería,
     # Defensoría o Procuraduría?
-    c3 = models.CharField( max_length=1, null=False ,blank=False)
+    c3 = models.CharField( max_length=1, null=False ,blank=True)
     #C4. Pertenece a población prioritaria de:
     c4 = models.TextField(null=False ,blank=True)
     id_c4 = models.TextField(null=False ,blank=True)
@@ -56,14 +56,14 @@ class Cabeza_Nucleo(models.Model):
     c4_puntaje = models.CharField(max_length=15, null=False, blank=True)
     c4_folio = models.CharField(max_length=15, null=False, blank=True)
     #C5. ¿Recibe subsidio de familias en acción?
-    c5 = models.CharField( max_length=1, null=False ,blank=False)
+    c5 = models.CharField( max_length=1, null=False ,blank=True)
     c5_beneficio =  models.TextField(null=False ,blank=True)
     id_c5_beneficio =  models.TextField(null=False ,blank=True)
     #C6. ¿Se encuentra recibiendo beneficios de otro programa?
-    c6 = models.CharField( max_length=1, null=False ,blank=False)
-    c6_beneficio = models.CharField( max_length=1, null=False ,blank=False)
+    c6 = models.CharField( max_length=1, null=False ,blank=True)
+    c6_beneficio = models.CharField( max_length=1, null=False ,blank=True)
     #C7. La mujer cuidadora del niño o niña menor de cinco años se encuentra
-    c7 = models.CharField( max_length=1, null=False ,blank=False)
+    c7 = models.CharField( max_length=1, null=False ,blank=True)
     #C8. En caso de no encontrarse afiliado al Sistema de seguridad social en salud, ¿Cuál es la razón?
     c8 = models.TextField(null=False ,blank=True)
     id_c8 = models.TextField(null=False ,blank=True)
@@ -75,7 +75,7 @@ class Cabeza_Nucleo(models.Model):
     c10 = models.TextField(null=False ,blank=True)
     id_c10 = models.TextField(null=False ,blank=True)
     #C11. El padre y la madre de los niños y niñas menores de 5 años, planearon con antelación el embarazo
-    c11 = models.CharField( max_length=1, null=False ,blank=False)
+    c11 = models.CharField( max_length=1, null=False ,blank=True)
 
     def __str__(self):
         return str(self.beneficiario)

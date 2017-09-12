@@ -291,7 +291,12 @@ def actualizarBeneficiario(request):
 @login_required(login_url="login:login")
 def eliminarBeneficiario(request, id=None):
   if request.method == 'DELETE':
-       b = Beneficiario.objects.get(id = id)
+       s = Salud.objects.filter(beneficiario = id)
+       n = Nutricion.objects.filter(beneficiario = id)
+       c = Cabeza_Nucleo.objects.filter(beneficiario = id)
+       f = Familiar.objects.filter(beneficiario = id)
+       v = CaracteristicasVivienda.objects.filter(beneficiario = id)
+       b = Beneficiario.objects.filter(id = id)
        try:
          conn = tinys3.Connection(AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_STORAGE_BUCKET_NAME,tls=True)
          lista = conn.list('media/beneficiarios/'+str(id), AWS_STORAGE_BUCKET_NAME)
@@ -301,6 +306,10 @@ def eliminarBeneficiario(request, id=None):
        except OSError as e:
          print(e)
        registrarLogs(request.user.first_name+" "+request.user.last_name,'ELIMINAR','Beneficiarios','Beneficiario Eliminado Exitosamente',b.primer_nombre+" "+b.segundo_nombre+" "+b.primer_apellido+" "+b.segundo_apellido)
+       s.delete()
+       n.delete()
+       c.delete()
+       f.delete()
        b.delete()
        messages.success(request, 'Borrado')
        return HttpResponse(status=200)

@@ -39,19 +39,19 @@ class Nutricion(models.Model):
     peso_nacer = models.CharField( max_length=4,  null=False ,blank=True)
     talla_nacer = models.CharField( max_length=4,  null=False ,blank=True)
     #E3. ¿El niño o niña cuenta con el carnet actualizado de crecimiento y desarrollo
-    e3 =  models.CharField( max_length=2, null=False ,blank=False)
+    e3 =  models.CharField( max_length=2, null=False ,blank=True)
     #E4 Si el niño o niña cuenta con el carnet de crecimiento y desarrollo verifique, cuantos controles de crecimiento y desarrollo ha recibido en los últimos 6 meses
     e4 =  models.TextField(null=False ,blank=True)
     e4_f1 =  models.CharField( max_length=10,  null=False ,blank=True)
     e4_f2 =  models.CharField( max_length=10,  null=False ,blank=True)
     e4_f3 =  models.CharField( max_length=10,  null=False ,blank=True)
     #E5. Si el niño o niña es menor de seis meses ¿Está siendo alimentado con leche materna de forma exclusiva?
-    e5 =  models.CharField( max_length=2, null=False ,blank=False)
+    e5 =  models.CharField( max_length=2, null=False ,blank=True)
     #E6. Si la respuesta anterior es NO, ¿qué tipo de alimentación recibe el niño o niña menor de seis meses?
-    e6 = models.CharField( max_length=2, null=False ,blank=False)
+    e6 = models.CharField( max_length=2, null=False ,blank=True)
     e6_otra = models.TextField(null=False ,blank=True)
     #E7. Si el niño o niña es mayor de 6 meses y menor de 2 años, está siendo alimentado con
-    e7 = models.CharField( max_length=2, null=False ,blank=False)
+    e7 = models.CharField( max_length=2, null=False ,blank=True)
     e7_otra = models.TextField(null=False ,blank=True)
     #E8. Si el niño o niña presenta diagnóstico de desnutrición u obesidad, le han realizado los siguientes exámenes
     t1_d8 = models.TextField(null=False ,blank=True)
@@ -79,11 +79,11 @@ class Nutricion(models.Model):
     a4_d8 = models.TextField(null=False ,blank=True)
     id_a4_d8 = models.TextField(null=False ,blank=True)
     #E9. El niño o niña mayor de dos años ¿ha recibido en el último año antiparasitarios, por parte de algún servicio de salud?
-    e9 = models.CharField( max_length=2, null=False ,blank=False)
+    e9 = models.CharField( max_length=2, null=False ,blank=True)
     #E10. En caso de haber recibido antiparasitarios, indique la última fecha en la que fue tomada por el niño o niña
     e10 = models.CharField( max_length=10,  null=False ,blank=True)
     #E11. El niño o niña tiene alguna dieta especial o restricción alimentaria o alergia alimentaria
-    e11 = models.CharField( max_length=2, null=False ,blank=False)
+    e11 = models.CharField( max_length=2, null=False ,blank=True)
     e11_cual = models.TextField(null=False ,blank=True)
 
     def __str__(self):
