@@ -296,7 +296,7 @@ def eliminarBeneficiario(request, id=None):
        c = Cabeza_Nucleo.objects.filter(beneficiario = id)
        f = Familiar.objects.filter(beneficiario = id)
        v = CaracteristicasVivienda.objects.filter(beneficiario = id)
-       b = Beneficiario.objects.filter(id = id)
+       b = Beneficiario.objects.get(id = id)
        try:
          conn = tinys3.Connection(AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_STORAGE_BUCKET_NAME,tls=True)
          lista = conn.list('media/beneficiarios/'+str(id), AWS_STORAGE_BUCKET_NAME)
