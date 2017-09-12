@@ -1,7 +1,7 @@
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'md+=+p9&m*34v_)7w9fm&6h4=40h#(g09t552u3yeyu46w^imq'
-DEBUG = True
+DEBUG = False
 
 URL = "https://s3.amazonaws.com/icbf-2017/"
 SERVIDOR = "https://controlydesarrollo.herokuapp.com"
