@@ -153,7 +153,6 @@ def guardarNutricion(request):
 def medidasAntropometricas(request, id=None):
     beneficiario = Beneficiario.objects.get(id = id)
     controles = Controles.objects.filter(beneficiario=id).order_by("total_meses")
-    cantidad = Controles.objects.filter(beneficiario=id).count()
 
     edades = []
     lista_pesos = []
@@ -218,7 +217,7 @@ def medidasAntropometricas(request, id=None):
             labels.append(str(a)+' Meses')
 
     label = ','.join(labels)
-    return render(request,'nutricion/agregar_medidas.html',{'controles':controles,'beneficiario':beneficiario,'label':label,'peso':peso, 'cantidad': cantidad })
+    return render(request,'nutricion/agregar_medidas.html',{'controles':controles,'beneficiario':beneficiario,'label':label,'peso':peso })
 
 ################## FUNCION GUARDAR MEDIDAS ANTROPOMETRICAS ######################
 
@@ -261,6 +260,7 @@ def guardarMedidasAntropometricas(request):
 def peso_talla_Ideal(id,genero,edad_anios,edad_meses,pesoK,pesoG,talla):
     edad_anios = int(edad_anios)
     edad_meses = int(edad_meses)
+
     if genero == "M":
         if edad_anios < 1:
             if edad_meses == 0:
@@ -1643,30 +1643,42 @@ def asignarClase(id,p_SobrepesoK,p_SobrepesoG,p_ObesoK,p_ObesoG,p_IdealK,p_Ideal
     BajoPeso = float(str(p_BajoPesoK)+"."+str(p_BajoPesoG))
     BajoPesoSevero = float(str(p_BajoPesoSeveroK)+"."+str(p_BajoPesoSeveroG))
 
-    if peso >= Sobrepeso:
+    if peso > Obeso and peso <= Sobrepeso or peso > Obeso and peso >= Sobrepeso :
         c_peso = "Sobrepeso"
-        interpretacion = "Sobrepeso"
+        interpretacion = "SOBREPESO"
     else:
-        if peso >= Obeso and pesoG < Sobrepeso:
+        if peso > Ideal and peso <= Obeso:
             c_peso = "Obeso"
-            interpretacion = "Obeso"
+            interpretacion = "OBESO"
         else:
-            if peso >= Ideal and peso < Obeso:
+            if peso > BajoPeso and peso <= Ideal:
                 c_peso = "Promedio"
-                interpretacion = "Peso Ideal"
+                interpretacion = "PESO IDEAL"
             else:
-                if peso >= BajoPesoSevero and peso < Ideal:
+                if peso > BajoPesoSevero and peso <= BajoPeso:
                     c_peso = "Bajo"
-                    interpretacion = "Bajo Peso"
+                    interpretacion = "BAJO PESO"
                 else:
                     c_peso = "Severo"
-                    interpretacion = "Bajo Peso Severo"
+                    interpretacion = "BAJO PESO SEVERO"
 
     c = Controles.objects.get(id=id)
     c.clase_peso = c_peso
     #c.clase_talla = c_talla
     c.interpretacion = interpretacion
     c.save()
+
+############## FUNCION GUARDAR GRAFICAS DEL BENEFICIARIO ######################
+
+def guardarGraficas(request):
+    if request.method == 'POST':
+        b = Beneficiario.objects.get(id=request.POST['beneficiario'])
+        b.grafica_peso = request.POST['grafica_peso']
+        #b.grafica_talla = request.POST['grafica_talla']
+        b.save()
+        return HttpResponse('Guardadas Correctamente',status=200)
+    else:
+        return HttpResponse('Solicitud Incorrecta',status=501)
 
 ############## FUNCION GENERAR PDF MEDIDAS ANTROPOMETRICAS ######################
 
@@ -1675,13 +1687,13 @@ def MedidasAntropometricasPDF(request, id=None):
     try:
         logo = "icbf-reporte.png"
         beneficiario = Beneficiario.objects.get(id = id)
+        controles = Controles.objects.filter(beneficiario=id).order_by("total_meses")
         if beneficiario.tipo_beneficiario == "1":
             tipo = 'Niño'
         else:
             tipo = 'Niña'
-        controles = Controles.objects.filter(beneficiario=id).order_by("fecha_control")
         result = StringIO()
-        html= render_to_string("reportes/medidas_antropometricas_pdf.html",{"url": URL, "logo": logo, "beneficiario": beneficiario , "controles": controles, "tipo": tipo, "titulo": "MEDIDAS ANTROPOMETRICAS" })
+        html= render_to_string("reportes/medidas_antropometricas_pdf.html",{'url':URL,'logo':logo,'beneficiario':beneficiario,'controles':controles,'tipo':tipo,'titulo':'MEDIDAS ANTROPOMETRICAS'})
         pdf = pisa.pisaDocument(html,result)
         return HttpResponse(result.getvalue(),content_type='application/pdf')
     except ObjectDoesNotExist:

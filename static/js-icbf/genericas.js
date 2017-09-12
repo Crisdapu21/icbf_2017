@@ -427,7 +427,6 @@ function adicionarNotas(){
   }
 }
 
-
 function validarCampos(modelo,campo){
   if ($("#"+modelo+"_"+campo).val() == ""){
     $("#"+modelo+"_"+campo).focus();

@@ -32,7 +32,7 @@ def guardarNotificacion(evento,uds,tipo,f_inicio,f_fin,beneficiario,nombre,detal
         n.beneficiario_id = int(beneficiario)
     n.nombre = nombre
     n.detalle = detalle
-    n.limite = "A_TIEMPO"
+    n.limite = "A TIEMPO"
     n.save()
 
     e = Eventos.objects.get(id=evento)

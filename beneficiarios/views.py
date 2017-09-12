@@ -86,39 +86,18 @@ def guardarBeneficiario(request):
         b.edad_anios = int(d_fechas.days / 365.2425)
         meses = int(d_fechas.days / 30.4375)
 
-        if  b.edad_anios == 1 or meses == 1:
-            if meses == 1:
-                b.edad_meses_detalle = "Mes"
-            if b.edad_anios == 1:
-                b.edad_anios_detalle = "Año"
-            if meses < 12:
-                b.edad_meses = meses
-            if meses >=12.9 and meses <=23.9:
-                b.edad_meses = meses - 12
-            if meses >=24.9 and meses <=35.9:
-                b.edad_meses = meses - 24
-            if meses >=36.9 and meses <=47.9:
-                b.edad_meses = meses - 36
-            if meses >=48.9 and meses <=59.9:
-                b.edad_meses = meses - 48
-            if meses >=60.9 and meses <=71.9:
-                b.edad_meses = meses - 60
-            b.edad_meses_detalle = "Meses"
-        else:
-            b.edad_anios_detalle = "Años"
-            b.edad_meses_detalle = "Meses"
-            if meses < 12:
-                b.edad_meses = meses
-            if meses >=12.9 and meses <=23.9:
-                b.edad_meses = meses - 12
-            if meses >=24.9 and meses <=35.9:
-                b.edad_meses = meses - 24
-            if meses >=36.9 and meses <=47.9:
-                b.edad_meses = meses - 36
-            if meses >=48.9 and meses <=59.9:
-                b.edad_meses = meses - 48
-            if meses >=60.9 and meses <=71.9:
-                b.edad_meses = meses - 60
+        if meses < 12:
+            b.edad_meses = meses
+        if meses >=12 and meses <=23.9:
+            b.edad_meses = meses - 12
+        if meses >=24 and meses <=35.9:
+            b.edad_meses = meses - 24
+        if meses >=36 and meses <=47.9:
+            b.edad_meses = meses - 36
+        if meses >=48 and meses <=59.9:
+            b.edad_meses = meses - 48
+        if meses >=60 and meses <=71.9:
+            b.edad_meses = meses - 60
 
         b.tipo_documento_id = request.POST['tip_doc']
         b.numero_documento = request.POST['numdoc']
@@ -239,39 +218,18 @@ def actualizarBeneficiario(request):
         b.edad_anios = int(d_fechas.days / 365.2425)
         meses = int(d_fechas.days / 30.4375)
 
-        if  b.edad_anios == 1 or meses == 1:
-            if meses == 1:
-                b.edad_meses_detalle = "Mes"
-            if b.edad_anios == 1:
-                b.edad_anios_detalle = "Año"
-            if meses < 12:
-                b.edad_meses = meses
-            if meses >=12.9 and meses <=23.9:
-                b.edad_meses = meses - 12
-            if meses >=24.9 and meses <=35.9:
-                b.edad_meses = meses - 24
-            if meses >=36.9 and meses <=47.9:
-                b.edad_meses = meses - 36
-            if meses >=48.9 and meses <=59.9:
-                b.edad_meses = meses - 48
-            if meses >=60.9 and meses <=71.9:
-                b.edad_meses = meses - 60
-            b.edad_meses_detalle = "Meses"
-        else:
-            b.edad_anios_detalle = "Años"
-            b.edad_meses_detalle = "Meses"
-            if meses < 12:
-                b.edad_meses = meses
-            if meses >=12.9 and meses <=23.9:
-                b.edad_meses = meses - 12
-            if meses >=24.9 and meses <=35.9:
-                b.edad_meses = meses - 24
-            if meses >=36.9 and meses <=47.9:
-                b.edad_meses = meses - 36
-            if meses >=48.9 and meses <=59.9:
-                b.edad_meses = meses - 48
-            if meses >=60.9 and meses <=71.9:
-                b.edad_meses = meses - 60
+        if meses < 12:
+            b.edad_meses = meses
+        if meses >=12 and meses <=23.9:
+            b.edad_meses = meses - 12
+        if meses >=24 and meses <=35.9:
+            b.edad_meses = meses - 24
+        if meses >=36 and meses <=47.9:
+            b.edad_meses = meses - 36
+        if meses >=48 and meses <=59.9:
+            b.edad_meses = meses - 48
+        if meses >=60 and meses <=71.9:
+            b.edad_meses = meses - 60
 
         b.grupo_etnico = request.POST['grupo_etnico']
         #A14. Si el núcleo familiar del beneficiario se reconoce como Afrocolombiano o Indígena indique a qué comunidad, resguardo o territorio colectivo pertenece

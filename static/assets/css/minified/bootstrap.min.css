@@ -1,5 +1,26 @@
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
+.Sobrepeso{
+  background-color: #ffcfa7;
+  background: #ffcfa7;
+}
+.Obeso{
+  background-color: #ffe6ce;
+  background: #ffe6ce;
+}
+.Promedio{
+  background-color: #e5f3e6;
+  background: #e5f3e6;
+}
+.Bajo{
+  background-color: #ffdce4;
+  background: #ffdce4;
+}
+.Severo{
+  background-color: #ffb6b1;
+  background: #ffb6b1;
+}
+
 html {
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;

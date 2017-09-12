@@ -14,6 +14,7 @@ from .validators import  FormLoginValidator
 import time
 from icbf.settings import URL, GRUPO1, GRUPO2
 from operarios.models import Operario
+from beneficiarios.models import Beneficiario
 import django.conf as conf
 from datetime import datetime, timedelta
 from parametrizacion.views import registrarLogs
@@ -42,12 +43,12 @@ def login(request):
             operario = Operario.objects.get(pk= request.user.id)
             foto = str(operario.foto)
             request.session["foto"] = URL+foto
-            return HttpResponseRedirect('/panel')
+            return HttpResponseRedirect('/dashboard')
         else:
             return render(request, "login/login.html",{'error': validator.getMessage(), 'url': URL })
     else:
         if request.user.is_authenticated:
-            return HttpResponseRedirect('/panel')
+            return HttpResponseRedirect('/dashboard')
         else:
             return render(request, "login/login.html",{'url': URL })
 
@@ -62,5 +63,12 @@ def logout(request):
 ################### TEMPLATE HOME ############################
 
 @login_required(login_url="login:login")
-def panel(request):
-    return render(request,'panel.html')
+def dashboard(request):
+    afro = Beneficiario.objects.filter(grupo_etnico = 1).count()
+    indigena = Beneficiario.objects.filter(grupo_etnico = 2).count()
+    gitano = Beneficiario.objects.filter(grupo_etnico = 3).count()
+    raizal = Beneficiario.objects.filter(grupo_etnico = 4).count()
+    palenquero = Beneficiario.objects.filter(grupo_etnico = 5).count()
+    ninguno = Beneficiario.objects.filter(grupo_etnico = 6).count()
+    beneficiarios = Beneficiario.objects.all().count()
+    return render(request,'dashboard.html', {'afro':afro,'indigena':indigena,'gitano':gitano,'raizal':raizal,'palenquero':palenquero,'ninguno':ninguno,'beneficiarios':beneficiarios})

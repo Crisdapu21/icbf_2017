@@ -25,10 +25,8 @@ class Beneficiario(models.Model):
     fecha_expedicion = models.CharField( max_length=10,  null=False ,blank=True)
     lugar_expedicion = models.CharField( max_length=5,  null=False ,blank=True)
     fecha_nacimiento = models.CharField( max_length=10,  null=False ,blank=True)
-    edad_anios = models.CharField( max_length=2,null=False ,blank=True)
-    edad_meses = models.CharField( max_length=2,null=False ,blank=True)
-    edad_anios_detalle = models.CharField( max_length=4,null=False ,blank=True)
-    edad_meses_detalle = models.CharField( max_length=5,null=False ,blank=True)
+    edad_anios = models.BigIntegerField(null=False ,blank=True)
+    edad_meses = models.BigIntegerField(null=False ,blank=True)
     genero = models.CharField( max_length=1, null=False ,blank=False)
     foto =  models.ImageField(upload_to=beneficiario_directory_path, blank=True)
     pais = models.ForeignKey(Paises,null=True ,blank=True)
@@ -51,6 +49,8 @@ class Beneficiario(models.Model):
     # Señale el tipo de relación del miembro del grupo familiar con el que convive, que ha sido víctima del Desplazamiento u otro hecho victimizante
     a20 = models.ForeignKey(Parentezco, null=True ,blank=True)
     #Banderas para saber que modulos estan completados
+    grafica_peso = models.TextField(null=False ,blank=True)
+    grafica_talla = models.TextField(null=False ,blank=True)
     modulo_b  =  models.CharField( max_length=15, null=False, blank=True)
     modulo_c = models.CharField( max_length=15, null=False, blank=True)
     modulo_d = models.CharField( max_length=15, null=False, blank=True)

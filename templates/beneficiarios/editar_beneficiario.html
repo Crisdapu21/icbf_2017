@@ -28,7 +28,7 @@ $(document).ready(function() {
     </div>
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
-            <li><a href="{% url 'login:panel' %}"><i class="icon-meter-fast position-left"></i>Panel Administrativo</a></li>
+            <li><a href="{% url 'login:dashboard' %}"><i class="icon-meter-fast position-left"></i>Dashboard</a></li>
             <li><a href="{% url 'beneficiarios:beneficiarios' %}"></i>Beneficiarios</a></li>
             <li>Editar</li>
             <li class="active">{{ beneficiario.primer_nombre }} {{ beneficiario.segundo_nombre }} {{ beneficiario.primer_apellido }} {{ beneficiario.segundo_nombre }}</a></li>
@@ -1265,7 +1265,7 @@ $(document).ready(function() {
                                    <ul class="nav nav-tabs nav-tabs-highlight nav-justified">
                                        <li class="active"><a href="#justified-left-tab5" data-toggle="tab" aria-expanded="true"><i class="position-left"><strong>E.</i>NUTRICIÓN</a></strong></li>
                                        <li class=""><a href="#justified-left-tab6" data-toggle="tab" aria-expanded="false"><i class="position-left"><strong>F.</i>SALUD</a></strong></li>
-                                       <li class=""><a href="#justified-left-tab7" data-toggle="tab" aria-expanded="false"><i class="position-left"><strong>G.</i>FACTORES DE RIESGO</a></strong></li>
+                                       <!--<li class=""><a href="#justified-left-tab7" data-toggle="tab" aria-expanded="false"><i class="position-left"><strong>G.</i>FACTORES DE RIESGO</a></strong></li>-->
                                    </ul>
                                    <div class="tab-content">
                                        <div class="tab-pane active" id="justified-left-tab5">

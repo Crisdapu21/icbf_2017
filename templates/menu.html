@@ -37,6 +37,11 @@
                  <i class="icon-gear"></i><span>Parametrización</span>
                 </a>
               </li>
+              <li id="menu_dashboard">
+                <a href="{% url 'login:dashboard' %}">
+                  <i class="icon-meter-fast position-left"></i><span>Dashboard</span>
+                </a>
+              </li>
               <li id="menu_entidades">
                 <a href="{% url 'entidad_administradora_servicio:entidades' %}">
                   <i class="icon-city"></i><span>Entidades</span>
@@ -88,6 +93,7 @@
         }
         if ("{{ request.session.grupo }}" == "2") {
             $("#menu_parametrizacion").remove()
+            $("#menu_dashboard").remove()
             $("#menu_entidades").remove()
             $("#menu_uds").remove()
             $("#menu_operarios").remove()

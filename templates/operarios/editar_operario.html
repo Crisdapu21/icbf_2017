@@ -9,7 +9,7 @@
 	</div>
 	<div class="breadcrumb-line">
 			<ul class="breadcrumb">
-					<li><i class="icon-meter-fast position-left"></i>Panel Administrativo</a></li>
+					<li><a href="{% url 'login:dashboard' %}"><i class="icon-meter-fast position-left"></i>Dashboard</a></li>
           <li><a href="{% url 'operarios:operarios' %}">Operarios</a></li>
           <li>Editar</li>
 					<li class="active">{{ operario.first_name }} {{ operario.last_name }}</a></li>

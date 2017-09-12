@@ -10,4 +10,5 @@ urlpatterns = [
     url('^beneficiarios/enfermedades/(?P<id>\d+)/reporte$', views.EnfermedadesPDF, name = 'EnfermedadesPDF'),
     url('^guardarNutricion$', views.guardarNutricion, name = 'guardarNutricion'),
     url('^guardarMedidasAntropometricas$', views.guardarMedidasAntropometricas, name = 'guardarMedidasAntropometricas'),
+    url('^beneficiarios/guardarGraficas$', views.guardarGraficas, name = 'guardarGraficas'),
 ]

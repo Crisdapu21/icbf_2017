@@ -1,4 +1,4 @@
-{% extends 'menu.html' %} {% block content %}{% load static from staticfiles %}{% if messages %}{% for message in messages %}
+{% extends 'menu.html' %}{% block content %}{% load static from staticfiles %}{% if messages %}{% for message in messages %}
 <script>
 $( document ).ready(function() {
 	if ("{{ message }}" == "Guardado"){
@@ -16,25 +16,6 @@ $( document ).ready(function() {
 });
 </script>
 {% endfor %}{% endif %}
-<div class="page-header">
-    <div class="page-header-content">
-        <div class="page-title">
-            <ul class="breadcrumb">
-                <li>
-                  <h4><a href="javascript:history.back(1)" id="volver_atras" class="icon-arrow-left52 position-left"></a><span class="no-margin text-bold">MEDIDAS ANTROPOMETRICAS</span></h4>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="breadcrumb-line">
-        <ul class="breadcrumb">
-          <li><a href="{% url 'login:panel' %}"><i class="icon-meter-fast position-left"></i>Panel Administrativo</a></li>
-          <li><a href="{% url 'beneficiarios:beneficiarios' %}">Beneficiarios</a></li>
-          <li>Medidas Antropometricas</li>
-          <li><a class="active" href="{% url 'beneficiarios:editarBeneficiario'  beneficiario.id  %}">{{ beneficiario.primer_nombre }} {{ beneficiario.segundo_nombre }} {{ beneficiario.primer_apellido }} {{ beneficiario.segundo_nombre }}</a></li>
-        </ul>
-    </div>
-</div>
 <style>
     legend {
         margin-bottom: 30px;
@@ -63,31 +44,26 @@ $( document ).ready(function() {
     	margin-top: 2px;
     	margin-bottom: 5px;
 		}
-
-		.Sobrepeso{
-	    background-color: rgba(255, 90, 12, 0.52);
-	    background: rgba(255, 90, 12, 0.52);
-		}
-		.Obeso{
-	    background-color: rgba(255, 166, 77, 0.41);
-	    background: rgba(255, 166, 77, 0.41);
-		}
-		.Promedio{
-	    background-color: rgba(88, 175, 36, 0.56);
-	    background: rgba(88, 175, 36, 0.56);
-		}
-		.Bajo{
-	    background-color: rgba(255, 99, 132, 0.57);
-	    background: rgba(255, 99, 132, 0.57);
-		}
-		.Severo{
-	    background-color: rgba(255, 17, 0, 0.58);
-	    background: rgba(255, 17, 0, 0.58);
-		}
-
-
 </style>
-{% load static from staticfiles %}
+<div class="page-header">
+    <div class="page-header-content">
+        <div class="page-title">
+            <ul class="breadcrumb">
+                <li>
+                  <h4><a href="javascript:history.back(1)" id="volver_atras" class="icon-arrow-left52 position-left"></a><span class="no-margin text-bold">MEDIDAS ANTROPOMETRICAS</span></h4>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+          <li><a href="{% url 'login:dashboard' %}"><i class="icon-meter-fast position-left"></i>Dashboard</a></li>
+          <li><a href="{% url 'beneficiarios:beneficiarios' %}">Beneficiarios</a></li>
+          <li>Medidas Antropometricas</li>
+          <li><a class="active" href="{% url 'beneficiarios:editarBeneficiario'  beneficiario.id  %}">{{ beneficiario.primer_nombre }} {{ beneficiario.segundo_nombre }} {{ beneficiario.primer_apellido }} {{ beneficiario.segundo_nombre }}</a></li>
+        </ul>
+    </div>
+</div>
 <script type="text/javascript" src="{% static 'js-icbf/notificaciones.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/pages/components_notifications_pnotify.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/plugins/notifications/pnotify.min.js' %}"></script>
@@ -102,7 +78,12 @@ $( document ).ready(function() {
           <input type="hidden" id="e_ben" name="e_ben" class="form-control" value="{{ beneficiario.id }}">
           <legend class="text-bold">DATOS DE CONTROL DE PESO Y TALLA</legend>
           <fieldset class="content-group">
-            <div class="table-responsive">
+						{% if controles.count <= 0  %}
+							<div class="alert alert-info alert-styled-left alert-bordered">
+								<span class="text-semibold">SIN REGISTROS</span> No Existen Medidas Antropometricas de Este Beneficiario
+							</div>
+						{% endif %}
+						<div class="table-responsive">
               <table class="table table-bordered table-striped">
                 <thead>
                   <tr>
@@ -116,249 +97,249 @@ $( document ).ready(function() {
                   </tr>
                 </thead>
                 <tbody style="max-height: 500px;">
-									<script>
-									$( document ).ready(function() {
-										if({{ cantidad }} >= 1){
-											$("#canvas").show()
-										}
-									});
-									var Sobrepeso = []
-									var Obeso = []
-									var Promedio = []
-									var Beneficiario = []
-									var Bajo = []
-									var Severo = []
-									</script>
-                  {% for control in controles %}
-                  <tr>
-                    <tr>
-                      <td style="text-align: center">
-                        <input type="text" name="numero_orden" class="form-control" id="numero_orden" onKeyPress="return soloNumeros(event,'control','numero_orden','NO')" maxlength="10" value="{{ control.numero_orden }}" disabled="disabled"/>
-                      </td>
-                      <td style="text-align: center;">
-                        <input type="date" name="fecha_control" class="form-control" id="fecha_control" value="{{ control.fecha_control }}" disabled="disabled" min="{{ request.session.fecha_min }}" />
-                      </td>
-                      <td style="text-align: center;">
-                        <table>
-                          <tbody>
-                            <tr>
-                              <td>
-                                <input type="text" id="edad_anios" name="edad_anios" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','edad_anios','NO')" maxlength="2" value="{{ control.edad_anios }}" disabled="disabled"/>
-                                <span align="center" class="help-block">Años</span>
-                              </td>
-                              <td>&nbsp;&nbsp;</td>
-                              <td>
-                                <input type="text" id="edad_meses" name="edad_meses" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','edad_meses','NO')" maxlength="2" value="{{ control.edad_meses }}" disabled="disabled"/>
-                                <span align="center" class="help-block">Meses</span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="text-align: center">
-                        <table>
-                          <tbody>
-                            <tr>
-                              <td>
-                                <input type="text" id="peso_kilos" name="peso_kilos" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','peso_kilos','NO')" maxlength="2" value="{{ control.peso_kilos }}" disabled="disabled"/>
-                                <span align="center" class="help-block">Kg</span>
-                              </td>
-                              <td>&nbsp;&nbsp;</td>
-                              <td>
-                                <input type="text" id="peso_gramos" name="peso_gramos" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','peso_gramos','NO')" maxlength="3" value="{{ control.peso_gramos }}" disabled="disabled"/>
-                                <span align="center" class="help-block">Gms</span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                      <td style="text-align: center">
-                        <input type="text" name="talla" class="form-control" id="talla" onKeyPress="return soloNumeros(event,'control','talla','NO')" maxlength="4" value="{{ control.talla }}" disabled="disabled"/>
-                        <span align="center" class="help-block">Cms</span>
-                      </td>
-                      <td style="text-align: center" class="{{ control.clase_peso }}">
-                        <textarea  id="interpretacion" style="height: 50px; resize: none;" name="interpretacion" class="form-control" disabled="disabled">{{ control.interpretacion }}</textarea>
-                      </td>
-                      <td style="text-align: center;"></td>
-                    </tr>
-                  </tr>
-									<script>
+									{% if controles.count >= 1 %}
+										<script>
+											var Sobrepeso = []
+											var Obeso = []
+											var Promedio = []
+											var Beneficiario = []
+											var Bajo = []
+											var Severo = []
+										</script>
+										{% for control in controles %}
+										<tr>
+											<td style="text-align: center">
+												<input type="text" name="numero_orden" class="form-control" id="numero_orden" onKeyPress="return soloNumeros(event,'control','numero_orden','NO')" maxlength="10" value="{{ control.numero_orden }}" disabled="disabled"/>
+											</td>
+											<td style="text-align: center;">
+												<input type="date" name="fecha_control" class="form-control" id="fecha_control" value="{{ control.fecha_control }}" disabled="disabled" min="{{ request.session.fecha_min }}" />
+											</td>
+											<td style="text-align: center;">
+												<table>
+													<tbody>
+														<tr>
+															<td>
+																<input type="text" id="edad_anios" name="edad_anios" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','edad_anios','NO')" maxlength="2" value="{{ control.edad_anios }}" disabled="disabled"/>
+																<span align="center" class="help-block">Años</span>
+															</td>
+															<td>&nbsp;&nbsp;</td>
+															<td>
+																<input type="text" id="edad_meses" name="edad_meses" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','edad_meses','NO')" maxlength="2" value="{{ control.edad_meses }}" disabled="disabled"/>
+																<span align="center" class="help-block">Meses</span>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+											<td style="text-align: center">
+												<table>
+													<tbody>
+														<tr>
+															<td>
+																<input type="text" id="peso_kilos" name="peso_kilos" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','peso_kilos','NO')" maxlength="2" value="{{ control.peso_kilos }}" disabled="disabled"/>
+																<span align="center" class="help-block">Kg</span>
+															</td>
+															<td>&nbsp;&nbsp;</td>
+															<td>
+																<input type="text" id="peso_gramos" name="peso_gramos" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','peso_gramos','NO')" maxlength="3" value="{{ control.peso_gramos }}" disabled="disabled"/>
+																<span align="center" class="help-block">Gms</span>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+											<td style="text-align: center">
+												<input type="text" name="talla" class="form-control" id="talla" onKeyPress="return soloNumeros(event,'control','talla','NO')" maxlength="4" value="{{ control.talla }}" disabled="disabled"/>
+												<span align="center" class="help-block">Cms</span>
+											</td>
+											<td style="text-align: center" class="{{ control.clase_peso }}">
+												<textarea  id="interpretacion" style="height: 50px; resize: none;" name="interpretacion" class="form-control" disabled="disabled">{{ control.interpretacion }}</textarea>
+											</td>
+											<td style="text-align: center;"></td>
+										</tr>
+										<script>
 											Sobrepeso.push({{ control.peso_SobrepesoK }}.{{ control.peso_SobrepesoG }})
 											Obeso.push({{ control.peso_ObesoK }}.{{ control.peso_ObesoG }})
 											Promedio.push({{ control.peso_idealK }}.{{ control.peso_idealG }})
 											Beneficiario.push({{ control.peso_kilos }}.{{ control.peso_gramos }})
 											Bajo.push({{ control.peso_BajoPesoK }}.{{ control.peso_BajoPesoG }})
 											Severo.push({{ control.peso_BajoPesoSeveroK }}.{{ control.peso_BajoPesoSeveroG }})
-									</script>
-                  {% endfor %}
-									<script>
-										var labels = "{{ label }}".split(",")
-						        var config = {
-						            type: 'line',
-						            data: {
-						                labels: labels,
-						                datasets: [
-															{
-						                    label: "Sobrepeso",
-						                    fill: false,
-																data: Sobrepeso,
-																backgroundColor: "rgb(255, 90, 12)",
-																borderColor: "rgb(255, 90, 12)",
-																hoverBackgroundColor: "rgb(255, 90, 12)",
-																strokeColor: "rgb(255, 90, 12)",
-																highlightFill: "rgb(255, 90, 12)",
-																highlightStroke: "rgb(255, 90, 12)",
-																//borderDash: [10, 5],
-																pointRadius: 4,
-														    pointHoverRadius: 4,
-														    pointHitRadius: 30,
-
-							                },{
-						                    label: "Obeso",
-																fill: false,
-						                    data: Obeso,
-																backgroundColor: window.chartColors.orange,
-															  borderColor: window.chartColors.orange,
-																//borderDash: [10, 5],
-																pointRadius: 4,
-														    pointHoverRadius: 4,
-														    pointHitRadius: 30,
-							                },{
-						                    label: "Promedio",
-						                    fill: false,
-																data: Promedio,
-																backgroundColor: "rgb(88, 175, 36)",
-																borderColor: "rgb(88, 175, 36)",
-																hoverBackgroundColor: "rgb(88, 175, 36)",
-																strokeColor: "rgb(88, 175, 36)",
-																highlightFill: "rgb(88, 175, 36)",
-																highlightStroke: "rgb(88, 175, 36)",
-																pointRadius: 4,
-														    pointHoverRadius: 4,
-														    pointHitRadius: 30,
-															},{
-						                    label: "Beneficiario",
-																fill: false,
-																data: Beneficiario,
-																backgroundColor: "rgb(38, 50, 56)",
-																borderColor: "rgb(38, 50, 56)",
-																hoverBackgroundColor: "rgb(38, 50, 56)",
-																strokeColor: "rgb(38, 50, 56)",
-																highlightFill: "rgb(38, 50, 56)",
-																highlightStroke: "rgb(38, 50, 56)",
-																pointRadius: 4,
-														    pointHoverRadius: 4,
-														    pointHitRadius: 30,
-						                	},{
-						                    label: "Bajo Peso",
-																fill: false,
-																data: Bajo,
-																backgroundColor: window.chartColors.red,
-																borderColor: window.chartColors.red,
-																//borderDash: [10, 5],
-																pointRadius: 4,
-														    pointHoverRadius: 4,
-														    pointHitRadius: 30,
-						                	},{
-																fill: false,
-																data: Severo,
-						                    label: "Bajo Peso Severo",
-																backgroundColor: "rgb(255, 17, 0)",
-																borderColor: "rgb(255, 17, 0)",
-																hoverBackgroundColor: "rgb(255, 17, 0)",
-																strokeColor: "rgb(255, 17, 0)",
-																highlightFill: "rgb(255, 17, 0)",
-																highlightStroke: "rgb(255, 17, 0)",
-																//borderDash: [10, 5],
-																pointRadius: 4,
-														    pointHoverRadius: 4,
-														    pointHitRadius: 30,
-						                	}
-						                ]
-						            },
-						            options: {
-						                responsive: true,
-						                title:{
-						                    display:true,
-						                    text:'CURVA DE PESO {{ beneficiario.primer_nombre }} {{ beneficiario.segundo_nombre }} {{ beneficiario.primer_apellido }} {{ beneficiario.segundo_nombre }}'
-						                },
-														tooltips: {
-															mode: 'index',
-															intersect: false,
-														},
-						                scales: {
-						                    yAxes: [{
-						                        ticks: {
-						                            min: 0,
-						                            max: {{ peso }},
-																				stepSize: 1
-						                        }
-						                    }]
-						                }
-						            }
-						        };
-						        window.onload = function() {
-						            var ctx = document.getElementById("canvas").getContext("2d");
-						            window.myLine = new Chart(ctx, config);
-						        };
-									</script>
-                  <tr>
-                  <td style="text-align: center; width: 140px; max-width: 140px; min-width: 140px">
-                    <input type="text" name="nutricion_numero_orden" class="form-control" id="nutricion_numero_orden" onKeyPress="return soloNumeros(event,'control','numero_orden','NO')" maxlength="10"/></td>
-                  <td style="text-align: center; width: 190px; max-width: 190px; min-width: 190px">
-                    <input type="date" name="nutricion_fecha_control" class="form-control" id="nutricion_fecha_control" min="{{ request.session.fecha_min }}"/ value="{{ request.session.fecha }}"></td>
-                  <td style="text-align: center; width: 180px; max-width: 180px; min-width: 180px">
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <span align="center" class="help-block">Años</span>
-                            <input type="text" id="nutricion_edad_anios" name="nutricion_edad_anios" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','edad_anios','NO')" maxlength="2" value="{{ beneficiario.edad_anios }}">
-                          </td>
-                          <td>&nbsp;&nbsp;</td>
-                          <td>
-                            <span align="center" class="help-block">Meses</span>
-                            <input type="text" id="nutricion_edad_meses" name="nutricion_edad_meses" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','edad_meses','NO')" value="{{ beneficiario.edad_meses }}" maxlength="2">
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-									</td>
-                  <td style="text-align: center">
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <span align="center" class="help-block">Kg</span>
-                            <input type="text" id="nutricion_peso_kilos" name="nutricion_peso_kilos" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','peso_kilos','NO')" maxlength="2">
-                          </td>
-                          <td>&nbsp;&nbsp;</td>
-                          <td>
-                            <span align="center" class="help-block">Gms</span>
-                            <input type="text" id="nutricion_peso_gramos" name="nutricion_peso_gramos" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','peso_gramos','NO')" maxlength="3">
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-									</td>
-                  <td style="text-align: center">
-                    <span align="center" class="help-block">Cms</span>
-                    <input type="text" name="nutricion_talla" class="form-control" id="nutricion_talla" onKeyPress="return soloNumeros(event,'control','talla','NO')" maxlength="3"/></td>
-                  <td style="text-align: center"><textarea  id="nutricion_interpretacion" style="height: 50px; resize: none;" name="nutricion_interpretacion" class="form-control"></textarea></td>
-                  <td style="text-align: center; padding-left: 10px;">
-                    <ul class="icons-list">
-                      <li class="text-danger-600"><a onclick="ValidarFormulario(['talla','peso_gramos','peso_kilos','edad_meses','edad_anios','fecha_control','numero_orden'],'nutricion','FormNutricion')" class="btn btn-primary btn-icon"><i style="color: white" class="icon-plus2"></i></a></li>
-                    </ul>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-							<canvas style="display: none; margin-top: 40px" id="canvas"></canvas>
-            </div>
+										</script>
+										{% endfor %}
+										<script>
+											var labels = "{{ label }}".split(",")
+											var config = {
+													type: 'line',
+													data: {
+															labels: labels,
+															datasets: [
+																{
+																	label: "Sobrepeso",
+																	fill: 1,
+																	data: Sobrepeso,
+																	backgroundColor: "rgba(239, 108, 0, 0.25)",
+																	borderColor: "rgb(255, 90, 12)",
+																	pointRadius: 0,
+																	pointHoverRadius: 0,
+																	pointHitRadius: 0,
+																},{
+																	label: "Obeso",
+																	fill: 4,
+																	data: Obeso,
+																	backgroundColor: "rgba(255, 159, 64, 0.14)",
+																	borderColor: window.chartColors.orange,
+																	pointRadius: 0,
+																	pointHoverRadius: 0,
+																	pointHitRadius: 0,
+																},{
+																	label: "Promedio",
+																	fill: 4,
+																	data: Promedio,
+																	backgroundColor: "rgba(76, 175, 80, 0.13)",
+																	borderColor: "rgb(88, 175, 36)",
+																	pointRadius: 0,
+																	pointHoverRadius: 0,
+																	pointHitRadius: 0,
+																},{
+																	label: "Beneficiario",
+																	fill: false,
+																	data: Beneficiario,
+																	borderDash: [10, 5],
+																	backgroundColor: "rgb(38, 50, 56)",
+																	borderColor: "rgb(38, 50, 56)",
+																	pointRadius: 4,
+																	pointHoverRadius: 4,
+																	pointHitRadius: 30,
+																},{
+																	label: "Bajo Peso",
+																	fill: 5,
+																	data: Bajo,
+																	backgroundColor: "rgba(255, 99, 132, 0.22)",
+																	borderColor: window.chartColors.red,
+																	pointRadius: 0,
+																	pointHoverRadius: 0,
+																	pointHitRadius: 0,
+																},{
+																	fill: 'origin',
+																	data: Severo,
+																	label: "Bajo Peso Severo",
+																	backgroundColor: "rgba(255, 17, 0, 0.22)",
+																	borderColor: "rgb(255, 17, 0)",
+																	pointRadius: 0,
+																	pointHoverRadius: 0,
+																	pointHitRadius: 0,
+																}
+															]
+													},
+													options: {
+															responsive: true,
+															title:{
+																	display:true,
+																	text:'CURVA DE PESO {{ beneficiario.primer_nombre }} {{ beneficiario.segundo_nombre }} {{ beneficiario.primer_apellido }} {{ beneficiario.segundo_nombre }}'
+															},
+															tooltips: {
+																mode: 'index',
+																intersect: false,
+															},
+															scales: {
+																	yAxes: [{
+																			ticks: {
+																					min: 0,
+																					max: {{ peso }},
+																					stepSize: 1
+																			}
+																	}]
+															},
+															plugins: {
+																	filler: {
+																			propagate: true
+																	}
+															}
+													}
+											};
+											window.onload = function() {
+													var ctx = document.getElementById("peso").getContext("2d");
+													window.myLine = new Chart(ctx, config);
+													$("#peso").show()
+											};
+										</script>
+									{% endif %}
+									<tr>
+										<td style="text-align: center; width: 140px; max-width: 140px; min-width: 140px">
+											<input type="text" name="nutricion_numero_orden" class="form-control" id="nutricion_numero_orden" onKeyPress="return soloNumeros(event,'control','numero_orden','NO')" maxlength="10"/></td>
+										<td style="text-align: center; width: 190px; max-width: 190px; min-width: 190px">
+											<input type="date" name="nutricion_fecha_control" class="form-control" id="nutricion_fecha_control" min="{{ request.session.fecha_min }}"/ value="{{ request.session.fecha }}"></td>
+										<td style="text-align: center; width: 180px; max-width: 180px; min-width: 180px">
+											<table>
+												<tbody>
+													<tr>
+														<td>
+															<span align="center" class="help-block">Años</span>
+															<input type="text" id="nutricion_edad_anios" name="nutricion_edad_anios" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','edad_anios','NO')" maxlength="2" value="{{ beneficiario.edad_anios }}">
+														</td>
+														<td>&nbsp;&nbsp;</td>
+														<td>
+															<span align="center" class="help-block">Meses</span>
+															<input type="text" id="nutricion_edad_meses" name="nutricion_edad_meses" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','edad_meses','NO')" value="{{ beneficiario.edad_meses }}" maxlength="2">
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+										<td style="text-align: center">
+											<table>
+												<tbody>
+													<tr>
+														<td>
+															<span align="center" class="help-block">Kg</span>
+															<input type="text" id="nutricion_peso_kilos" name="nutricion_peso_kilos" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','peso_kilos','NO')" maxlength="2">
+														</td>
+														<td>&nbsp;&nbsp;</td>
+														<td>
+															<span align="center" class="help-block">Gms</span>
+															<input type="text" id="nutricion_peso_gramos" name="nutricion_peso_gramos" class="form-control" style="max-width: 70px" onKeyPress="return soloNumeros(event,'control','peso_gramos','NO')" maxlength="3">
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+										<td style="text-align: center">
+											<span align="center" class="help-block">Cms</span>
+											<input type="text" name="nutricion_talla" class="form-control" id="nutricion_talla" onKeyPress="return soloNumeros(event,'control','talla','NO')" maxlength="3"/></td>
+										<td style="text-align: center"><textarea  id="nutricion_interpretacion" style="height: 50px; resize: none;" name="nutricion_interpretacion" class="form-control"></textarea></td>
+										<td style="text-align: center; padding-left: 10px;">
+											<ul class="icons-list">
+												<li class="text-danger-600"><a onclick="ValidarFormulario(['talla','peso_gramos','peso_kilos','edad_meses','edad_anios','fecha_control','numero_orden'],'nutricion','FormNutricion')" class="btn btn-primary btn-icon"><i style="color: white" class="icon-plus2"></i></a></li>
+											</ul>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<canvas style="display: none; margin-top: 40px; background: white;" id="peso"></canvas>
           </fieldset>
         </form>
+				<form id="formGraficas" method="POST">{% csrf_token %}
+					<input type="hidden" id="beneficiario" name="beneficiario" value="{{ beneficiario.id }}">
+					<textarea id="grafica_peso" style="display: none" name="grafica_peso"></textarea>
+				</form>
       </div>
     </div>
   </div>
 </div>
+<script>
+$(document).ready(function() {
+	setTimeout(function(){
+		$('#grafica_peso').val(peso = document.getElementById("peso").toDataURL("image/png"));
+		$.ajax({
+		    type: 'POST',
+		    url: '/beneficiarios/guardarGraficas',
+		    dataType: 'json',
+		    data: $('#formGraficas').serialize(),
+				}).done(function(msg) {
+					console.log(msg)
+				});
+	},2000);
+});
+</script>
 {% endblock %}

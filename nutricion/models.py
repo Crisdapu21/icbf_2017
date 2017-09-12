@@ -10,7 +10,7 @@ from parametrizacion.models import *
 from beneficiarios.models import Beneficiario
 
 class Controles(models.Model):
-    beneficiario  = models.ForeignKey(Beneficiario, null=False ,blank=False)
+    beneficiario = models.ForeignKey(Beneficiario, null=False ,blank=False)
     numero_orden = models.CharField( max_length=20,  null=False ,blank=True)
     fecha_control = models.CharField( max_length=10,  null=False ,blank=True)
     edad_anios = models.BigIntegerField(null=False ,blank=True)
