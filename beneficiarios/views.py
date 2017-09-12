@@ -33,6 +33,22 @@ from datetime import datetime, timedelta
 from calendario.tasks import VacunasTask
 import json, os, boto3, tinys3, time, math
 
+
+################## FUNCION VERIFICAR DOCUMENTO ######################
+
+@csrf_exempt
+@login_required(login_url="login:login")
+def verificarDocumento(request):
+    if request.method == 'PUT':
+        numdoc = request.GET['numdoc'].replace(' ','')
+        if Beneficiario.objects.filter(numero_documento=numdoc).exists():
+            return HttpResponse("EXISTE", status=200)
+        else:
+            return HttpResponse("NO EXISTE", status=200)
+    else:
+        return HttpResponse("SOLICITUD INCORRECTA", status=200)
+
+
 ################## LISTADO BENEFICIARIOS ######################
 
 def beneficiarios(request):
@@ -299,11 +315,6 @@ def DatosEtnicosPDF(request, id=None):
     try:
         logo = "icbf-reporte.png"
         beneficiario = Beneficiario.objects.get(id = id)
-        if beneficiario.tipo_beneficiario == "1":
-            tipo = 'Niño'
-        else:
-            tipo = 'Niña'
-
         if beneficiario.grupo_etnico == '1':
             grupoI = "media/grupos_etnicos/afrocolombiano.jpg"
             grupoN = "Afrocolombiano"
@@ -323,15 +334,8 @@ def DatosEtnicosPDF(request, id=None):
             grupoI = "media/grupos_etnicos/no_reconoce.jpg"
             grupoN = "No se Autoreconze"
 
-        if beneficiario.a15 == 'S' or beneficiario.a16 == 'S':
-            a15 = 'SI'
-            a16 = 'SI'
-        else:
-            a15 = 'NO'
-            a16 = 'NO'
-
         result = StringIO()
-        html= render_to_string("reportes/datos_etnicos_pdf.html",{"url": URL, "logo": logo, "beneficiario": beneficiario , "grupoI": grupoI, "grupoN": grupoN, "a15": a15, "a16": a16, "tipo": tipo, "titulo": "DATOS ETNICOS" })
+        html= render_to_string("reportes/datos_etnicos_pdf.html",{"url": URL, "logo": logo, "beneficiario": beneficiario , "grupoI": grupoI, "grupoN": grupoN, "titulo": "DATOS ETNICOS" })
         pdf = pisa.pisaDocument(html,result)
         return HttpResponse(result.getvalue(),content_type='application/pdf')
     except ObjectDoesNotExist:
@@ -344,25 +348,12 @@ def HechosVictimizantesPDF(request, id=None):
     try:
         logo = "icbf-reporte.png"
         beneficiario = Beneficiario.objects.get(id = id)
-        if beneficiario.tipo_beneficiario == "1":
-            tipo = 'Niño'
-        else:
-            tipo = 'Niña'
-
-        if beneficiario.a18 == 'S' or beneficiario.a19 == 'S':
-            a18 = 'SI'
-            a19 = 'SI'
-        else:
-            a18 = 'NO'
-            a19 = 'NO'
-
         if beneficiario.a20 != None:
             parentezco = beneficiario.a20
         else:
             parentezco = "Ninguno"
-
         result = StringIO()
-        html= render_to_string("reportes/hechos_victimizantes_pdf.html",{"url": URL, "logo": logo, "beneficiario": beneficiario , "a18": a18, "a19": a19, "tipo": tipo, "titulo": "HECHOS VICTIMIZANTES", "parentezco": parentezco })
+        html= render_to_string("reportes/hechos_victimizantes_pdf.html",{"url": URL, "logo": logo, "beneficiario": beneficiario , "titulo": "HECHOS VICTIMIZANTES", "parentezco": parentezco })
         pdf = pisa.pisaDocument(html,result)
         return HttpResponse(result.getvalue(),content_type='application/pdf')
     except ObjectDoesNotExist:

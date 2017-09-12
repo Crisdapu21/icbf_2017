@@ -1,3 +1,23 @@
+$( document ).ready(function() {
+  // VERIFICA QUE NO EXISTA EL NUMERO DE DOCUMENTO
+  $('#numdoc').on('input', function(){
+      documento = $("#numdoc").val()
+      $.ajax({
+      method: "PUT",
+      url: "/verificarDocumento?numdoc="+$("#numdoc").val(),
+      }).done(function(msg) {
+        if (msg == "EXISTE"){
+            $("#numdoc").focus();
+            var str = $("#numdoc").val();
+            var ultimo = str.length-1;
+            var res = str.substring(0, ultimo);
+            $("#numdoc").val(res);
+            mensagesError("EL NÚMERO DE DOCUMENTO",documento,"Ya Esta Registrado.");
+          }
+      });
+  });
+});
+
 function MiembroFamilia(id,f3,f6,f6_detalle,f7,f7_detalle,f8,f9,f10,f13,f14,f15,f16,listS,listN,listVC,listCD,listVD,listOC,listNA,listmf_15A,listmf_15D){
   if (f8  == "S") {
       VerificarArray("mf8_"+id,listS);
@@ -473,6 +493,7 @@ function verificarEmail() {
 				}
 		});
 }
+
 
 
 function EliminarArray(id,lista){

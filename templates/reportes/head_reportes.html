@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-{% load static from staticfiles %}
+{% load static from staticfiles %}{% load tags %}
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -156,11 +156,11 @@
       <td>
         <div class="td_ben"><strong>Unidad de Servicio :</strong><span> {{ beneficiario.uds }}</span></div>
         <div class="td_ben"><strong>Fecha de Afiliación :</strong><span> {{ beneficiario.fecha }}</span></div>
-        <div class="td_ben"><strong>Tipo de Beneficiario :</strong><span> {{ tipo }}</span></div>
+        <div class="td_ben"><strong>Tipo de Beneficiario :</strong><span> {{ beneficiario.tipo_beneficiario|tipo_beneficiarios }}</span></div>
         <div class="td_ben"><strong>Tipo de Documento :</strong><span> {{ beneficiario.tipo_documento }}</span></div>
         <div class="td_ben"><strong>Numero de Documento :</strong><span> {{ beneficiario.numero_documento }}</span></div>
         <div class="td_ben"><strong>Fecha de Nacimiento :</strong><span> {{ beneficiario.fecha_nacimiento }}</span></div>
-        <div class="td_ben"><strong>Edad :</strong><span> {{ beneficiario.edad_anios }} {{ beneficiario.edad_anios_detalle }} {{ beneficiario.edad_meses }} {{ beneficiario.edad_meses_detalle }}</span></div>
+        <div class="td_ben"><strong>Edad :</strong><span> {{ beneficiario.edad_anios|edades:'A' }} {{ beneficiario.edad_meses|edades:'M' }}</span></div>
       </td>
       <td align="right"><img src="{{ url }}{{ beneficiario.foto }}" width="150" height="150" alt="" style="display: block;"/></td>
     </tr>

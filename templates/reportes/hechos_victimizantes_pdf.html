@@ -1,4 +1,4 @@
-{% include 'reportes/head_reportes.html' %}
+{% include 'reportes/head_reportes.html' %}{% load tags %}
   <table style="width:100%;">
     <tbody>
       <div style="overflow-x:auto;">
@@ -23,9 +23,9 @@
           <tr class="table-content">
             <td style="padding: 10px;">
               <div class="td_ben"><strong> ¿ Ha sido víctima del desplazamiento forzado u otro hecho victimizante ?</strong><span> {{ a15 }}</span></div>
-              <div class="td_ben"><span> {{ a18 }}</span></div>
+              <div class="td_ben"><span> {{ beneficiario.a18|respuestas }}</span></div>
               <div class="td_ben"><strong> ¿ Algún miembro del grupo familiar con el que convive el beneficiario ha sido víctima del Desplazamiento forzado u otro hecho victimizante ?</strong></div>
-              <div class="td_ben"><span> {{ a19 }}</span></div>
+              <div class="td_ben"><span> {{ beneficiario.a19|respuestas }}</span></div>
               <div class="td_ben"><strong> Señale el tipo de relación del miembro del grupo familiar con el que convive, que ha sido víctima del Desplazamiento u otro hecho victimizante.</strong></div>
               <div class="td_ben"><span> {{ parentezco }}</span></div>
             </td>

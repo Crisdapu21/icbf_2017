@@ -172,7 +172,7 @@ def medidasAntropometricas(request, id=None):
         peso_beneficiario = e.peso_kilos+"."+e.peso_gramos
         peso_bajo = e.peso_BajoPesoK+"."+e.peso_BajoPesoG
         peso_severo = e.peso_BajoPesoSeveroK+"."+e.peso_BajoPesoSeveroG
-        edades.append(edad)
+        edades.append(int(edad))
         p_sobrepeso.append(float(peso_sobrepeso))
         p_obeso.append(float(peso_obeso))
         p_ideal.append(float(peso_ideal))
@@ -1688,12 +1688,8 @@ def MedidasAntropometricasPDF(request, id=None):
         logo = "icbf-reporte.png"
         beneficiario = Beneficiario.objects.get(id = id)
         controles = Controles.objects.filter(beneficiario=id).order_by("total_meses")
-        if beneficiario.tipo_beneficiario == "1":
-            tipo = 'Niño'
-        else:
-            tipo = 'Niña'
         result = StringIO()
-        html= render_to_string("reportes/medidas_antropometricas_pdf.html",{'url':URL,'logo':logo,'beneficiario':beneficiario,'controles':controles,'tipo':tipo,'titulo':'MEDIDAS ANTROPOMETRICAS'})
+        html = render_to_string("reportes/medidas_antropometricas_pdf.html",{'url':URL,'logo':logo,'beneficiario':beneficiario,'controles':controles,'titulo':'MEDIDAS ANTROPOMETRICAS'})
         pdf = pisa.pisaDocument(html,result)
         return HttpResponse(result.getvalue(),content_type='application/pdf')
     except ObjectDoesNotExist:

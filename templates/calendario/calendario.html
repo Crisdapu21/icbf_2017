@@ -127,7 +127,6 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
-
 <script>var eventos = [];</script>
 {% for evento in eventos %}
 <script>AddEventos('{{ evento.id }}','{{ evento.estado }}','{{ evento.tipo }}','{{ evento.beneficiario }}','{{ evento.allday }}','{{ evento.detalle }}','{{ evento.f_inicio }}','{{ evento.f_fin }}')</script>
@@ -170,9 +169,7 @@ $(function() {
     });
 });
 </script>
-<script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery_ui/datepicker.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/pages/form_validation.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/core/libraries/jquery_ui/interactions.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/plugins/forms/selects/select2.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'assets/js/pages/form_select2.js' %}"></script>
+<script type="text/javascript" src="{% static 'js-icbf/notificaciones.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/pages/components_notifications_pnotify.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/plugins/notifications/pnotify.min.js' %}"></script>
 {% endblock %}

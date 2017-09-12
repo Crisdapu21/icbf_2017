@@ -5,6 +5,13 @@ from django import template
 register = template.Library()
 
 @register.filter
+def respuestas(value):
+    if value == "S":
+        return ("SI")
+    else:
+        return ("NO")
+
+@register.filter
 def tipo_beneficiarios(value):
     if value == "1":
         return ("Niño")

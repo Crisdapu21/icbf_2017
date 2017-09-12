@@ -99,13 +99,6 @@ $( document ).ready(function() {
     {% endif %}
 	</div>
 </div>
-<!--Data Table-->
-<!--<script type="text/javascript"  src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>-->
-<script>
-$('#list_ben').dataTable(
-	{"lengthMenu": [ 10,50,100,200,500,1000 ]},
- );
-</script>
 {% endblock %}
 {% block javascript %}
 <script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>

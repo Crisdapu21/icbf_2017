@@ -8,16 +8,17 @@ from django.contrib import auth,  messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User, Group
-from .forms import LoginForm
-from validators import Validator
-from .validators import  FormLoginValidator
-import time
+from forms import LoginForm
+from validators import Validator, FormLoginValidator
+from django.db.models import Q
 from icbf.settings import URL, GRUPO1, GRUPO2
 from operarios.models import Operario
 from beneficiarios.models import Beneficiario
 import django.conf as conf
 from datetime import datetime, timedelta
 from parametrizacion.views import registrarLogs
+from login.validators import existInGroup
+import time
 
 ################### FUNCION LOGIN  #######################
 
@@ -64,11 +65,15 @@ def logout(request):
 
 @login_required(login_url="login:login")
 def dashboard(request):
-    afro = Beneficiario.objects.filter(grupo_etnico = 1).count()
-    indigena = Beneficiario.objects.filter(grupo_etnico = 2).count()
-    gitano = Beneficiario.objects.filter(grupo_etnico = 3).count()
-    raizal = Beneficiario.objects.filter(grupo_etnico = 4).count()
-    palenquero = Beneficiario.objects.filter(grupo_etnico = 5).count()
-    ninguno = Beneficiario.objects.filter(grupo_etnico = 6).count()
-    beneficiarios = Beneficiario.objects.all().count()
-    return render(request,'dashboard.html', {'afro':afro,'indigena':indigena,'gitano':gitano,'raizal':raizal,'palenquero':palenquero,'ninguno':ninguno,'beneficiarios':beneficiarios})
+    if existInGroup(request.user.id,GRUPO2):
+        o = Operario.objects.get(id=request.user.id)
+        afro = Beneficiario.objects.filter(Q(grupo_etnico = 1) & Q(uds = o.uds)).count()
+        indigena = Beneficiario.objects.filter(Q(grupo_etnico = 2) & Q(uds = o.uds)).count()
+        gitano = Beneficiario.objects.filter(Q(grupo_etnico = 3) & Q(uds = o.uds)).count()
+        raizal = Beneficiario.objects.filter(Q(grupo_etnico = 4) & Q(uds = o.uds)).count()
+        palenquero = Beneficiario.objects.filter(Q(grupo_etnico = 5) & Q(uds = o.uds)).count()
+        ninguno = Beneficiario.objects.filter(Q(grupo_etnico = 6) & Q(uds = o.uds)).count()
+        beneficiarios = Beneficiario.objects.all().count()
+        return render(request,'dashboard.html', {'afro':afro,'indigena':indigena,'gitano':gitano,'raizal':raizal,'palenquero':palenquero,'ninguno':ninguno,'beneficiarios':beneficiarios})
+    else:
+        return HttpResponseRedirect("/")

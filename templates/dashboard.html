@@ -45,6 +45,8 @@
 </style>
 <script type="text/javascript" src="{% static 'js-icbf/Chart.bundle.js' %}"></script>
 <script type="text/javascript" src="{% static 'js-icbf/utils.js' %}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.0/fullcalendar.min.js"></script>
 <div class="page-header ">
     <div class="page-header-content">
       <div class="page-title">
@@ -103,31 +105,12 @@
                   </div>
               </div>
           </div>
-          <div class="col-sm-7 col-md-7 col-lg-7">
+          <div class="col-sm-4 col-md-4 col-lg-4">
               <div class="panel border-left-lg border-left-success invoice-grid timeline-content">
                   <div class="panel-body">
-                      <div class="row">
-                          <h6 class="text-semibold no-margin-top" align="center">LEADS COMPLETADOS BUSQUEDA DE TRABAJO&nbsp;&nbsp;<span class="label label-success">{{ request.session.leadsC }}</span></h6>
-                          <br>
-                          <div class="col-sm-6">
-                              <ul class="list list-unstyled">
-                                  <li><i aria-hidden="true" class="icon-facebook2"></i>&nbsp;&nbsp;&nbsp; Facebook:</li>
-                                  <li><i aria-hidden="true" class="fa fa-google"></i>&nbsp;&nbsp;&nbsp; Google: </li>
-                                  <li><i aria-hidden="true" class="fa fa fa-desktop"></i>&nbsp;&nbsp;&nbsp;Web: </li>
-                              </ul>
-                          </div>
-                          <div class="col-sm-6">
-                              <ul class="list list-unstyled text-right">
-                                  <li><span class="text-semibold">{{ request.session.leadsCF }}</span></li>
-                              </ul>
-                              <ul class="list list-unstyled text-right">
-                                  <li><span class="text-semibold">{{ request.session.leadsCG }}</span></li>
-                              </ul>
-                              <ul class="list list-unstyled text-right">
-                                  <li><span class="text-semibold">{{ request.session.leadsCW }}</span></li>
-                              </ul>
-                          </div>
-                      </div>
+                    <div class="content">
+                      <div id="calendario" class="fullcalendar-agenda"></div>
+                    </div>
                   </div>
                   <div class="panel-footer">
                       <ul>
@@ -176,7 +159,6 @@
         var ctx = document.getElementById("chart-area").getContext("2d");
         window.myDoughnut = new Chart(ctx, config);
     };
-
 
 </script>
 <script type="text/javascript" src="{% static 'assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>

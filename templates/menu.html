@@ -88,12 +88,12 @@
     </div>
     <script>
         if ("{{ request.session.grupo }}" == "1") {
+            $("#menu_dashboard").remove()
             $("#menu_calendario").remove()
             $("#menu_parametrizacion").remove()
         }
         if ("{{ request.session.grupo }}" == "2") {
             $("#menu_parametrizacion").remove()
-            $("#menu_dashboard").remove()
             $("#menu_entidades").remove()
             $("#menu_uds").remove()
             $("#menu_operarios").remove()

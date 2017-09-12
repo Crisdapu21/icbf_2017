@@ -14,4 +14,5 @@ urlpatterns = [
     url('^beneficiarios/datos_etnicos/(?P<id>\d+)/reporte$', views.DatosEtnicosPDF, name = 'DatosEtnicosPDF'),
     url('^beneficiarios/hechos_victimizantes/(?P<id>\d+)/reporte$', views.HechosVictimizantesPDF, name = 'HechosVictimizantesPDF'),
     url('^guardarNota$', views.guardarNota, name = 'guardarNota'),
+    url('^verificarDocumento', views.verificarDocumento, name = 'verificarDocumento' ),
 ]
