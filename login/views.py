@@ -49,7 +49,10 @@ def login(request):
             return render(request, "login/login.html",{'error': validator.getMessage(), 'url': URL })
     else:
         if request.user.is_authenticated:
-            return HttpResponseRedirect('/dashboard')
+            if existInGroup(request.user.id,GRUPO2):
+                return HttpResponseRedirect('/dashboard')
+            else:
+                return HttpResponseRedirect('/perfil')
         else:
             return render(request, "login/login.html",{'url': URL })
 
