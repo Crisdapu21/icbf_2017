@@ -4,11 +4,15 @@ Plataforma para el registro, clasificación y 	caracterización de los beneficia
 
 # Modulos : 
 
-1. Beneficiarios 
-2. Calendario
-3. Caracteristicas de Vivienda
-4. Composición Familiar
-5. Relaciones Comunitarias
-6. Salud
-7. Nutrición
-8. Operarios
+1. Parametrización
+2. Entidades Administradoras
+3. Unidades del Servicio
+4. Beneficiarios 
+5. Salud
+6. Nutrición
+7. Calendario
+8. Caracteristicas de Vivienda
+9. Composición Familiar
+10. Relaciones Comunitarias
+11. Operarios
+12. Dashboard
