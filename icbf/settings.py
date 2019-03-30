@@ -3,14 +3,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'md+=+p9&m*34v_)7w9fm&6h4=40h#(g09t552u3yeyu46w^imq'
 DEBUG = False
 
-URL = "https://s3.amazonaws.com/icbf-2017/"
+URL = "
 SERVIDOR = "https://controlydesarrollo.herokuapp.com"
 AWS_STORAGE_BUCKET_NAME = 'icbf-2017'
-AWS_ACCESS_KEY_ID = 'AKIAJMWYEBDRPUXIB5UA'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
 STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-STATIC_URL = 'https://s3.amazonaws.com/icbf-2017/'
+STATIC_URL = ''
 ALLOWED_HOSTS = ["*"]
 
 if not DEBUG:
@@ -94,11 +94,11 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dvnj0mh3eokne',
-        'USER': 'tajibkgilmttmj',
-        'PASSWORD': '93d9ffd41ae417265532fae74a8c4875c627f3aac1b9dac4f8d58d8bcb2101a6',
-        'HOST': 'ec2-54-235-80-137.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
