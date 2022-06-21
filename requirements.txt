@@ -34,7 +34,7 @@ goslate==1.5.1
 gunicorn==19.6.0
 html5lib==0.9999999
 kombu==3.0.37
-numpy==1.12.1
+numpy==1.22.0
 oauthlib==2.0.1
 olefile==0.44
 openpyxl==2.4.5
